@@ -10,4 +10,5 @@
 | :----:|:-----| :-----|
 | 19.12. | 1    | palautusrepo/dokumentaatio/projektin skeleton |
 | 29.12. | 2    | domain name osoittaa oikeaan IP |
+| 01.01. | 1    | https support |
 
