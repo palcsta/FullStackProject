@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import Country from './components/Country'
+import Footer from './components/Footer'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 
 const useField = (type) => {
   const [value, setValue] = useState('')
@@ -22,11 +26,11 @@ const useCountry = (name) => {
     if (name) {
       const url = `https://restcountries.eu/rest/v2/name/${name}?fullText=true`
       axios.get(url).then(response => {
-        console.log("fetched countries: ",response.data)
-        if (response.data.length>0) {
-          setCountry({ 
-            found: true, 
-            data: response.data[0] 
+        console.log("fetched countries: ", response.data)
+        if (response.data.length > 0) {
+          setCountry({
+            found: true,
+            data: response.data[0]
           })
         }
 
@@ -39,30 +43,10 @@ const useCountry = (name) => {
 
   return country
 }
-
-const Country = ({ country }) => {
-  if (!country) {
-    return null
-  }
-
-  if (!country.found) {
-    return (
-      <div>
-        not found...
-      </div>
-    )
-  }
-
-  return (
-    <div>
-      <h3>{country.data.name} </h3>
-      <div>capital {country.data.capital} </div>
-      <div>population {country.data.population}</div> 
-      <img src={country.data.flag} height='100' alt={`flag of ${country.data.name}`}/>  
-    </div>
-  )
+const p = {
+  "border": "2px solid cyan",
+  "border-radius": "5px"
 }
-
 const App = () => {
   const nameInput = useField('text')
   const [name, setName] = useState('')
@@ -74,15 +58,26 @@ const App = () => {
   }
 
   return (
-    <div>
-      <form onSubmit={fetch}>
-        <input {...nameInput} />
-        <button>find</button>
-      </form>
+    <>
+      <div class="container" style={p}>
+
+      <Form onSubmit={fetch}>
+        <Form.Row>
+          <Form.Group controlId="formBasicEmail">
+            <Form.Control placeholder="enter countrys code(eg. US)"{...nameInput} />
+          </Form.Group>
+          <Form.Group >
+            <Button variant="primary" type="submit" >
+              Find
+      </Button>
+          </Form.Group>
+        </Form.Row>
+      </Form>
 
       <Country country={country} />
-    </div>
-  )
+      
+    </div><div class="container" style={p}><Footer/></div>
+  </>)
 }
 
 export default App
