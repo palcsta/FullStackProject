@@ -46,6 +46,7 @@ const useCountry = (name) => {
 const p = {
   "border": "2px solid cyan",
   "border-radius": "5px"
+  
 }
 const App = () => {
   const nameInput = useField('text')
@@ -61,23 +62,23 @@ const App = () => {
     <>
       <div class="container" style={p}>
 
-      <Form onSubmit={fetch}>
-        <Form.Row>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Control placeholder="enter countrys code(eg. US)"{...nameInput} />
-          </Form.Group>
-          <Form.Group >
-            <Button variant="primary" type="submit" >
-              Find
+        <Form onSubmit={fetch}>
+          <Form.Row>
+            <Form.Group  controlId="formBasicEmail">
+              <Form.Control placeholder="enter country code (e.g. US)"{...nameInput} />
+            </Form.Group>
+            <Form.Group >
+              <Button variant="primary" type="submit" >
+                Find
       </Button>
-          </Form.Group>
-        </Form.Row>
-      </Form>
+            </Form.Group>
+          </Form.Row>
+        </Form>
 
-      <Country country={country} />
-      
-    </div><div class="container" style={p}><Footer/></div>
-  </>)
+        <Country country={country} />
+
+      </div><div class="container" style={p}><Footer /></div>
+    </>)
 }
 
 export default App
