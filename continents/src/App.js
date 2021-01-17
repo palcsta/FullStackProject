@@ -2,81 +2,50 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Country from './components/Country'
 import Footer from './components/Footer'
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
+import Filter from './components/Filter';
 
-const useField = (type) => {
-  const [value, setValue] = useState('')
-
-  const onChange = (event) => {
-    setValue(event.target.value)
-  }
-
-  return {
-    type,
-    value,
-    onChange
-  }
-}
-
-const useCountry = (name) => {
-  const [country, setCountry] = useState(null)
-
-  useEffect(() => {
-    if (name) {
-      const url = `https://restcountries.eu/rest/v2/name/${name}?fullText=true`
-      axios.get(url).then(response => {
-        console.log("fetched countries: ", response.data)
-        if (response.data.length > 0) {
-          setCountry({
-            found: true,
-            data: response.data[0]
-          })
-        }
-
-      }).catch(error => {
-        setCountry({ found: false })
-      })
-    }
-
-  }, [name])
-
-  return country
-}
 const p = {
   "border": "2px solid cyan",
   "border-radius": "5px"
-  
 }
 const App = () => {
-  const nameInput = useField('text')
   const [name, setName] = useState('')
-  const country = useCountry(name)
+  const [country, setCountry] = useState([])
+  const [countries, setCountries] = useState([])
 
-  const fetch = (e) => {
-    e.preventDefault()
-    setName(nameInput.value)
+
+  const hook = () => {
+    console.log('effect countries')
+    axios
+      .get('https://restcountries.eu/rest/v2/all')
+      .then(response => {
+        setCountries(response.data)
+        console.log('got countries (size; ', countries.length, ")")
+      })
+  }
+  useEffect(hook, [])
+
+  
+  const handleNewSearched = (event) => {
+
+    event.preventDefault()
+    setName(event.target.value)
+
+    let country = countries.filter(
+      x =>
+        x.name.toUpperCase().includes(
+          event.target.value.toUpperCase()))
+
+    setCountry(country)
+    
+
   }
 
   return (
     <>
       <div class="container" style={p}>
-
-        <Form onSubmit={fetch}>
-          <Form.Row>
-            <Form.Group  controlId="formBasicEmail">
-              <Form.Control placeholder="enter country code (e.g. US)"{...nameInput} />
-            </Form.Group>
-            <Form.Group >
-              <Button variant="primary" type="submit" >
-                Find
-      </Button>
-            </Form.Group>
-          </Form.Row>
-        </Form>
-
+        <Filter value={name} change={handleNewSearched} />
         <Country country={country} />
-
       </div><div class="container" style={p}><Footer /></div>
     </>)
 }
