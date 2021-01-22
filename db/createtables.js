@@ -1,17 +1,18 @@
-aconst db = require('./db')
+const db = require('./db')
+const logger = require('../utils/logger')
 
 const createTableText = `
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
-CREATE TEMP TABLE IF NOT EXISTS users (
+CREATE TABLE IF NOT EXISTS users (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  data JSONB
+  username TEXT NOT NULL UNIQUE,
+  passwordhash TEXT NOT NULL
 );
 `
 
 const createUsersTable = async () => {
-  const { rows } = await db.query(createTableText)
-  return rows
+  logger.info('creating tables!')
+  await db.query(createTableText)
 }
 
-
-module.exports(createUsersTable)
+module.exports = createUsersTable

@@ -1,8 +1,8 @@
 const config = require('./utils/config')
 const logger = require('./utils/logger')
 const middleware = require('./utils/middleware')
-
-
+const createUsersTable = require('./db/createtables')
+createUsersTable()
 const express = require('express')
 const app = express()
 const json = express.json()
