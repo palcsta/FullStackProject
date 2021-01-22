@@ -1,9 +1,10 @@
 require('dotenv').config()
 
-let PORT = process.env.PORT
-let MONGODB_URI = process.env.MONGODB_URI
+let CONNECTIONSTRING = process.env.CONNECTIONSTRING
+
+const parse = require('pg-connection-string').parse;
+let config = parse(CONNECTIONSTRING)
 
 module.exports = {
-  MONGODB_URI,
-  PORT
+  ...config
 }
