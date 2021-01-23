@@ -1,10 +1,27 @@
-const app = require('./app')
-const http = require('http')
 const config = require('./utils/config')
 const logger = require('./utils/logger')
+const middleware = require('./utils/middleware')
+const createUsersTable = require('./db/createtables')
+createUsersTable()
+const express = require('express')
+const app = express()
+const json = express.json()
+app.use(json)
+const users = require('./controllers/user')
 
-const server = http.createServer(app)
+app.use(users)
 
-server.listen(config.PORT, () => {
-  logger.info(`Server running on port ${config.PORT}`)
+app.get('/', (request, response) => {
+  response.json({ info: 'Auth' })
+})
+
+app.use(middleware.requestLogger)
+app.use(middleware.unknownEndpoint)
+app.use(middleware.errorHandler)
+
+const port = 3003
+const postgresPort = config.port
+app.listen(port, () => {
+  logger.info(`Postgres on port ${postgresPort}.`)
+  logger.info(`App running on port ${port}.`)
 })
