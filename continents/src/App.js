@@ -3,26 +3,29 @@ import axios from 'axios'
 
 import Footer from './components/Footer'
 import Filter from './components/Filter';
+
 import Countries from './components/Countries';
+
 
 const p = {
   "border": "2px solid cyan",
   "border-radius": "5px"
-  
+
+
 }
 
 const App = () => {
-  
-  
-  
+
+
+
   const [searched, setNewSearched] = useState('')
   const [countries, setCountries] = useState([])
 
   const [filteredCountries, setFilteredCountries] = useState(countries)
-  
+
   const [showTen, setShowTen] = useState(true)
   const [showOne, setShowOne] = useState(false)
-  
+
 
   const hook = () => {
     console.log('effect countries')
@@ -37,7 +40,7 @@ const App = () => {
   useEffect(hook, [])
 
 
-  
+
 
   const handleNewSearched = (event) => {
     console.log("event ", event)
@@ -52,21 +55,21 @@ const App = () => {
     setShowTen(filtered.length < 1000)
     setShowOne(filtered.length === 1 && filtered !== [])
 
+
+
+
+    return (
+      <>
+        <div class="container" style={p}>
+
+          <Filter value={searched} change={handleNewSearched} />
+
+          <Countries countries={filteredCountries}
+            one={showOne}
+            ten={showTen} />
+
+        </div><div class="container" style={p}><Footer /></div>
+      </>)
   }
-
-
-  return (
-    <>
-      <div class="container" style={p}>
-
-        <Filter value={searched} change={handleNewSearched} />
-      
-        <Countries countries={filteredCountries}
-          one={showOne}
-          ten={showTen} />
-
-      </div><div class="container" style={p}><Footer /></div>
-    </>)
 }
-
 export default App
