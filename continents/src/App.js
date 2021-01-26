@@ -56,7 +56,7 @@ const App = () => {
     setShowOne(filtered.length === 1 && filtered !== [])
 
 
-
+        }
 
     return (
       <>
@@ -71,5 +71,8 @@ const App = () => {
         </div><div class="container" style={p}><Footer /></div>
       </>)
   }
-}
+
+
+
+
 export default App
