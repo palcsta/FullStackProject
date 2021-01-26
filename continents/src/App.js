@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Country from './components/Country'
 import Footer from './components/Footer'
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
+import Filter from './components/Filter';
+import Countries from './components/Countries';
+
 
 const useField = (type) => {
   const [value, setValue] = useState('')
@@ -48,34 +49,60 @@ const p = {
   "border-radius": "5px"
   
 }
-const App = () => {
-  const nameInput = useField('text')
-  const [name, setName] = useState('')
-  const country = useCountry(name)
 
-  const fetch = (e) => {
-    e.preventDefault()
-    setName(nameInput.value)
+const App = () => {
+  
+  
+  
+  const [searched, setNewSearched] = useState('')
+  const [countries, setCountries] = useState([])
+
+  const [filteredCountries, setFilteredCountries] = useState(countries)
+  
+  const [showTen, setShowTen] = useState(true)
+  const [showOne, setShowOne] = useState(false)
+  
+
+  const hook = () => {
+    console.log('effect countries')
+    axios
+      .get('https://restcountries.eu/rest/v2/all')
+      .then(response => {
+        setCountries(response.data)
+        console.log('got countries (size; ', countries.length, ")")
+      })
   }
+
+  useEffect(hook, [])
+
+
+  
+
+  const handleNewSearched = (event) => {
+    console.log("event ", event)
+
+    let filtered = countries.filter(
+      x =>
+        x.name.toUpperCase().includes(
+          event.target.value.toUpperCase()))
+    event.preventDefault()
+    setNewSearched(event.target.value)
+    setFilteredCountries(filtered)
+    setShowTen(filtered.length < 1000)
+    setShowOne(filtered.length === 1 && filtered !== [])
+
+  }
+
 
   return (
     <>
       <div class="container" style={p}>
 
-        <Form onSubmit={fetch}>
-          <Form.Row>
-            <Form.Group  controlId="formBasicEmail">
-              <Form.Control placeholder="enter country code (e.g. US)"{...nameInput} />
-            </Form.Group>
-            <Form.Group >
-              <Button variant="primary" type="submit" >
-                Find
-      </Button>
-            </Form.Group>
-          </Form.Row>
-        </Form>
-
-        <Country country={country} />
+        <Filter value={searched} change={handleNewSearched} />
+      
+        <Countries countries={filteredCountries}
+          one={showOne}
+          ten={showTen} />
 
       </div><div class="container" style={p}><Footer /></div>
     </>)
