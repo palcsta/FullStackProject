@@ -76,9 +76,9 @@ const login = () => {
   console.log("loginObject", loginObject)
   const url = `api/login`
   axios.post(url,loginObject,{baseURL: 'http://localhost:3003'}).then(response => {
-      console.log("login response: ", response.data)
+      console.log(`login response: ${response.data} `)
     }).catch(error => {
-      console.log("login error: ", error)
+      console.log(`login error: ${error}, response: ${error.response.data.error} , can register this user: ${error.response.data.canReg} `)
     })
   }
 
