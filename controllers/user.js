@@ -51,7 +51,7 @@ router.post('/api/login/', async (req,res) => {
   const username = req.body.username
   const password = req.body.password
   //logger.info('Trying to login as user:',username)
-  const { rows } = await db.query('SELECT passwordhash FROM users WHERE username=$1',[username])
+  const { rows } = await db.query('SELECT passwordhash FROM users WHERE username = $1',[username])
   if(rows.length>0){
     const hashfromdb = rows[0].passwordhash
     const verifyok = await argon2.verify(hashfromdb, password)
@@ -61,12 +61,12 @@ router.post('/api/login/', async (req,res) => {
       res.send({info:'Logged in successfully! Welcome!'})
     } else {
       //punish for wrong pw?
-      res.status(403).send({error:'Wrong username or password provided'})
+      res.status(403).send({error:'Wrong username or password provided',canReg:false})
     }
   } else {
     //username doesn't exist
-    logger.info(`${username} logged in unsucessfully`)
-    res.status(403).send({error:'Wrong username or password provided'})
+    logger.info(`${username} tried to login, but user does not exist`)
+    res.status(403).send({error:'Wrong username or password provided',canReg:true})
   }
 })
 
