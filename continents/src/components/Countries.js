@@ -11,31 +11,13 @@ const style = {
 
 };
 const TenCountries = ({ countries, one }) => {
-    const [details, setDetails] = useState();
+    
     const [index, setIndex] = useState(999);
-    //const [shown, setShown] = useState("show");
-    //const [isShown, setIsShown] = useState(false);
-
-
+    
     const [shown, setShown] = useState("")
 
-    const present = (i) => {
-        details !== undefined && !one
-            ? setDetails()
-            : setDetails(<Country country={countries[i]} />)
-
-
-    }
-    const show2 = (i) => {
-
-        setIndex(i)
-        setShown(countries[i])
-        console.log(i, index, details)
-        i === index
-            ? present(i)
-            : setDetails(<Country country={countries[i]} />)
-    }
-
+    
+    
     const show = (i) => {
         console.log('clicked shown2')
 
@@ -46,9 +28,9 @@ const TenCountries = ({ countries, one }) => {
         setIndex(i)
     }
 
-    const darker = () => {
+   /* const darker = () => {
         console.log("darker method: ", details)
-    }
+    }*/
 
     let whatToShow = one
         ? (<Country country={countries[0]} />)
