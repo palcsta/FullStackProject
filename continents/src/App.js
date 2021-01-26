@@ -4,6 +4,15 @@ import Country from './components/Country'
 import Footer from './components/Footer'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
+import LoginForm from './components/login'
+
+
+//require('dotenv').config()
+
+//const config = {
+	//			produrl: process.env.PRODURL,
+	//			development: process.env.DEVELOPMENT
+//}
 
 const useField = (type) => {
   const [value, setValue] = useState('')
@@ -18,6 +27,7 @@ const useField = (type) => {
     onChange
   }
 }
+
 
 const useCountry = (name) => {
   const [country, setCountry] = useState(null)
@@ -46,22 +56,37 @@ const useCountry = (name) => {
 const p = {
   "border": "2px solid cyan",
   "border-radius": "5px"
-  
+
 }
 const App = () => {
   const nameInput = useField('text')
   const [name, setName] = useState('')
   const country = useCountry(name)
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
   const fetch = (e) => {
     e.preventDefault()
     setName(nameInput.value)
   }
 
+
+const login = () => {
+  const loginObject = {"username":username,"password":password}
+  console.log("loginObject", loginObject)
+  const url = `api/login`
+  axios.post(url,loginObject,{baseURL: 'http://localhost:3003'}).then(response => {
+      console.log("login response: ", response.data)
+    }).catch(error => {
+      console.log("login error: ", error)
+    })
+  }
+
   return (
     <>
       <div class="container" style={p}>
 
+      <LoginForm setLoginUser={setUsername} setLoginPass={setPassword} login={login}/>
         <Form onSubmit={fetch}>
           <Form.Row>
             <Form.Group  controlId="formBasicEmail">
@@ -70,7 +95,7 @@ const App = () => {
             <Form.Group >
               <Button variant="primary" type="submit" >
                 Find
-      </Button>
+              </Button>
             </Form.Group>
           </Form.Row>
         </Form>
