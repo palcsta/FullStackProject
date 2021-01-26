@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-
 import Country from './Country';
 
-//"display:inline"
+
 const style = {
     display: 'inline',
     border: '3px solid black',
@@ -11,26 +10,17 @@ const style = {
 
 };
 const TenCountries = ({ countries, one }) => {
-    
-    const [index, setIndex] = useState(999);
-    
+    const [index, setIndex] = useState(10);
     const [shown, setShown] = useState("")
 
-    
-    
+
     const show = (i) => {
-        console.log('clicked shown2')
-
-
         if (shown == "") { setShown(<Country country={countries[i]} />) }
         else if (index == i) { setShown("") }
         else setShown(<Country country={countries[i]} />)
         setIndex(i)
     }
 
-   /* const darker = () => {
-        console.log("darker method: ", details)
-    }*/
 
     let whatToShow = one
         ? (<Country country={countries[0]} />)
