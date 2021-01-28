@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import LoginForm from './components/login'
 import Filter from './components/Filter';
+import Dropdown from './components/Dropdwn'
 
 import Countries from './components/Countries';
 
@@ -75,6 +76,7 @@ const App = () => {
       <div class="container" style={p}>
 
         <LoginForm setLoginUser={setUsername} setLoginPass={setPassword} login={login}/>
+        <Dropdown/>
 
         <Filter value={searched} change={handleNewSearched} />
 
