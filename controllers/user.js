@@ -9,43 +9,43 @@ const {failqueueInsert, failqueueCheck} = require('../failqueue')
 
 router.post('/api/register', async (req, res) => {
 
-    //check if username exists, including different combos of capitalization and spacing for the username
-    const existinguserres  = await db.query(
-      'SELECT username from users WHERE regexp_replace(LOWER(username), \'[\\s+]\', \'\', \'g\') = regexp_replace(LOWER($1), \'[\\s+]\', \'\', \'g\')',
-      [req.body.username])
+  //check if username exists, including different combos of capitalization and spacing for the username
+  const existinguserres  = await db.query(
+    'SELECT username from users WHERE regexp_replace(LOWER(username), \'[\\s+]\', \'\', \'g\') = regexp_replace(LOWER($1), \'[\\s+]\', \'\', \'g\')',
+    [req.body.username])
 
-    //check if pw meets length, char requirements
-    const checkerRes = passwordChecker(req.body.password)
+  //check if pw meets length, char requirements
+  const checkerRes = passwordChecker(req.body.password)
 
-    if(existinguserres.rows[0]) {
-      const existinguser = existinguserres.rows[0].username
-      logger.info(`Did not register ${req.body.username} because there was already a user named ${existinguser}`)
-      res.status(403).send({error:`User already exists: ${existinguser}`})
-      failqueueInsert(fingerprint,ip)
-    } else if(checkerRes.ok) {
-      //check if username obeys min,max, whitespace,special char requirements
-      usernameCheck = usernameChecker(req.body.username)
-      if(usernameCheck.ok) {
-        const pwhash = await argon2.hash(req.body.password, {
-          type: argon2.argon2id,
-          memoryCost: 2 ** 16,
-          hashLength: 50,
-        })
-        //logger.info('pw not being inserted:',req.body.password)
-        //logger.info('pwhash being inserted:',pwhash)
-        const { rows } = await db.query('INSERT INTO users (username,passwordhash) VALUES ($1,$2)',[req.body.username,pwhash])
-        logger.info('Successfully registered:',req.body.username)
-        res.send({info:'Registered successfully! Welcome!'})
-      } else {
-        logger.error(`Did not register the username ${req.body.username} because ${usernameCheck.problems}`)
-        const errors = usernameCheck.problems.map(p => { return { error:p } })
-        res.status(403).send(errors.length>1?errors:errors[0])
-      }
+  if(existinguserres.rows[0]) {
+    const existinguser = existinguserres.rows[0].username
+    logger.info(`Did not register ${req.body.username} because there was already a user named ${existinguser}`)
+    res.status(403).send({error:`User already exists: ${existinguser}`})
+    failqueueInsert(fingerprint,ip)
+  } else if(checkerRes.ok) {
+    //check if username obeys min,max, whitespace,special char requirements
+    usernameCheck = usernameChecker(req.body.username)
+    if(usernameCheck.ok) {
+      const pwhash = await argon2.hash(req.body.password, {
+        type: argon2.argon2id,
+        memoryCost: 2 ** 16,
+        hashLength: 50,
+      })
+      //logger.info('pw not being inserted:',req.body.password)
+      //logger.info('pwhash being inserted:',pwhash)
+      const { rows } = await db.query('INSERT INTO users (username,passwordhash) VALUES ($1,$2)',[req.body.username,pwhash])
+      logger.info('Successfully registered:',req.body.username)
+      res.send({info:'Registered successfully! Welcome!'})
     } else {
-      const errors = checkerRes.problems.map(p => { return { error:p } })
-      logger.info(`Did not register ${req.body.username} because of a password problem: ${checkerRes.problems}`)
+      logger.error(`Did not register the username ${req.body.username} because ${usernameCheck.problems}`)
+      const errors = usernameCheck.problems.map(p => { return { error:p } })
       res.status(403).send(errors.length>1?errors:errors[0])
     }
+  } else {
+    const errors = checkerRes.problems.map(p => { return { error:p } })
+    logger.info(`Did not register ${req.body.username} because of a password problem: ${checkerRes.problems}`)
+    res.status(403).send(errors.length>1?errors:errors[0])
+  }
 })
 
 router.post('/api/login/', async (req,res) => { 
@@ -71,6 +71,7 @@ router.post('/api/login/', async (req,res) => {
       }
     } else {
       //username doesn't exist
+      failqueueInsert(fingerprint,ip)
       logger.info(`${username} tried to login, but user does not exist`)
       res.status(403).send({error:'Wrong username or password provided',canReg:true})
     }
