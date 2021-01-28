@@ -21,7 +21,6 @@ router.post('/api/register', async (req, res) => {
     const existinguser = existinguserres.rows[0].username
     logger.info(`Did not register ${req.body.username} because there was already a user named ${existinguser}`)
     res.status(403).send({error:`User already exists: ${existinguser}`})
-    failqueueInsert(fingerprint,ip)
   } else if(checkerRes.ok) {
     //check if username obeys min,max, whitespace,special char requirements
     usernameCheck = usernameChecker(req.body.username)
