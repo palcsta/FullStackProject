@@ -7,6 +7,7 @@
 |17.1.|2  | koodin refaktorointi, maiden löytäminen ilman napin painallusta
 |27.1.|10 | hakukentän uudistus/maanäkymän viilaaminen/maiden nimien listaaminen
 |27.1.| 5 | refaktorointi/vanhojen menetelmien poisto/bugien korjaus
+|28.1.| 2 | dropdown kokeiluja react-bootstrap kirjaston avulla
 # työaikakirjanpito(Emil)
 
 | päivä | aika | mitä tein  |
