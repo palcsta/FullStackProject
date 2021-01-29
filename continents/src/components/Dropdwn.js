@@ -14,7 +14,7 @@ let continents = [
 const Dropdwn = () => {
     return (<>
         <div align="center" split>
-            <DropdownButton id="dropdown-basic-button" title="Countries" split>
+            <DropdownButton id="dropdown-basic-button" title="Continents" split>
                 {continents.filter(x => x!=="Other").map(x => <><Dropdown.Item href="#/action-1">{x}</Dropdown.Item></>)}                
                 <DropdownButton id="dropdown-basic-button" title="Other">
                     {continents.map(x => <><Dropdown.Item href="#/action-1">{x}(not supposed to be)</Dropdown.Item></>)}
@@ -25,7 +25,7 @@ const Dropdwn = () => {
 
 
             <Dropdown split>
-                <Dropdown.Toggle id="dropdown-custom-1">Pow! Zoom!</Dropdown.Toggle>
+                <Dropdown.Toggle id="dropdown-custom-1">Countries</Dropdown.Toggle>
                 <Dropdown.Menu className="super-colors">
                     <Dropdown.Item eventKey="1">Action</Dropdown.Item>
                     <Dropdown.Item eventKey="2">Another action</Dropdown.Item>
