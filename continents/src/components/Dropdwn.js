@@ -2,16 +2,13 @@ import React, { /*useState*/ } from 'react';
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button'
-let continents = [
-    "Europe",
-    "Asia",
-    "Africa",
-    "America",
-    "Other",
 
-]
-
-const Dropdwn = () => {
+const unique = (value, index, self) => {
+    return self.indexOf(value) === index
+  }
+const Dropdwn = ({data}) => {
+    const continents = data.map(x => x.region).filter(unique)
+    console.log("data in dropdown: ",continents)
     return (<>
         <div align="center" split>
             <DropdownButton id="dropdown-basic-button" title="Continents" split>

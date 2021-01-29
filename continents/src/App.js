@@ -76,7 +76,7 @@ const App = () => {
       <div class="container" style={p}>
 
         <LoginForm setLoginUser={setUsername} setLoginPass={setPassword} login={login}/>
-        <Dropdown/>
+        <Dropdown data={countries}/>
 
         <Filter value={searched} change={handleNewSearched} />
 
