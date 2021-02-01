@@ -8,7 +8,7 @@ const unique = (value, index, self) => {
 }
 const Dropdwn = ({ data }) => {
     const continents = data.map(x => x.region).filter(unique)
-    const subContinents = data.filter(x => x.region==="")//.map(x => x.subregion).filter(unique)
+    const subContinents = data.filter(x => x.region==="").map(x => x.name)
     console.log('continents in dropdown: ', continents)
     console.log("data in dropdown: ", subContinents)
     return (<>
@@ -16,7 +16,7 @@ const Dropdwn = ({ data }) => {
             <DropdownButton id="dropdown-basic-button" title="Continents" split>
                 {continents.filter(x => x !== "Other").map(x => <><Dropdown.Item href="#/action-1">{x}</Dropdown.Item></>)}
                 <DropdownButton id="dropdown-basic-button" title="Other">
-                    {subContinents.map(x => <><Dropdown.Item href="#/action-1">{x.name}</Dropdown.Item></>)}
+                    {subContinents.map(x => <><Dropdown.Item href="#/action-1">{x}</Dropdown.Item></>)}
 
                 </DropdownButton>
             </DropdownButton>
