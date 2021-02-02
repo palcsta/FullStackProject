@@ -8,15 +8,26 @@ const unique = (value, index, self) => {
 }
 const Dropdwn = ({ data }) => {
     const continents = data.map(x => x.region).filter(unique)
-    const subContinents = data.filter(x => x.region==="").map(x => x.name)
+    const noContinent = data.filter(x => x.region === "").map(x => x.name)
     console.log('continents in dropdown: ', continents)
-    console.log("data in dropdown: ", subContinents)
+    console.log("data in dropdown: ", noContinent)
     return (<>
         <div align="center" split>
-            <DropdownButton id="dropdown-basic-button" title="Continents" split>
-                {continents.filter(x => x !== "Other").map(x => <><Dropdown.Item href="#/action-1">{x}</Dropdown.Item></>)}
+            <DropdownButton id="dropdown-basic-button" title="Countries/Continents" split>
+                {continents.filter(x => x!=="").map(x => <>                   
+                    <Dropdown >
+                        <Button variant="info">{x}</Button>
+                        <Dropdown.Toggle split variant="success" id="dropdown-custom-2" />
+                        <Dropdown.Menu className="super-colors">
+
+                        </Dropdown.Menu>
+                    </Dropdown>
+
+
+
+                </>)}
                 <DropdownButton id="dropdown-basic-button" title="Other">
-                    {subContinents.map(x => <><Dropdown.Item href="#/action-1">{x}</Dropdown.Item></>)}
+                    {noContinent.map(x => <><Dropdown.Item href="#/action-1">{x}</Dropdown.Item></>)}
 
                 </DropdownButton>
             </DropdownButton>
@@ -26,7 +37,7 @@ const Dropdwn = ({ data }) => {
             <Dropdown split>
                 <Dropdown.Toggle id="dropdown-custom-1">Countries</Dropdown.Toggle>
                 <Dropdown.Menu className="super-colors">
-                    
+
                     <DropdownButton id="dropdown-basic-button" title="Countries">
                         {continents.map(x => <><Dropdown.Item href="#/action-1">{x}</Dropdown.Item></>)}
                         <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
@@ -41,7 +52,7 @@ const Dropdwn = ({ data }) => {
                     </DropdownButton>
                     <Dropdown.Divider />
                     <Dropdown >
-                        <Button onClick={()=>alert(Date.now())}variant="info">dropdown with button</Button>
+                        <Button onClick={() => alert(Date.now())} variant="info">dropdown with button</Button>
                         <Dropdown.Toggle split variant="success" id="dropdown-custom-2" />
                         <Dropdown.Menu className="super-colors">
                             <Dropdown.Item eventKey="1" >Action</Dropdown.Item>
@@ -54,7 +65,7 @@ const Dropdwn = ({ data }) => {
                                 <Button variant="info">mix it up style-wise</Button>
                                 <Dropdown.Toggle split variant="success" id="dropdown-custom-2" />
                                 <Dropdown.Menu className="super-colors">
-                                    
+
                                     <Dropdown.Item eventKey="2">Another action</Dropdown.Item>
                                     <Dropdown.Item eventKey="3" active>
                                         Active Item
@@ -67,7 +78,7 @@ const Dropdwn = ({ data }) => {
                                 <Button variant="info">mix it up style-wise</Button>
                                 <Dropdown.Toggle split variant="info" id="dropdown-custom-2" />
                                 <Dropdown.Menu className="super-colors">
-                                    
+
                                     <Dropdown.Item eventKey="2">Another action</Dropdown.Item>
                                     <Dropdown.Item eventKey="3" active>
                                         Active Item

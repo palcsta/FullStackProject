@@ -9,6 +9,7 @@
 |27.1.| 5 | refaktorointi/vanhojen menetelmien poisto/bugien korjaus
 |28.1.| 3 | dropdown kokeiluja react-bootstrap kirjaston avulla
 |29.1.| 3 | dropdown osaa käsitellä haettua dataa ja lisätä itseensä suodatettua dataa
+|2.2.| 3 | dropdown into one button with multiple links in one button
 # työaikakirjanpito(Emil)
 
 | päivä | aika | mitä tein  |
