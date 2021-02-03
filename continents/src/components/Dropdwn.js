@@ -8,10 +8,11 @@ const unique = (value, index, self) => {
 }
 
 const Dropdwn = ({ data }) => {
-    const continents = data.map(x => x.region).filter(unique)
+    const continents = data.filter(x => x.region !== "Polar").map(x => x.region).filter(unique)
 
-    const noContinent = data.filter(x => x.subregion === "").map(x => x.name)
-    const polar = data.filter(x => x.region == "Americas")
+    const polar = data.filter(x => x.region === "Polar").map(x => x.name)
+    const other = data.filter(x => x.region === "").map(x => x.name)
+    //const polar = data.filter(x => x.region == "Americas")
 
     console.log('sub-continents in dropdown: ', polar)
     //console.log("data in dropdown: ", noContinent)
@@ -24,16 +25,21 @@ const Dropdwn = ({ data }) => {
                         <Dropdown.Toggle split variant="success" id="dropdown-custom-2" />
                         <Dropdown.Menu className="super-colors">
 
-                            {data.filter(y => y.subregion.includes(x)).map(x => x.subregion)
+                            {data.filter(y => y.region.includes(x)).map(x => x.subregion)
                                 .filter(unique).map(z =>
                                     <>
                                         <Dropdown >
-                                            <Button variant="info">{z}</Button>
+                                            <Button variant="info">{"   " + z}</Button>
                                             <Dropdown.Toggle split variant="success" id="dropdown-custom-2" />
                                             <Dropdown.Menu className="super-colors">
+                                                {data.filter(a => a.subregion == z).map(b =>
+                                                    <><Dropdown.Item >{b.name}</Dropdown.Item></>
+                                                )}
+
 
                                             </Dropdown.Menu>
                                         </Dropdown>
+                                        <Dropdown.Divider />
                                     </>)}
 
 
@@ -46,15 +52,20 @@ const Dropdwn = ({ data }) => {
 
 
                 </>)}
-                <DropdownButton id="dropdown-basic-button" title="Other">
-                    {noContinent.map(x => <><Dropdown.Item href="#/action-1">{x}</Dropdown.Item></>)}
+                <DropdownButton variant="info" id="dropdown-basic-button" title="Polar">
+                    {polar.map(x => <><Dropdown.Item href="#/action-1">{x}</Dropdown.Item></>)}
+
+                </DropdownButton>
+                <Dropdown.Divider />
+                <DropdownButton variant="info" id="dropdown-basic-button" title="Other(no region)">
+                    {other.map(x => <><Dropdown.Item href="#/action-1">{x}</Dropdown.Item></>)}
 
                 </DropdownButton>
             </DropdownButton>
 
 
 
-            <Dropdown split>
+          {/*  <Dropdown split>
                 <Dropdown.Toggle id="dropdown-custom-1">Countries</Dropdown.Toggle>
                 <Dropdown.Menu className="super-colors">
 
@@ -111,7 +122,7 @@ const Dropdwn = ({ data }) => {
                     </Dropdown>
                 </Dropdown.Menu>
             </Dropdown>{' '}
-
+          */}
 
         </div></>);
 }

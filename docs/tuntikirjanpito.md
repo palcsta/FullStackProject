@@ -11,6 +11,7 @@
 |29.1.| 3 | dropdown osaa käsitellä haettua dataa ja lisätä itseensä suodatettua dataa
 |2.2.| 3 | dropdown into one button with multiple links in one button
 |3.2.| 2 | dropdown now includes subregions of continents
+|3.2.|3| dropdown is now implemented completely without click functionality
 # työaikakirjanpito(Emil)
 
 | päivä | aika | mitä tein  |
