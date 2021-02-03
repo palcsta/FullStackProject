@@ -6,22 +6,42 @@ import Button from 'react-bootstrap/Button'
 const unique = (value, index, self) => {
     return self.indexOf(value) === index
 }
+
 const Dropdwn = ({ data }) => {
     const continents = data.map(x => x.region).filter(unique)
-    const noContinent = data.filter(x => x.region === "").map(x => x.name)
-    console.log('continents in dropdown: ', continents)
-    console.log("data in dropdown: ", noContinent)
+
+    const noContinent = data.filter(x => x.subregion === "").map(x => x.name)
+    const polar = data.filter(x => x.region == "Americas")
+
+    console.log('sub-continents in dropdown: ', polar)
+    //console.log("data in dropdown: ", noContinent)
     return (<>
         <div align="center" split>
             <DropdownButton id="dropdown-basic-button" title="Countries/Continents" split>
-                {continents.filter(x => x!=="").map(x => <>                   
+                {continents.filter(x => x !== "").map(x => <>
                     <Dropdown >
                         <Button variant="info">{x}</Button>
                         <Dropdown.Toggle split variant="success" id="dropdown-custom-2" />
                         <Dropdown.Menu className="super-colors">
 
+                            {data.filter(y => y.subregion.includes(x)).map(x => x.subregion)
+                                .filter(unique).map(z =>
+                                    <>
+                                        <Dropdown >
+                                            <Button variant="info">{z}</Button>
+                                            <Dropdown.Toggle split variant="success" id="dropdown-custom-2" />
+                                            <Dropdown.Menu className="super-colors">
+
+                                            </Dropdown.Menu>
+                                        </Dropdown>
+                                    </>)}
+
+
+
+
                         </Dropdown.Menu>
                     </Dropdown>
+                    <Dropdown.Divider />
 
 
 
