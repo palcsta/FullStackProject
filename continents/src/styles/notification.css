@@ -7,6 +7,9 @@
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 10px;
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
 }
 
 .info{
@@ -18,4 +21,11 @@
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 10px;
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+}
+
+.notificationIcon {
+  margin-right: 10px;
 }

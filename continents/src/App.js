@@ -29,10 +29,15 @@ const App = () => {
     axios.post(url,loginObject,{baseURL: 'http://localhost:3003'}).then(response => {
       console.log(`login response: ${response.data} `)
       setNotifMessage(response.data)
+      setTimeout(() => {
+        setNotifMessage(null)
+      }, 5000)
     }).catch(error => {
       console.log(`login error: ${error}, response: ${error.response.data.error} , can register this user: ${error.response.data.canReg} `)
-
       setNotifMessage(error.response.data)
+      setTimeout(() => {
+        setNotifMessage(null)
+      }, 5000)
     })
   }
 

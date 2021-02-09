@@ -1,17 +1,19 @@
 import '../styles/notification.css'
+import { MdErrorOutline, MdInfoOutline } from 'react-icons/md'
+import { IconContext } from 'react-icons'
 
 const Notification = ({resObj}) => {
-  console.log('resobj is : ',resObj)
-const {error,info} = resObj
-    console.log(`error is ${error} and info is ${info}`)
-  if (!error && !info) {
+  if (!resObj) {
     return null
   }
+  const {error,info} = resObj
 
   return (
+    <IconContext.Provider value={{ size: "1.5em", className: "notificationIcon" }}>
       <div className={error?"error":"info"}>
-      {error||info}
-    </div>
+        {error?<MdErrorOutline/>:<MdInfoOutline/>}   {error||info}
+      </div>
+    </IconContext.Provider>
   )
 }
 
