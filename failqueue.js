@@ -11,7 +11,7 @@ const insert = (reqFingerprint,reqIp) => {
 
 const check = (reqFingerprint, reqIp) => {
   failqueue = failqueue.filter(f => Date.now()-f.time<cooldown)
-  const failsForThisRequester = failqueue.filter(c => (c.fingerprint === reqFingerprint||c.ip === req.ip)).length
+  const failsForThisRequester = failqueue.filter(c => (c.fingerprint === reqFingerprint||c.ip === reqIp)).length
   if(failsForThisRequester > maxFails) logger.info(`${reqFingerprint}-${reqIp} rate-limiting temp ban. ${failsForThisRequester} fails (max ${maxFails})`)
   return failsForThisRequester > maxFails
 }

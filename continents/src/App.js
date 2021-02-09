@@ -5,20 +5,20 @@ import Footer from './components/Footer'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import LoginForm from './components/login'
+import Notification from './components/Notification'
 import Filter from './components/Filter';
 import Dropdown from './components/Dropdwn'
 
 import Countries from './components/Countries';
-
 
 const p = {
   "border": "2px solid cyan",
   "border-radius": "5px"
 }
 
-
 const App = () => {
 
+  const [notifMessage, setNotifMessage] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
@@ -28,8 +28,11 @@ const App = () => {
     const url = `api/login`
     axios.post(url,loginObject,{baseURL: 'http://localhost:3003'}).then(response => {
       console.log(`login response: ${response.data} `)
+      setNotifMessage(response.data)
     }).catch(error => {
       console.log(`login error: ${error}, response: ${error.response.data.error} , can register this user: ${error.response.data.canReg} `)
+
+      setNotifMessage(error.response.data)
     })
   }
 
@@ -40,7 +43,6 @@ const App = () => {
 
   const [showTen, setShowTen] = useState(true)
   const [showOne, setShowOne] = useState(false)
-
 
   const hook = () => {
     console.log('effect countries')
@@ -53,7 +55,6 @@ const App = () => {
   }
 
   useEffect(hook, [])
-
 
   const handleNewSearched = (event) => {
     console.log("event ", event)
@@ -69,10 +70,9 @@ const App = () => {
     setShowOne(filtered.length === 1 && filtered !== [])
   }
 
-
-
   return (
     <>
+      <Notification resObj={notifMessage} />
       <div class="container" style={p}>
 
         <LoginForm setLoginUser={setUsername} setLoginPass={setPassword} login={login}/>

@@ -1,0 +1,21 @@
+.error {
+  color: red;
+  background: lightgrey;
+  font-size: 20px;
+  border-style: solid;
+  border-color: red;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.info{
+  color: blue;
+  background: lightgrey;
+  font-size: 20px;
+  border-style: solid;
+  border-color: lightskyblue;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
