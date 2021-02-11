@@ -21,6 +21,8 @@ const App = () => {
   const [notifMessage, setNotifMessage] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [showReg, setShowReg] = useState(false)
+  const [regPassConfirm, setRegPassConfirm] = useState('')
 
   const login = () => {
     const loginObject = {"username":username,"password":password}
@@ -38,7 +40,15 @@ const App = () => {
       setTimeout(() => {
         setNotifMessage(null)
       }, 5000)
+      console.log("error.response.data.canReg=",error.response.data.canReg)
+      setShowReg(error.response.data.canReg)
     })
+  }
+
+  const register = () => {
+    if(regPassConfirm === password){
+      console.log("lets register ",username)
+    }
   }
 
   const [searched, setNewSearched] = useState('')
@@ -80,7 +90,7 @@ const App = () => {
       <Notification resObj={notifMessage} />
       <div class="container" style={p}>
 
-        <LoginForm setLoginUser={setUsername} setLoginPass={setPassword} login={login}/>
+        <LoginForm setLoginUser={setUsername} setLoginPass={setPassword} login={login} showReg={showReg} setShowReg={setShowReg} setRegPassConfirm={setRegPassConfirm} />
         <Dropdown data={countries}/>
 
         <Filter value={searched} change={handleNewSearched} />
