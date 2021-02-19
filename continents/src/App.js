@@ -69,6 +69,8 @@ const App = () => {
         setNotifMessage(null)
       }, 5000)
     })
+    }else{
+      setNotifMessage({error:"The passwords did not match"})
     }
   }
 
