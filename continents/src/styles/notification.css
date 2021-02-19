@@ -1,0 +1,31 @@
+.error {
+  color: red;
+  background: lightgrey;
+  font-size: 20px;
+  border-style: solid;
+  border-color: red;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+}
+
+.info{
+  color: blue;
+  background: lightgrey;
+  font-size: 20px;
+  border-style: solid;
+  border-color: lightskyblue;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+}
+
+.notificationIcon {
+  margin-right: 10px;
+}

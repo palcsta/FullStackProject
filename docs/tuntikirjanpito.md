@@ -21,4 +21,11 @@
 | 20.1. | 5    | postgres integraatio |
 | 21.1. | 10    | kirjautuminen ja registering |
 | 22.1. | 8   | kirjautuminen ja registering viilaaminen |
+| 24.1. | 5   | kirjautuminen ja registering dataan validointia eli käyttäjänimi/ salasana vaatimukset|
+| 26.1. | 2   | lisää alustavaa backend-työtä tulevaa kirjautumislomaketta varten|
+| 28.1. | 8   | rate-limiting ominaisuus backendiin|
+| 5.2. | 1   | samaan tiedostoon kohdistuneiden muutosten iso merge|
+| 9.2. | 6   | alustava kirjautumislomake,kirjautumis-backendin vastaukset näkyviin fronttiin|
+| 11.2. | 6   | alustava valmistautuminen rekiströinnin lisäämiseen fronttiin|
+| 18.2. | 5   | rekiströinnin lisäämiseen fronttiin, hieman käyttöliittymän viilausta|
 
