@@ -12,6 +12,7 @@
 |2.2.| 3 | dropdown into one button with multiple links in one button
 |3.2.| 2 | dropdown now includes subregions of continents
 |3.2.|3| dropdown is now implemented completely without click functionality
+|19.3.|5| dropdown is completely functional and shows regions, subregions and country
 # työaikakirjanpito(Emil)
 
 | päivä | aika | mitä tein  |
