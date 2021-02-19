@@ -52,21 +52,23 @@ const Dropdwn = ({ data }) => {
                                                 onClick={() => setFiltered(
                                                     data.filter(g => g.subregion === z)
 
-                                                )}
+                                                )
+
+                                                }
 
 
                                                 variant="info">{"   " + z}</Button>
                                             <Dropdown.Toggle split variant="success" id="dropdown-custom-2" />
                                             <Dropdown.Menu className="super-colors">
                                                 {data.filter(a => a.subregion == z).map(b =>
-                                                    <><Dropdown.Item 
-                                                    
-                                                    onClick={() => setFiltered(
-                                                        data.filter(q => q.name === b.name)
-    
-                                                    )}
+                                                    <><Dropdown.Item
 
-                                                    
+                                                        onClick={() => setFiltered(
+                                                            data.filter(q => q.name === b.name)
+
+                                                        )}
+
+
                                                     >{b.name}</Dropdown.Item></>
                                                 )}
 
@@ -86,79 +88,28 @@ const Dropdwn = ({ data }) => {
 
 
                 </>)}
-                <DropdownButton variant="info" id="dropdown-basic-button" title="Polar">
-                    {polar.map(x => <><Dropdown.Item href="#/action-1">{x}</Dropdown.Item></>)}
 
-                </DropdownButton>
                 <Dropdown.Divider />
-                <DropdownButton variant="info" id="dropdown-basic-button" title="Other(no region)">
-                    {other.map(x => <><Dropdown.Item href="#/action-1">{x}</Dropdown.Item></>)}
-
+                <DropdownButton variant="info" id="dropdown-basic-button" title="Other">
+                    {other.map(x => <><Dropdown.Item onClick={() => setFiltered(
+                        data.filter(q => q.name === x)
+                    )
+                    }>{x}</Dropdown.Item></>)}
+                    {polar.map(x => <><Dropdown.Item onClick={() => setFiltered(
+                        data.filter(q => q.name === x)
+                    )
+                    }>{x + "(Polar)"}</Dropdown.Item></>)}
                 </DropdownButton>
             </DropdownButton>
+
+
+
 
             <Countries countries={filtered}
                 one={one}
             />
 
-            {/*  <Dropdown split>
-                <Dropdown.Toggle id="dropdown-custom-1">Countries</Dropdown.Toggle>
-                <Dropdown.Menu className="super-colors">
 
-                    <DropdownButton id="dropdown-basic-button" title="Countries">
-                        {continents.map(x => <><Dropdown.Item href="#/action-1">{x}</Dropdown.Item></>)}
-                        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-                        <DropdownButton id="dropdown-basic-button" title="Countries">
-                            {continents.map(x => <><Dropdown.Item href="#/action-1">{x}</Dropdown.Item></>)}
-                            <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                            <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                            <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-                        </DropdownButton>
-                    </DropdownButton>
-                    <Dropdown.Divider />
-                    <Dropdown >
-                        <Button onClick={() => alert(Date.now())} variant="info">dropdown with button</Button>
-                        <Dropdown.Toggle split variant="success" id="dropdown-custom-2" />
-                        <Dropdown.Menu className="super-colors">
-                            <Dropdown.Item eventKey="1" >Action</Dropdown.Item>
-                            <Dropdown.Item eventKey="2" >Another action</Dropdown.Item>
-                            <Dropdown.Item eventKey="3" active>
-                                Active Item sdfsdlfhskjdhfkj
-      </Dropdown.Item>
-                            <Dropdown.Divider />
-                            <Dropdown split>
-                                <Button variant="info">mix it up style-wise</Button>
-                                <Dropdown.Toggle split variant="success" id="dropdown-custom-2" />
-                                <Dropdown.Menu className="super-colors">
-
-                                    <Dropdown.Item eventKey="2">Another action</Dropdown.Item>
-                                    <Dropdown.Item eventKey="3" active>
-                                        Active Item
-      </Dropdown.Item>
-                                    <Dropdown.Divider />
-                                    <Dropdown.Item eventKey="4">Separated link</Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
-                            <Dropdown >
-                                <Button variant="info">mix it up style-wise</Button>
-                                <Dropdown.Toggle split variant="info" id="dropdown-custom-2" />
-                                <Dropdown.Menu className="super-colors">
-
-                                    <Dropdown.Item eventKey="2">Another action</Dropdown.Item>
-                                    <Dropdown.Item eventKey="3" active>
-                                        Active Item
-      </Dropdown.Item>
-                                    <Dropdown.Divider />
-                                    <Dropdown.Item eventKey="4">Separated link</Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
-                        </Dropdown.Menu>
-                    </Dropdown>
-                </Dropdown.Menu>
-            </Dropdown>{' '}
-          */}
 
         </div></>);
 }
