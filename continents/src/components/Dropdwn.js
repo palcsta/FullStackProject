@@ -19,6 +19,7 @@ const unique = (value, index, self) => {
 
 const Dropdwn = ({ data }) => {
     const [filtered, setFiltered] = useState(data)
+    const [one, setOne] = useState(false)
 
 
 
@@ -46,11 +47,27 @@ const Dropdwn = ({ data }) => {
                                 .filter(unique).map(z =>
                                     <>
                                         <Dropdown >
-                                            <Button variant="info">{"   " + z}</Button>
+                                            <Button
+
+                                                onClick={() => setFiltered(
+                                                    data.filter(g => g.subregion === z)
+
+                                                )}
+
+
+                                                variant="info">{"   " + z}</Button>
                                             <Dropdown.Toggle split variant="success" id="dropdown-custom-2" />
                                             <Dropdown.Menu className="super-colors">
                                                 {data.filter(a => a.subregion == z).map(b =>
-                                                    <><Dropdown.Item >{b.name}</Dropdown.Item></>
+                                                    <><Dropdown.Item 
+                                                    
+                                                    onClick={() => setFiltered(
+                                                        data.filter(q => q.name === b.name)
+    
+                                                    )}
+
+                                                    
+                                                    >{b.name}</Dropdown.Item></>
                                                 )}
 
 
@@ -81,8 +98,8 @@ const Dropdwn = ({ data }) => {
             </DropdownButton>
 
             <Countries countries={filtered}
-                one={false}
-                ten={true} />
+                one={one}
+            />
 
             {/*  <Dropdown split>
                 <Dropdown.Toggle id="dropdown-custom-1">Countries</Dropdown.Toggle>
