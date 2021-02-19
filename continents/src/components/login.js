@@ -1,4 +1,7 @@
 import React from 'react'
+import { MdAccountCircle, MdVpnKey } from 'react-icons/md'
+import { IconContext } from 'react-icons'
+import '../styles/login.css'
 
 const LoginForm = (props) => {
   const p = {
@@ -30,10 +33,12 @@ const LoginForm = (props) => {
   return (
     <div>
       <form onSubmit={pressLogin}>
-        <span>username:<input onChange={handleLoginFormUserChange}/></span>
-        <span>password:<input type="password" onChange={handleLoginFormPassChange}/></span>
-        <span style={{display:props.showReg?"inline":"none"}}>password again:<input type="password" onChange={handleRegPassConfirmChange}/></span>
-        <button type="submit">{props.showReg?"Register":"Submit"}</button>
+        <IconContext.Provider value={{ size: "1.25em", className: "loginIcon" }}>
+          <span><MdAccountCircle /><input placeholder="Username" onChange={handleLoginFormUserChange} /></span>
+          <span><MdVpnKey /><input placeholder="Password" type="password" onChange={handleLoginFormPassChange}/></span>
+          <span style={{display:props.showReg?"inline":"none"}}><MdVpnKey /><input placeholder="Confirm Password"type="password" onChange={handleRegPassConfirmChange}/></span>
+          <button type="submit">{props.showReg?"Register":"Login/ Register"}</button>
+        </IconContext.Provider>
       </form>   
     </div>
   )
