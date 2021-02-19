@@ -1,13 +1,27 @@
-import React, { /*useState*/ } from 'react';
+import React, { useState } from 'react';
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button'
+import show from './Countries'
+import Countries from './Countries'
+//import Country from './Country'
+
+
+
 
 const unique = (value, index, self) => {
     return self.indexOf(value) === index
 }
 
+
+
+
+
 const Dropdwn = ({ data }) => {
+    const [filtered, setFiltered] = useState(data)
+
+
+
     const continents = data.filter(x => x.region !== "Polar").map(x => x.region).filter(unique)
 
     const polar = data.filter(x => x.region === "Polar").map(x => x.name)
@@ -18,10 +32,13 @@ const Dropdwn = ({ data }) => {
     //console.log("data in dropdown: ", noContinent)
     return (<>
         <div align="center" split>
-            <DropdownButton id="dropdown-basic-button" title="Countries/Continents" split>
+            <DropdownButton id="dropdown-basic-button" title="Browse" split>
                 {continents.filter(x => x !== "").map(x => <>
                     <Dropdown >
-                        <Button variant="info">{x}</Button>
+                        <Button onClick={() => setFiltered(
+                            data.filter(r => r.region === x)
+
+                        )} variant="info">{x}</Button>
                         <Dropdown.Toggle split variant="success" id="dropdown-custom-2" />
                         <Dropdown.Menu className="super-colors">
 
@@ -63,9 +80,11 @@ const Dropdwn = ({ data }) => {
                 </DropdownButton>
             </DropdownButton>
 
+            <Countries countries={filtered}
+                one={false}
+                ten={true} />
 
-
-          {/*  <Dropdown split>
+            {/*  <Dropdown split>
                 <Dropdown.Toggle id="dropdown-custom-1">Countries</Dropdown.Toggle>
                 <Dropdown.Menu className="super-colors">
 

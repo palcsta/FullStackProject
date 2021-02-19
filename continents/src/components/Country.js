@@ -27,7 +27,7 @@ const numberChanger = (number) => {
   else if (filtered.length == 9) filtered = (filtered.substring(0, 3) + " " + filtered.substring(3, 6) + " " + filtered.substring(6))
   else if (filtered.length == 9) filtered = (filtered.substring(0, 3) + " " + filtered.substring(3, 6) + " " + filtered.substring(6))
   else if (filtered.length == 10) filtered = (filtered.substring(0, 1) + " " + filtered.substring(1, 4) + " " + filtered.substring(4, 7) + " " + filtered.substring(7))
-   return (<>{filtered}</>)
+  return (<>{filtered}</>)
 
 }
 
