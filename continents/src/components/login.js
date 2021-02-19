@@ -9,7 +9,7 @@ const LoginForm = (props) => {
   const pressLogin = (event) => {
     event.preventDefault()
     console.log("pressed login form button")
-    props.login()
+    props.showReg?props.register():props.login()
   }
 
   const handleLoginFormUserChange = (event) => {
@@ -33,7 +33,7 @@ const LoginForm = (props) => {
         <span>username:<input onChange={handleLoginFormUserChange}/></span>
         <span>password:<input type="password" onChange={handleLoginFormPassChange}/></span>
         <span style={{display:props.showReg?"inline":"none"}}>password again:<input type="password" onChange={handleRegPassConfirmChange}/></span>
-        <button type="submit">{props.showReg?"Register":"Login"}</button>
+        <button type="submit">{props.showReg?"Register":"Submit"}</button>
       </form>   
     </div>
   )
