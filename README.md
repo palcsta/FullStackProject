@@ -6,7 +6,7 @@ Course project for Fullstack open course
 
 # Important quotes from the instruction 
 
-- yksi opintopiste vastaa 17.5 tuntia, 10*17.5=175h
+- yksi opintopiste vastaa 17.5 tuntia,10op: 10*17.5=175h, 5op: 17.5*5=87,5h
 - GitHub-repositoriosi README.md-tiedostossa tulee olla linkki osoitteeseen, missä sovellus on käynnissä. 
 - README:stä täytyy myös löytyä linkki sovelluksen käyttöohjeisiin sekä työaikakirjanpitoon(selvittävä työtuntien yhteenlaskettu määrä). 
 - esimerkki tuntikirjanpito : https://github.com/mluukkai/OtmTodoApp/blob/master/dokumentaatio/tuntikirjanpito.md
