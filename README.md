@@ -1,7 +1,7 @@
 # FullStackProject
 Course project for Fullstack open course
 
-[Timetable/ recorded hours](docs/tuntikirjanpito.md)
+[Timetable/recorded hours](docs/tuntikirjanpito.md)
 
 
 # Important quotes from the instruction 
