@@ -77,4 +77,4 @@ const Countries = ({ countries, one, ten }) => {
 };
 
 
-export default Countries;
+export default Countries
