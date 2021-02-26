@@ -44,7 +44,7 @@ const Filter = ({ countries }) => {
           onChange={handleNewSearched} />
       </div>
     
-      <Countries countries={filteredCountries}/>
+     {/*<Countries countries={filteredCountries}/>*/} 
     </>)
 }
 export default Filter

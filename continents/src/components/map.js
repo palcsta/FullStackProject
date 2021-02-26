@@ -3,26 +3,26 @@ import axios from 'axios'
 import Country from './Country'
 import hoverer from '../styles/hoverer.css';
 
-import { Button } from 'semantic-ui-react'
+import Button from 'react-bootstrap/Button'
 
 
-const Map = ({ country }) => {
+const Map = ({ showing }) => {
     const [selected, setSelected] = useState()//let counter = 0
     // const [counter, setCounter] = useState(0)
     const [chosen, setChosen] = useState(undefined)
     const [details, setDetails] = useState(false)
-
+    console.log("SHOWING IN MAP: ", showing)
 
 
     const getCountry = () => {
-       
+
 
 
         if (chosen == undefined) {
             axios
                 .get('https://restcountries.eu/rest/v2/all')
                 .then(response => {
-                    console.log("data, ", response.data, "selected", selected)
+                    console.log("IN MAP: data, ", response.data, "selected", selected)
                     setChosen(response.data.filter(
                         x =>
                             x.alpha2Code.toUpperCase().includes(
@@ -46,29 +46,23 @@ const Map = ({ country }) => {
 
 
     }
-
-
-
-
-
-
-
-    const color = () => {
+    function getColor() {
+        const R = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
+        const G = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
+        const B = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
+        return `#${R}${G}${B}`
+    }
+    const paint = () => {
         try {
             window.addEventListener('DOMContentLoaded', () => {
-                function getColor() {
-                    const R = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
-                    const G = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
-                    const B = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
-                    return `#${R}${G}${B}`
-                }
-                
+
+
 
                 document.querySelector('g').addEventListener('click', (event) => {
                     //   if (e.target.parentNode.id !== "") setSelected(e.target.parentNode.id)
                     // if (e.target.id !== "") setSelected(e.target.id)
 
-
+                    console.log("clicked")
                     if (event.target.parentNode.id !== "") {
                         setSelected(event.target.parentNode.id)
 
@@ -81,8 +75,10 @@ const Map = ({ country }) => {
                             setDetails(true)
 
                         }
-                        else { event.target.parentNode.style.fill = "black" 
-                        setDetails(false)}
+                        else {
+                            event.target.parentNode.style.fill = "black"
+                            setDetails(false)
+                        }
                     }
 
 
@@ -96,8 +92,10 @@ const Map = ({ country }) => {
                             setDetails(true)
 
                         }
-                        else { event.target.style.fill = "black" 
-                        setDetails(false)}
+                        else {
+                            event.target.style.fill = "black"
+                            setDetails(false)
+                        }
 
                     }
 
@@ -124,7 +122,7 @@ const Map = ({ country }) => {
     }
 
 
-    color()
+    paint()
 
     return (<><div>{selected != null ? getCountry() : selected}</div>
         <div>{details ? <Country country={chosen} /> : ""}</div>
@@ -781,11 +779,11 @@ const Map = ({ country }) => {
                     d="M459.78,571.656l2.739,3.802l4.244,0.261l1.504,0.829l4.443,0.053l3.829-5.367l10.702-4.789l0.934-4.219l-1.244-6.043l-5.584-3.181l-3.727,0.26l-1.857,4.114l0.053,1.876l4.391,2.136l0.26,4.642l-3.775,0.208l-0.935-1.564l-10.495-4.479l-0.311,3.44l-4.962,0.155L459.78,571.656L459.78,571.656z" />
                 <path id="zw"
                     d="M468.52,578.226l7.755,8.757l5.946,1.513l3.984-6.248l-0.312-8.281l-6.465-3.337l-2.431,1.098l-3.62,5.524l-5.014-0.053L468.52,578.226L468.52,578.226z" />
-              </g>
-          
-        </svg><Button  onClick={() => clear()}secondary>Clear map</Button>
-         </>
-        )
+            </g>
+
+        </svg><Button onClick={() => clear()} secondary>Clear map</Button>
+    </>
+    )
 }
 
 export default Map
