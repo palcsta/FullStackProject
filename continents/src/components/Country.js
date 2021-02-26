@@ -41,7 +41,7 @@ const Country = ({ country }) => {
   const [showing, setShowing] = useState(country!==undefined)
   const [religion, setReligion] = useState(" no religion data...")
   const [currency, setCurrency] = useState(" no currency data...")
-  if (country === null) {
+  if (country === null || country === undefined) {
     return (<></>)
   }
 
