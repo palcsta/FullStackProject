@@ -7,68 +7,51 @@ import Button from 'react-bootstrap/Button'
 
 
 const Map = ({ showing }) => {
-    const [selected, setSelected] = useState()//let counter = 0
-    // const [counter, setCounter] = useState(0)
-    const [chosen, setChosen] = useState(undefined)
+    const [selected, setSelected] = useState(showing[0])
+    const [chosen, setChosen] = useState(showing[0])
     const [details, setDetails] = useState(false)
-    console.log("SHOWING IN MAP: ", showing)
 
-
-    const getCountry = () => {
-
-
-
-        if (chosen == undefined) {
-            axios
-                .get('https://restcountries.eu/rest/v2/all')
-                .then(response => {
-                    console.log("IN MAP: data, ", response.data, "selected", selected)
-                    setChosen(response.data.filter(
-                        x =>
-                            x.alpha2Code.toUpperCase().includes(
-                                selected.toUpperCase()))[0])
-                    console.log("chosen", chosen)
-                })
-
-        } else if (selected.toUpperCase() !== chosen.alpha2Code.toUpperCase()) {
-            axios
-                .get('https://restcountries.eu/rest/v2/all')
-                .then(response => {
-                    console.log("data, ", response.data, "selected", selected)
-                    setChosen(response.data.filter(
-                        x =>
-                            x.alpha2Code.toUpperCase().includes(
-                                selected.toUpperCase()))[0])
-                    console.log("chosen", chosen)
-                })
+    const clear = () => {
+        console.log("test-test-clear")
+        var i;
+        for (i = 0; i < document.querySelector('g').children.length; i++) {
+            document.querySelector('g').children[i].style.fill = "black"
         }
-
-
-
+        //console.log(document.querySelector('g').children.style.fill="black")
     }
+
+    const paint = () => {
+        console.log("length of the showing", showing.length)
+        //clear()
+        var i;
+        if (document.querySelector('g') !== null && showing !== undefined && showing.length !== 0) {
+            
+            for (i = 0; i < showing.length; i++) {
+                // console.log("country from paint method: ",showing[i]
+                //.children.style.fill="black")
+                // )
+                if (document.getElementById(showing[i].alpha2Code.toLowerCase()) !== null) {
+                    document.getElementById(showing[i].alpha2Code.toLowerCase()).setAttribute("fill", getColor());
+                }
+
+            }
+        }
+    }
+    paint()
     function getColor() {
         const R = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
         const G = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
         const B = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
         return `#${R}${G}${B}`
     }
-    const paint = () => {
+    const listenToClicks = () => {
         try {
             window.addEventListener('DOMContentLoaded', () => {
-
-
-
                 document.querySelector('g').addEventListener('click', (event) => {
-                    //   if (e.target.parentNode.id !== "") setSelected(e.target.parentNode.id)
-                    // if (e.target.id !== "") setSelected(e.target.id)
 
-                    console.log("clicked")
                     if (event.target.parentNode.id !== "") {
                         setSelected(event.target.parentNode.id)
 
-
-
-                        //console.log("testing first parameter ",e.target.parentNode.style.fill=="")
                         if (event.target.parentNode.style.fill == "black" ||
                             event.target.parentNode.style.fill == "") {
                             event.target.parentNode.style.fill = getColor()
@@ -80,8 +63,6 @@ const Map = ({ showing }) => {
                             setDetails(false)
                         }
                     }
-
-
 
                     if (event.target.id !== "") {
                         setSelected(event.target.id)
@@ -101,30 +82,17 @@ const Map = ({ showing }) => {
 
                 })
 
-
-
-
-
-
-                //document.getElementById("by").setAttribute("fill", getColor()); 
             })
-        } catch (e) { console.log("error in svg printin", e) }
+        } catch (e) { console.log("error in svg clicking", e) }
     }
 
 
-    const clear = () => {
-        console.log("test-test-clear")
-        var i;
-        for (i = 0; i < document.querySelector('g').children.length; i++) {
-            document.querySelector('g').children[i].style.fill = "black"
-        }
-        //console.log(document.querySelector('g').children.style.fill="black")
-    }
+    
 
 
-    paint()
+    listenToClicks()
 
-    return (<><div>{selected != null ? getCountry() : selected}</div>
+    return (<><div>{/*selected != null ? getCountry() : selected*/}</div>
         <div>{details ? <Country country={chosen} /> : ""}</div>
 
         <svg style={hoverer} viewBox="30.767 241.591 784.077 458.627" xmlns="http://www.w3.org/2000/svg">
