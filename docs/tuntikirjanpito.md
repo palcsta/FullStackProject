@@ -14,6 +14,7 @@
 |3.2.|3| dropdown is now implemented completely without click functionality
 |19.2.|5| dropdown is completely functional and shows regions, subregions and country
 |23.2|3| moved apps filter functionality in filter class itself, changed functionality of filter, eg. shows less than 20 while searching, removed some useless code
+|26.2|5| implemented svg map with interactive hovering possibility
 # työaikakirjanpito(Emil)
 
 | päivä | aika | mitä tein  |
