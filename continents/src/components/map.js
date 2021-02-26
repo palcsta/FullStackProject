@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react'
 //import axios from 'axios'
-//import Country from './Country'
+import Country from './Country'
 import hoverer from '../styles/hoverer.css';
 
 import Button from 'react-bootstrap/Button'
 
 
 const Map = ({ showing }) => {
-  /*  const [selected, setSelected] = useState(showing[0])
-    const [chosen, setChosen] = useState(showing[0])
-    const [details, setDetails] = useState(false)*/
+    /*  const [selected, setSelected] = useState(showing[0])
+     
+      const [details, setDetails] = useState(false)*/
 
+    const [chosen, setChosen] = useState(showing[0])
+
+
+    console.log("SHOWING IN THE MAP::::::", showing)
     const clear = () => {
         console.log("test-test-clear")
         var i;
@@ -31,7 +35,7 @@ const Map = ({ showing }) => {
                 //.children.style.fill="black")
                 // )
                 if (document.getElementById(showing[i].alpha2Code.toLowerCase()) !== null) {
-                    document.getElementById(showing[i].alpha2Code.toLowerCase()).style.fill = "blue"
+                    document.getElementById(showing[i].alpha2Code.toLowerCase()).style.fill = "red"
                     //.setAttribute("fill", "blue");
                 }
                 if (document.getElementById(showing[i].alpha2Code.toLowerCase()) == null)
@@ -45,8 +49,8 @@ const Map = ({ showing }) => {
         let painted = []
         var i;
         for (i = 0; i < document.querySelector('g').children.length; i++) {
-            if(document.querySelector('g').children[i].style.fill!=="" 
-            && document.querySelector('g').children[i].style.fill!=="black"){
+            if (document.querySelector('g').children[i].style.fill !== ""
+                && document.querySelector('g').children[i].style.fill !== "black") {
                 painted.push(document.querySelector('g').children[i].id)
             }
         }
@@ -65,34 +69,34 @@ const Map = ({ showing }) => {
             window.addEventListener('DOMContentLoaded', () => {
 
                 document.querySelector('g').addEventListener('click', (event) => {
-                    
+
                     if (event.target.parentNode.id !== "") {
-                      //  setSelected(event.target.parentNode.id)
+                        //  setSelected(event.target.parentNode.id)
 
                         if (event.target.parentNode.style.fill == "black" ||
                             event.target.parentNode.style.fill == "") {
                             event.target.parentNode.style.fill = getColor()
-                           // setDetails(true)
+                            // setDetails(true)
 
                         }
                         else {
                             event.target.parentNode.style.fill = "black"
-                           // setDetails(false)
+                            // setDetails(false)
                         }
                     }
 
                     if (event.target.id !== "") {
-                       // setSelected(event.target.id)
+                        // setSelected(event.target.id)
 
                         if (event.target.style.fill == "black" ||
                             event.target.style.fill == "") {
                             event.target.style.fill = getColor()
-                           // setDetails(true)
+                            // setDetails(true)
 
                         }
                         else {
                             event.target.style.fill = "black"
-                           // setDetails(false)
+                            // setDetails(false)
                         }
 
                     }
@@ -109,8 +113,8 @@ const Map = ({ showing }) => {
 
     listenToClicks()
 
-    return (<><div>{/*selected != null ? getCountry() : selected*/}</div>
-        
+    return (<><div></div>
+        {showing.length == 1 ? <Country country={showing[0]} /> : ""}
 
         <svg style={hoverer} viewBox="30.767 241.591 784.077 458.627" xmlns="http://www.w3.org/2000/svg">
 
