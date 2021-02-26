@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-//import axios from 'axios'
+import axios from 'axios'
 import Country from './Country'
 import hoverer from '../styles/hoverer.css';
 
@@ -7,44 +7,55 @@ import Button from 'react-bootstrap/Button'
 
 
 const Map = ({ showing }) => {
-    /*  const [selected, setSelected] = useState(showing[0])
-     
-      const [details, setDetails] = useState(false)*/
 
-    const [chosen, setChosen] = useState(showing[0])
+    const [chosen, setChosen] = useState(null)
 
 
-    console.log("SHOWING IN THE MAP::::::", showing)
+    const click = (props) => {
+        axios
+            .get('https://restcountries.eu/rest/v2/all')
+            .then(response => {
+                //console.log("data, ", response.data, "selected", selected)
+                setChosen(response.data.filter(
+                    x =>
+                        x.alpha2Code.toUpperCase().includes(
+                            props.toUpperCase())))
+                console.log("chosen", chosen)
+            })
+
+    }
+
     const clear = () => {
-        console.log("test-test-clear")
         var i;
         for (i = 0; i < document.querySelector('g').children.length; i++) {
             document.querySelector('g').children[i].style.fill = "black"
         }
-        //console.log(document.querySelector('g').children.style.fill="black")
+        setChosen(null)
+
     }
 
     const paint = () => {
-        console.log("length of the showing", showing.length)
-
+        //clear()
+        let error = ""
         var i;
         if (document.querySelector('g') !== null && showing !== undefined && showing.length !== 0) {
-            clear()
+            //clear()
             for (i = 0; i < showing.length; i++) {
-                // console.log("country from paint method: ",showing[i]
-                //.children.style.fill="black")
-                // )
+
                 if (document.getElementById(showing[i].alpha2Code.toLowerCase()) !== null) {
                     document.getElementById(showing[i].alpha2Code.toLowerCase()).style.fill = "red"
-                    //.setAttribute("fill", "blue");
+
                 }
                 if (document.getElementById(showing[i].alpha2Code.toLowerCase()) == null)
-                    console.log("Sorry! The country is too small to be shown on this map", showing[i].name)
+                    error += ", " + showing[i].name
 
             }
+            console.log("Sorry! The these countries are too small to be shown on this map: ", error)
+
         }
     }
     paint()
+    // useEffect(paint())
     const printSelected = () => {
         let painted = []
         var i;
@@ -54,8 +65,8 @@ const Map = ({ showing }) => {
                 painted.push(document.querySelector('g').children[i].id)
             }
         }
-        console.log(painted)
-        //console.log(document.querySelector('g').children.style.fill="black")
+        console.log("these are the painted countries", painted)
+
     }
 
     function getColor() {
@@ -65,6 +76,7 @@ const Map = ({ showing }) => {
         return `#${R}${G}${B}`
     }
     const listenToClicks = () => {
+
         try {
             window.addEventListener('DOMContentLoaded', () => {
 
@@ -72,30 +84,50 @@ const Map = ({ showing }) => {
 
                     if (event.target.parentNode.id !== "") {
                         //  setSelected(event.target.parentNode.id)
-
+                        //setCode(event.target.parentNode.id )
                         if (event.target.parentNode.style.fill == "black" ||
                             event.target.parentNode.style.fill == "") {
                             event.target.parentNode.style.fill = getColor()
                             // setDetails(true)
+                            //setCode(event.target.parentNode.id )
+                            //console.log("ID IN CLICK!!!!!!!!!!!",event.target.parentNode.id)
+                            click(event.target.parentNode.id)
 
                         }
+                        /*if (event.target.parentNode.style.fill == "red") {
+                            event.target.parentNode.style.fill = "green"
+
+                            click(event.target.parentNode.id)
+
+                        }*/
                         else {
                             event.target.parentNode.style.fill = "black"
+                            //setChosen(null)
                             // setDetails(false)
                         }
                     }
 
                     if (event.target.id !== "") {
                         // setSelected(event.target.id)
-
+                        //setCode(event.target.id)
                         if (event.target.style.fill == "black" ||
                             event.target.style.fill == "") {
                             event.target.style.fill = getColor()
                             // setDetails(true)
+                            //setCode(event.target.id)
+                            //console.log("ID IN CLICK!!!!!!!!!!!",event.target.id)
+                            click(event.target.id)
 
-                        }
+                        } 
+                       /* if (event.target.style.fill == "red"){
+                            event.target.style.fill = "green"
+                            
+                            click(event.target.id)
+
+                        }*/
                         else {
                             event.target.style.fill = "black"
+                            //setChosen(null)
                             // setDetails(false)
                         }
 
@@ -105,6 +137,7 @@ const Map = ({ showing }) => {
 
             })
         } catch (e) { console.log("error in svg clicking", e) }
+        // 
     }
 
 
@@ -113,8 +146,12 @@ const Map = ({ showing }) => {
 
     listenToClicks()
 
-    return (<><div></div>
-        {showing.length == 1 ? <Country country={showing[0]} /> : ""}
+    return (<>
+        {chosen !== null
+            ? <Country country={chosen[0]} />
+            : ""}
+
+
 
         <svg style={hoverer} viewBox="30.767 241.591 784.077 458.627" xmlns="http://www.w3.org/2000/svg">
 
