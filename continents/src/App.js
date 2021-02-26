@@ -8,6 +8,7 @@ import LoginForm from './components/login'
 import Notification from './components/Notification'
 import Filter from './components/Filter';
 import Dropdown from './components/Dropdwn'
+import Map from './components/Map'
 
 import Countries from './components/Countries';
 

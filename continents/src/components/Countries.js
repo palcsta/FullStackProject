@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Country from './Country';
 import Filter from './Filter';
-
+import Map from './Map'
 
 const style = {
     display: 'inline',
@@ -49,7 +49,7 @@ const Countries = ({ countries }) => {
 
     let whatToShow = showOne
         ? (<Country country={countries[0]} />)
-        : <>{shown}{countries.map((x, i) =>
+        : <>{shown}<Map country={"FI"}/>{countries.map((x, i) =>
             <p style={style}><a key={x.name} onClick={() => show(i)}>
                 {x.name}<img style={style} src={x.flag} alt={x.name}
                     width="35" height="24">

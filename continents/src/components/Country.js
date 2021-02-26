@@ -38,13 +38,14 @@ const l = {
 
 const Country = ({ country }) => {
 
+  const [showing, setShowing] = useState(country!==undefined)
   const [religion, setReligion] = useState(" no religion data...")
   const [currency, setCurrency] = useState(" no currency data...")
   if (country === null) {
     return (<></>)
   }
 
-  let whatToShow = country !== undefined
+  let whatToShow = showing
     ? <><div style={style}> <div><h2><a target="_blank" rel="noopener noreferrer"
       href={"https://en.wikipedia.org/wiki/" + country.name} >{country.name}({country.alpha2Code})</a></h2>
       <b > capital:</b> {country.capital}</div>
@@ -76,11 +77,12 @@ const Country = ({ country }) => {
             <n><b><span style={l}>Religion:</span></b>{religion}</n>
             <br></br>
             <n><b><span style={l}>Currency:</span></b>{currency}</n>
+            <button onClick={()=> setShowing(false)}>hide</button>
           </div>
         </div>
 
       </div></>
-    : "There is either no country or the API doesn't return anything..."
+    : ""
   return (
     <>{whatToShow}</>
   );
