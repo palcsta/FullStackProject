@@ -17,12 +17,12 @@ const Dropdwn = () => {
     const [countries, setCountries] = useState([])
 
 const hook = () => {
-    console.log('effect countries')
+   // console.log('effect countries')
     axios
       .get('https://restcountries.eu/rest/v2/all')
       .then(response => {
         setCountries(response.data)
-        console.log(countries)
+       // console.log(countries)
      
       })
   }
@@ -35,7 +35,7 @@ const hook = () => {
     const other = countries.filter(x => x.region === "").map(x => x.name)
     //const polar = data.filter(x => x.region == "Americas")
 
-    console.log('sub-continents in dropdown: ', polar)
+    //console.log('sub-continents in dropdown: ', polar)
     //console.log("data in dropdown: ", noContinent)
     return (<>
     <Filter countries={countries}/>

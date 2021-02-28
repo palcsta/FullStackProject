@@ -15,6 +15,10 @@
 |19.2.|5| dropdown is completely functional and shows regions, subregions and country
 |23.2|3| moved apps filter functionality in filter class itself, changed functionality of filter, eg. shows less than 20 while searching, removed some useless code
 |26.2|5| implemented svg map with interactive hovering possibility
+|26.2|2| browsed regions are painted after clicking
+|26.2|3| better functionality of map painting eg. shows details of countryif browsing for one country
+|26.2|2| clicking on the country shows the details, functionality for the map complete
+|28.2|3| trying to fix re-rendering of the region when region is already painted once
 # työaikakirjanpito(Emil)
 
 | päivä | aika | mitä tein  |

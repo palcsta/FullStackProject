@@ -2,13 +2,30 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Country from './Country'
 import hoverer from '../styles/hoverer.css';
-
 import Button from 'react-bootstrap/Button'
+
 
 
 const Map = ({ showing }) => {
 
     const [chosen, setChosen] = useState(null)
+
+    const [color, setColor] = useState("_")
+    console.log("color in the map: ", color)
+
+    function onlyUnique(value, index, self) {
+        return self.indexOf(value) === index;
+    }
+
+    function getColor() {
+        const R = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
+        const G = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
+        const B = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
+        return `#${R}${G}${B}`
+    }
+
+
+
 
 
     const click = (props) => {
@@ -20,7 +37,7 @@ const Map = ({ showing }) => {
                     x =>
                         x.alpha2Code.toUpperCase().includes(
                             props.toUpperCase())))
-                console.log("chosen", chosen)
+                //console.log("chosen", chosen)
             })
 
     }
@@ -35,27 +52,41 @@ const Map = ({ showing }) => {
     }
 
     const paint = () => {
-        //clear()
         let error = ""
         var i;
+
         if (document.querySelector('g') !== null && showing !== undefined && showing.length !== 0) {
-            //clear()
+            const color = getColor()
+            const painted = []
+            const region = []
+            const subregion = []
+
+
+            //add dropdown clicked countries in painted table
+            for (i = 0; i < showing.length; i++) {
+                if (document.getElementById(showing[i].alpha2Code.toLowerCase()) !== null) {
+                    painted.push(document.getElementById(showing[i].alpha2Code.toLowerCase()).style.fill)
+                    region.push(showing[i].region)
+                    subregion.push(showing[i].subregion)
+                }
+            }
+            console.log("region.filter(onlyUnique) ",region.filter(onlyUnique))
+            console.log("subregion.filter(onlyUnique) ",subregion.filter(onlyUnique))
+            //if(painted.filter(onlyUnique))
             for (i = 0; i < showing.length; i++) {
 
                 if (document.getElementById(showing[i].alpha2Code.toLowerCase()) !== null) {
-                    document.getElementById(showing[i].alpha2Code.toLowerCase()).style.fill = "red"
-
+                    document.getElementById(showing[i].alpha2Code.toLowerCase()).style.fill = color
                 }
                 if (document.getElementById(showing[i].alpha2Code.toLowerCase()) == null)
                     error += ", " + showing[i].name
-
             }
+
             console.log("Sorry! The these countries are too small to be shown on this map: ", error)
 
         }
     }
-    paint()
-    // useEffect(paint())
+
     const printSelected = () => {
         let painted = []
         var i;
@@ -66,69 +97,37 @@ const Map = ({ showing }) => {
             }
         }
         console.log("these are the painted countries", painted)
-
     }
 
-    function getColor() {
-        const R = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
-        const G = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
-        const B = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
-        return `#${R}${G}${B}`
-    }
     const listenToClicks = () => {
-
         try {
             window.addEventListener('DOMContentLoaded', () => {
 
                 document.querySelector('g').addEventListener('click', (event) => {
-
+                    let color = getColor()
+                    setColor(color)
                     if (event.target.parentNode.id !== "") {
-                        //  setSelected(event.target.parentNode.id)
-                        //setCode(event.target.parentNode.id )
-                        if (event.target.parentNode.style.fill == "black" ||
-                            event.target.parentNode.style.fill == "") {
-                            event.target.parentNode.style.fill = getColor()
-                            // setDetails(true)
-                            //setCode(event.target.parentNode.id )
-                            //console.log("ID IN CLICK!!!!!!!!!!!",event.target.parentNode.id)
+
+                        if (event.target.parentNode.style.fill == "black" || event.target.parentNode.style.fill == "") {
+
+                            event.target.parentNode.style.fill = color//getColor()
                             click(event.target.parentNode.id)
 
                         }
-                        /*if (event.target.parentNode.style.fill == "red") {
-                            event.target.parentNode.style.fill = "green"
-
-                            click(event.target.parentNode.id)
-
-                        }*/
                         else {
                             event.target.parentNode.style.fill = "black"
-                            //setChosen(null)
-                            // setDetails(false)
+                            click(event.target.parentNode.id)
                         }
                     }
 
                     if (event.target.id !== "") {
-                        // setSelected(event.target.id)
-                        //setCode(event.target.id)
-                        if (event.target.style.fill == "black" ||
-                            event.target.style.fill == "") {
-                            event.target.style.fill = getColor()
-                            // setDetails(true)
-                            //setCode(event.target.id)
-                            //console.log("ID IN CLICK!!!!!!!!!!!",event.target.id)
+                        if (event.target.style.fill == "black" || event.target.style.fill == "") {
+                            event.target.style.fill = color
                             click(event.target.id)
-
-                        } 
-                       /* if (event.target.style.fill == "red"){
-                            event.target.style.fill = "green"
-                            
-                            click(event.target.id)
-
-                        }*/
+                        }
                         else {
                             event.target.style.fill = "black"
-                            //setChosen(null)
-                            // setDetails(false)
+                            click(event.target.id)
                         }
 
                     }
@@ -139,11 +138,9 @@ const Map = ({ showing }) => {
         } catch (e) { console.log("error in svg clicking", e) }
         // 
     }
-
-
-
-
-
+    //useEffect(() => {
+    paint()
+    //}, []);
     listenToClicks()
 
     return (<>
@@ -807,7 +804,8 @@ const Map = ({ showing }) => {
                     d="M468.52,578.226l7.755,8.757l5.946,1.513l3.984-6.248l-0.312-8.281l-6.465-3.337l-2.431,1.098l-3.62,5.524l-5.014-0.053L468.52,578.226L468.52,578.226z" />
             </g>
 
-        </svg><Button onClick={() => clear()} secondary>Clear map</Button><Button onClick={() => printSelected()} secondary>print selected</Button>
+        </svg><Button onClick={() => clear()} secondary>Clear map</Button>
+        <Button onClick={() => printSelected()} secondary>print selected(for later block implementation)</Button>
     </>
     )
 }
