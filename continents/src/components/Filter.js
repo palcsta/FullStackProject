@@ -1,6 +1,34 @@
-import React from 'react'
 
-const Filter = ({ value, change }) => {
+import React, { useState,useEffect } from 'react';
+import Countries from './Countries'
+
+
+
+const Filter = ({ countries }) => {
+
+  const [searched, setNewSearched] = useState('')
+    
+
+  const [filteredCountries, setFilteredCountries] = useState(countries)
+
+
+
+  const handleNewSearched = (event) => {
+      console.log("event ", event)
+
+      let filtered = countries.filter(
+          x =>
+              x.name.toUpperCase().includes(
+                  event.target.value.toUpperCase()))
+      event.preventDefault()
+      setNewSearched(event.target.value)
+      console.log(filtered.length)
+      filtered.length<20 ? setFilteredCountries(filtered) :  setFilteredCountries([])
+      
+    
+  }
+
+
 
 
   const center = {
@@ -8,13 +36,15 @@ const Filter = ({ value, change }) => {
   }
 
     return(
-
+      <>
 
       <div style={center}>
-        <input placeholder="Enter name of the country" value={value}
+        <input placeholder="Search for the country" value={searched}
 
-          onChange={change} />
+          onChange={handleNewSearched} />
       </div>
-    )
+    
+      <Countries countries={filteredCountries}/>
+    </>)
 }
 export default Filter

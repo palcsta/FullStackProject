@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Country from './Country';
+import Filter from './Filter';
 
 
 const style = {
@@ -9,9 +10,33 @@ const style = {
     'font-size': '29px',
 
 };
-const TenCountries = ({ countries, one }) => {
+const Countries = ({ countries }) => {
     const [index, setIndex] = useState(10);
     const [shown, setShown] = useState("")
+    const [searched, setNewSearched] = useState('')
+    
+
+    const [filteredCountries, setFilteredCountries] = useState(countries)
+
+    const [showTen, setShowTen] = useState(true)
+    const [showOne, setShowOne] = useState(false)
+
+
+    const handleNewSearched = (event) => {
+        console.log("event ", event)
+
+        let filtered = countries.filter(
+            x =>
+                x.name.toUpperCase().includes(
+                    event.target.value.toUpperCase()))
+        event.preventDefault()
+        setNewSearched(event.target.value)
+        setFilteredCountries(filtered)
+        setShowTen(filtered.length < 1000)
+        setShowOne(filtered.length === 1 && filtered !== [])
+    }
+
+
 
 
     const show = (i) => {
@@ -22,7 +47,7 @@ const TenCountries = ({ countries, one }) => {
     }
 
 
-    let whatToShow = one
+    let whatToShow = showOne
         ? (<Country country={countries[0]} />)
         : <>{shown}{countries.map((x, i) =>
             <p style={style}><a key={x.name} onClick={() => show(i)}>
@@ -31,50 +56,19 @@ const TenCountries = ({ countries, one }) => {
                 </img>
             </a></p>)}</>
     //{details}
-    return (
-
-        <>
-            { console.log("darker method: ", whatToShow)}
-            {whatToShow}
-
-
-        </>
-
+    return (<>
+        
+        {whatToShow}
+    </>
     );
 }
+
+
+export default Countries
+
+
 
 //about 250 countries
 //23 subregions including empty string
 //4 europes, 5 africas, 3 americas, 5 asias, 1 empty, 5 others
 //no region in antarctica, bouvet island and heard island and mcdonald islands
-
-
-const Countries = ({ countries, one, ten }) => {
-
-    let whatToShow = <TenCountries countries={countries} one={one} />
-    //  let unique = countries !== [] ? [...new Set(countries.map(x => x.subregion))] : undefined
-    //  console.log(unique)
-    //  let euro = countries.filter(x => x.subregion.includes("Europe"))
-    //  let afri = countries.filter(x => x.subregion.includes("Africa"))
-    //  let amer = countries.filter(x => x.subregion.includes("America"))
-    // let asia = countries.filter(x => x.subregion.includes("Asia"))
-    /* let all_other = countries.filter(x => !x.subregion.includes("Africa")
-         && !x.subregion.includes("Europe")
-         && !x.subregion.includes("Asia")
-         && !x.subregion.includes("America"))*/
-    //let other = [...new Set(all_other.map(x => x.subregion))]
-    //console.log("other countries", other)
-    // console.log(euro)
-    // console.log(countries.length)
-
-    return (
-
-        <>
-            {whatToShow}
-        </>
-
-    );
-};
-
-
-export default Countries
