@@ -6,28 +6,17 @@ import Button from 'react-bootstrap/Button'
 
 
 
-const Map = ({ showing }) => {
-
+const Map = () => {
+    
     const [chosen, setChosen] = useState(null)
-
-    const [color, setColor] = useState("_")
-    console.log("color in the map: ", color)
-
-    function onlyUnique(value, index, self) {
-        return self.indexOf(value) === index;
-    }
-
+    
     function getColor() {
         const R = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
         const G = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
         const B = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
         return `#${R}${G}${B}`
     }
-
-
-
-
-
+    
     const click = (props) => {
         axios
             .get('https://restcountries.eu/rest/v2/all')
@@ -44,48 +33,17 @@ const Map = ({ showing }) => {
 
     const clear = () => {
         var i;
+        
+
         for (i = 0; i < document.querySelector('g').children.length; i++) {
             document.querySelector('g').children[i].style.fill = "black"
         }
+
         setChosen(null)
 
     }
 
-    const paint = () => {
-        let error = ""
-        var i;
-
-        if (document.querySelector('g') !== null && showing !== undefined && showing.length !== 0) {
-            const color = getColor()
-            const painted = []
-            const region = []
-            const subregion = []
-
-
-            //add dropdown clicked countries in painted table
-            for (i = 0; i < showing.length; i++) {
-                if (document.getElementById(showing[i].alpha2Code.toLowerCase()) !== null) {
-                    painted.push(document.getElementById(showing[i].alpha2Code.toLowerCase()).style.fill)
-                    region.push(showing[i].region)
-                    subregion.push(showing[i].subregion)
-                }
-            }
-            console.log("region.filter(onlyUnique) ",region.filter(onlyUnique))
-            console.log("subregion.filter(onlyUnique) ",subregion.filter(onlyUnique))
-            //if(painted.filter(onlyUnique))
-            for (i = 0; i < showing.length; i++) {
-
-                if (document.getElementById(showing[i].alpha2Code.toLowerCase()) !== null) {
-                    document.getElementById(showing[i].alpha2Code.toLowerCase()).style.fill = color
-                }
-                if (document.getElementById(showing[i].alpha2Code.toLowerCase()) == null)
-                    error += ", " + showing[i].name
-            }
-
-            console.log("Sorry! The these countries are too small to be shown on this map: ", error)
-
-        }
-    }
+    
 
     const printSelected = () => {
         let painted = []
@@ -105,7 +63,7 @@ const Map = ({ showing }) => {
 
                 document.querySelector('g').addEventListener('click', (event) => {
                     let color = getColor()
-                    setColor(color)
+                    // setColor(color)
                     if (event.target.parentNode.id !== "") {
 
                         if (event.target.parentNode.style.fill == "black" || event.target.parentNode.style.fill == "") {
@@ -138,9 +96,6 @@ const Map = ({ showing }) => {
         } catch (e) { console.log("error in svg clicking", e) }
         // 
     }
-    //useEffect(() => {
-    paint()
-    //}, []);
     listenToClicks()
 
     return (<>
@@ -809,5 +764,11 @@ const Map = ({ showing }) => {
     </>
     )
 }
-
+//let paint =""
 export default Map
+
+//export default paint
+//module.exports = {
+ //   Map//, 
+    //paint()
+//}

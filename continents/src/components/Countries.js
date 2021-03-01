@@ -24,12 +24,12 @@ const Countries = ({ countries }) => {
     }
 
 
-    return (<><Map showing={countries} />{shown}{countries.map((x, i) =>
+    return (<><Map showing={countries} country={shown}/>{countries.map((x, i) =>
         <p style={style}><a key={x.name} onClick={() => show(i)}>
             {x.name}<img style={style} src={x.flag} alt={x.name}
                 width="35" height="24">
             </img>
-        </a></p>)}</>
+        </a></p>)}{shown}</>
     );
 }
 

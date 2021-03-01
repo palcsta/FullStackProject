@@ -11,10 +11,64 @@ const unique = (value, index, self) => {
     return self.indexOf(value) === index
 }
 
+function getColor() {
+    const R = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
+    const G = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
+    const B = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
+    return `#${R}${G}${B}`
+}
+
+
+
+
+
 
 const Dropdwn = () => {
     const [filtered, setFiltered] = useState([])   
     const [countries, setCountries] = useState([])
+
+
+
+
+    const paint = () => {
+        let error = ""
+        var i;
+       
+       
+        if (document.querySelector('g') !== null && filtered !== undefined && filtered.length !== 0) {
+           
+            const color = getColor()
+            const painted = []
+            const region = []
+            const subregion = []
+            
+            for (i = 0; i < filtered.length; i++) {
+                if (document.getElementById(filtered[i].alpha2Code.toLowerCase()) !== null) {
+                    painted.push(document.getElementById(filtered[i].alpha2Code.toLowerCase()).style.fill)
+                    region.push(filtered[i].region)
+                    subregion.push(filtered[i].subregion)
+                }
+            if (true) {
+                for (i = 0; i < filtered.length; i++) {
+    
+                    if (document.getElementById(filtered[i].alpha2Code.toLowerCase()) !== null) {
+                        document.getElementById(filtered[i].alpha2Code.toLowerCase()).style.fill = color
+                    }
+                    if (document.getElementById(filtered[i].alpha2Code.toLowerCase()) == null)
+                        error += ", " + filtered[i].name
+                }
+            }
+    
+            console.log("Sorry! The these countries are too small to be shown on this map: ", error)
+    
+        }
+    }
+
+    }
+
+
+
+
 
 const hook = () => {
    // console.log('effect countries')
@@ -100,7 +154,7 @@ const hook = () => {
 
 
 
-
+            {paint()}
             <Countries countries={filtered}               
             />
 

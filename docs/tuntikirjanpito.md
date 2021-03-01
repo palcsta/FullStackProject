@@ -19,6 +19,7 @@
 |26.2|3| better functionality of map painting eg. shows details of countryif browsing for one country
 |26.2|2| clicking on the country shows the details, functionality for the map complete
 |28.2|3| trying to fix re-rendering of the region when region is already painted once
+|1.2|3| fixed re-rendering issue by completely reimplementation of paint() method and moved the method elsewhere(in dropdown class where rendering is required)
 # työaikakirjanpito(Emil)
 
 | päivä | aika | mitä tein  |
