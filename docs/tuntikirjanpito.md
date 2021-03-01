@@ -12,7 +12,16 @@
 |2.2.| 3 | dropdown into one button with multiple links in one button
 |3.2.| 2 | dropdown now includes subregions of continents
 |3.2.|3| dropdown is now implemented completely without click functionality
-|19.3.|5| dropdown is completely functional and shows regions, subregions and country
+|19.2.|5| dropdown is completely functional and shows regions, subregions and country
+|23.2|3| moved apps filter functionality in filter class itself, changed functionality of filter, eg. shows less than 20 while searching, removed some useless code
+|26.2|5| implemented svg map with interactive hovering possibility
+|26.2|2| browsed regions are painted after clicking
+|26.2|3| better functionality of map painting eg. shows details of countryif browsing for one country
+|26.2|2| clicking on the country shows the details, functionality for the map complete
+|28.2|3| trying to fix re-rendering of the region when region is already painted once
+|1.2|3| fixed re-rendering issue by completely reimplementation of paint() method and moved the method elsewhere(in dropdown class where rendering is required)
+|1.2|1| improved dropdown by enabling country details showing automatically after clicking on countrys name in dropdown
+|1.2|1| fixed the conflict when selected country details from chart freezez
 # työaikakirjanpito(Emil)
 
 | päivä | aika | mitä tein  |
