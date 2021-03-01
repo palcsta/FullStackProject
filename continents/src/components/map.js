@@ -6,17 +6,24 @@ import Button from 'react-bootstrap/Button'
 
 
 
-const Map = () => {
+const Map =  ({ showing }) => {
+
+    const [chosen, setChosen] =  useState((showing !== undefined && showing.length < 2) ? showing[0] : null)
+
+    //console.log(chosen)
+
     
-    const [chosen, setChosen] = useState(null)
-    
+
+
     function getColor() {
         const R = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
         const G = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
         const B = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
         return `#${R}${G}${B}`
     }
-    
+
+
+
     const click = (props) => {
         axios
             .get('https://restcountries.eu/rest/v2/all')
@@ -33,7 +40,7 @@ const Map = () => {
 
     const clear = () => {
         var i;
-        
+
 
         for (i = 0; i < document.querySelector('g').children.length; i++) {
             document.querySelector('g').children[i].style.fill = "black"
@@ -43,7 +50,7 @@ const Map = () => {
 
     }
 
-    
+
 
     const printSelected = () => {
         let painted = []
@@ -99,10 +106,12 @@ const Map = () => {
     listenToClicks()
 
     return (<>
-        {chosen !== null
+        {/*chosen !== null
             ? <Country country={chosen[0]} />
+        : ""*/}
+        {showing.length == 1
+            ? <Country country={showing[0]} />
             : ""}
-
 
 
         <svg style={hoverer} viewBox="30.767 241.591 784.077 458.627" xmlns="http://www.w3.org/2000/svg">

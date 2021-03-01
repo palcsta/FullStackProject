@@ -20,6 +20,7 @@
 |26.2|2| clicking on the country shows the details, functionality for the map complete
 |28.2|3| trying to fix re-rendering of the region when region is already painted once
 |1.2|3| fixed re-rendering issue by completely reimplementation of paint() method and moved the method elsewhere(in dropdown class where rendering is required)
+|1.2|1| improved dropdown by enabling country details showing automatically after clicking on countrys name in dropdown
 # työaikakirjanpito(Emil)
 
 | päivä | aika | mitä tein  |

@@ -19,7 +19,7 @@ function getColor() {
 }
 
 
-
+//const color = getColor()
 
 
 

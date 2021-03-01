@@ -77,7 +77,7 @@ const Country = ({ country }) => {
             <n><b><span style={l}>Religion:</span></b>{religion}</n>
             <br></br>
             <n><b><span style={l}>Currency:</span></b>{currency}</n>
-            <button onClick={()=> setShowing(false)}>hide</button>
+            <button hidden onClick={()=> setShowing(false)}>hide</button>
           </div>
         </div>
 
