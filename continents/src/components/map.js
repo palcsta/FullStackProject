@@ -6,13 +6,13 @@ import Button from 'react-bootstrap/Button'
 
 
 
-const Map =  ({ showing }) => {
+const Map = ({ showing }) => {
 
-    const [chosen, setChosen] =  useState((showing !== undefined && showing.length < 2) ? showing[0] : null)
-
+    const [chosen, setChosen] = useState(undefined)
+    const [clicked, setClicked] = useState(false)
     //console.log(chosen)
 
-    
+
 
 
     function getColor() {
@@ -25,17 +25,26 @@ const Map =  ({ showing }) => {
 
 
     const click = (props) => {
-        axios
-            .get('https://restcountries.eu/rest/v2/all')
-            .then(response => {
-                //console.log("data, ", response.data, "selected", selected)
-                setChosen(response.data.filter(
-                    x =>
-                        x.alpha2Code.toUpperCase().includes(
-                            props.toUpperCase())))
-                //console.log("chosen", chosen)
-            })
+       // if (showing[0].alpha2Code !== chosen[0].alpha2Code) {
+        
+            axios
+                .get('https://restcountries.eu/rest/v2/all')
+                .then(response => {
+                    //console.log("data, ", response.data, "selected", selected)
+                    setChosen(response.data.filter(
+                        x =>
+                            x.alpha2Code.toUpperCase().includes(
+                                props.toUpperCase())))
+                    //console.log("chosen", chosen)
+                })
+      //  }
+      //setClicked(false)
+    }
 
+    if (showing.length == 1 && !clicked) {
+        //setClicked(true)
+        click(showing[0].alpha2Code)
+       // setClicked(false)
     }
 
     const clear = () => {
@@ -46,7 +55,7 @@ const Map =  ({ showing }) => {
             document.querySelector('g').children[i].style.fill = "black"
         }
 
-        setChosen(null)
+        setChosen(undefined)
 
     }
 
@@ -70,13 +79,16 @@ const Map =  ({ showing }) => {
 
                 document.querySelector('g').addEventListener('click', (event) => {
                     let color = getColor()
-                    // setColor(color)
+                    
+                    setClicked(true)
+
                     if (event.target.parentNode.id !== "") {
 
                         if (event.target.parentNode.style.fill == "black" || event.target.parentNode.style.fill == "") {
 
                             event.target.parentNode.style.fill = color//getColor()
                             click(event.target.parentNode.id)
+                            
 
                         }
                         else {
@@ -89,6 +101,7 @@ const Map =  ({ showing }) => {
                         if (event.target.style.fill == "black" || event.target.style.fill == "") {
                             event.target.style.fill = color
                             click(event.target.id)
+                            
                         }
                         else {
                             event.target.style.fill = "black"
@@ -103,15 +116,14 @@ const Map =  ({ showing }) => {
         } catch (e) { console.log("error in svg clicking", e) }
         // 
     }
+    //if (showing.length == 1 && chosen.alpha2Code!==showing[0].alpha2Code) click(showing[0].alpha2Code)
     listenToClicks()
 
     return (<>
-        {/*chosen !== null
+        {chosen !== undefined
             ? <Country country={chosen[0]} />
-        : ""*/}
-        {showing.length == 1
-            ? <Country country={showing[0]} />
             : ""}
+
 
 
         <svg style={hoverer} viewBox="30.767 241.591 784.077 458.627" xmlns="http://www.w3.org/2000/svg">

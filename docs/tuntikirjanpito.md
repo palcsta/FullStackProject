@@ -21,6 +21,7 @@
 |28.2|3| trying to fix re-rendering of the region when region is already painted once
 |1.2|3| fixed re-rendering issue by completely reimplementation of paint() method and moved the method elsewhere(in dropdown class where rendering is required)
 |1.2|1| improved dropdown by enabling country details showing automatically after clicking on countrys name in dropdown
+|1.2|1| fixed the conflict when selected country details from chart freezez
 # työaikakirjanpito(Emil)
 
 | päivä | aika | mitä tein  |
