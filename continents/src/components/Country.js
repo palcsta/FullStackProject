@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 
+/*const color = "red"
+
 const style = {
   display: 'flex',
-  border: '3px solid black',
+  border: '3px solid ' + color,
   align: "center",
   "border-radius": "10px"
 };
@@ -13,7 +15,7 @@ const flag = {
   width: "175",
   height: "120"
 };
-
+*/
 
 const numberChanger = (number) => {
   if (number == null) return (<>-</>)
@@ -36,9 +38,34 @@ const l = {
 }
 
 
-const Country = ({ country }) => {
+const Country = ({ country, paint }) => {
+  let color = "red"
+  if(typeof paint === 'string'){
+    color=paint
+  }else{
+     color = "red"
+  }
+  
 
-  const [showing, setShowing] = useState(country!==undefined)
+  const style = {
+    display: 'flex',
+    border: '3px solid ' + color,
+    align: "center",
+    "border-radius": "10px"
+  };
+  const flag = {
+    //display: 'flex',
+    border: '2px solid black',
+    "border-radius": "5px",
+    width: "175",
+    height: "120"
+  };
+  
+
+
+  //paint!== undefined ? color="cyan" : color = "green"
+
+  const [showing, setShowing] = useState(country !== undefined)
   const [religion, setReligion] = useState(" no religion data...")
   const [currency, setCurrency] = useState(" no currency data...")
   if (country === null || country === undefined) {
@@ -77,7 +104,7 @@ const Country = ({ country }) => {
             <n><b><span style={l}>Religion:</span></b>{religion}</n>
             <br></br>
             <n><b><span style={l}>Currency:</span></b>{currency}</n>
-            <button hidden onClick={()=> setShowing(false)}>hide</button>
+            <button hidden onClick={() => setShowing(false)}>hide</button>
           </div>
         </div>
 

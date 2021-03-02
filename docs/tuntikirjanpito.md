@@ -22,6 +22,8 @@
 |1.2|3| fixed re-rendering issue by completely reimplementation of paint() method and moved the method elsewhere(in dropdown class where rendering is required)
 |1.2|1| improved dropdown by enabling country details showing automatically after clicking on countrys name in dropdown
 |1.2|1| fixed the conflict when selected country details from chart freezez
+|2.3|1| added coloring to map selection, so ull remember which map you selected and where it is on map
+|2.3|1| implemented button of selected country/region/subregion which repaints selected from the list, also improved it visually
 # työaikakirjanpito(Emil)
 
 | päivä | aika | mitä tein  |
