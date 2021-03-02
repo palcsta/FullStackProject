@@ -8,11 +8,11 @@ import Button from 'react-bootstrap/Button'
 
 const Map = ({ showing }) => {
 
+
     const [chosen, setChosen] = useState(undefined)
-    const [clicked, setClicked] = useState(false)
-    //console.log(chosen)
 
-
+    const [already, setAlready] = useState()
+    const [colo, setColo] = useState("black")
 
 
     function getColor() {
@@ -21,30 +21,20 @@ const Map = ({ showing }) => {
         const B = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
         return `#${R}${G}${B}`
     }
-
-
-
     const click = (props) => {
-       // if (showing[0].alpha2Code !== chosen[0].alpha2Code) {
-        
-            axios
-                .get('https://restcountries.eu/rest/v2/all')
-                .then(response => {
-                    //console.log("data, ", response.data, "selected", selected)
-                    setChosen(response.data.filter(
-                        x =>
-                            x.alpha2Code.toUpperCase().includes(
-                                props.toUpperCase())))
-                    //console.log("chosen", chosen)
-                })
-      //  }
-      //setClicked(false)
-    }
 
-    if (showing.length == 1 && !clicked) {
-        //setClicked(true)
-        click(showing[0].alpha2Code)
-       // setClicked(false)
+
+        axios
+            .get('https://restcountries.eu/rest/v2/all')
+            .then(response => {
+                setChosen(response.data.filter(
+                    x =>
+                        x.alpha2Code.toUpperCase().includes(
+                            props.toUpperCase())))
+
+            })
+
+
     }
 
     const clear = () => {
@@ -74,26 +64,40 @@ const Map = ({ showing }) => {
     }
 
     const listenToClicks = () => {
+        if (showing[0] !== undefined) {
+            console.log("showing.length == 1 ", showing.length == 1
+                , " already!==showing[0] ", already !== showing[0]
+                , " showing[0].alpha2Code!==already", showing[0].alpha2Code !== already)
+        }
+        
+        if (showing.length == 1 && already !== showing[0] && showing[0].alpha2Code !== already) {
+            // console.log(already)
+            setAlready(showing[0].alpha2Code)
+            click(showing[0].alpha2Code)
+
+        }
+        //console.log("already",already)
+
         try {
             window.addEventListener('DOMContentLoaded', () => {
 
                 document.querySelector('g').addEventListener('click', (event) => {
                     let color = getColor()
-                    
-                    setClicked(true)
+                   // setColo(color)
 
                     if (event.target.parentNode.id !== "") {
 
                         if (event.target.parentNode.style.fill == "black" || event.target.parentNode.style.fill == "") {
-
-                            event.target.parentNode.style.fill = color//getColor()
+                            event.target.parentNode.style.fill = color
                             click(event.target.parentNode.id)
-                            
+                            setColo(color)
+
 
                         }
                         else {
                             event.target.parentNode.style.fill = "black"
                             click(event.target.parentNode.id)
+                            setColo("black")
                         }
                     }
 
@@ -101,11 +105,15 @@ const Map = ({ showing }) => {
                         if (event.target.style.fill == "black" || event.target.style.fill == "") {
                             event.target.style.fill = color
                             click(event.target.id)
-                            
+                            setColo(color)
+
                         }
                         else {
                             event.target.style.fill = "black"
                             click(event.target.id)
+                            setColo("black")
+
+
                         }
 
                     }
@@ -114,6 +122,7 @@ const Map = ({ showing }) => {
 
             })
         } catch (e) { console.log("error in svg clicking", e) }
+
         // 
     }
     //if (showing.length == 1 && chosen.alpha2Code!==showing[0].alpha2Code) click(showing[0].alpha2Code)
@@ -121,7 +130,7 @@ const Map = ({ showing }) => {
 
     return (<>
         {chosen !== undefined
-            ? <Country country={chosen[0]} />
+            ? <Country country={chosen[0]} paint={colo} />
             : ""}
 
 
@@ -781,7 +790,7 @@ const Map = ({ showing }) => {
             </g>
 
         </svg><Button onClick={() => clear()} secondary>Clear map</Button>
-        <Button onClick={() => printSelected()} secondary>print selected(for later block implementation)</Button>
+        <Button onClick={() => printSelected()} secondary>print selected(for later block implementation)</Button><p></p>
     </>
     )
 }

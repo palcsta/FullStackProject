@@ -59,7 +59,7 @@ const Dropdwn = () => {
                 }
             }
     
-            console.log("Sorry! The these countries are too small to be shown on this map: ", error)
+            console.log("Sorry! These countries are too small to be shown on this map: ", error)
     
         }
     }
