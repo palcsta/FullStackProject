@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { MdAccountCircle, MdVpnKey } from 'react-icons/md'
 import { IconContext } from 'react-icons'
 import '../styles/login.css'
@@ -13,6 +13,12 @@ const LoginForm = (props) => {
     event.preventDefault()
     console.log("pressed login form button")
     props.showReg?props.register():props.login()
+  }
+
+  const pressLogout = (event) => {
+    event.preventDefault()
+    console.log("pressed logout")
+    props.logout()
   }
 
   const handleLoginFormUserChange = (event) => {
@@ -31,16 +37,25 @@ const LoginForm = (props) => {
   }
 
   return (
-    <div>
-      <form onSubmit={pressLogin}>
-        <IconContext.Provider value={{ size: "1.25em", className: "loginIcon" }}>
-          <span><MdAccountCircle /><input placeholder="Username" onChange={handleLoginFormUserChange} /></span>
-          <span><MdVpnKey /><input placeholder="Password" type="password" onChange={handleLoginFormPassChange}/></span>
-          <span style={{display:props.showReg?"inline":"none"}}><MdVpnKey /><input placeholder="Confirm Password"type="password" onChange={handleRegPassConfirmChange}/></span>
-          <button type="submit">{props.showReg?"Register":"Login/ Register"}</button>
-        </IconContext.Provider>
-      </form>   
-    </div>
+    <>
+      <div style={{display:props.user?"inline":"none"}}>
+        <form onSubmit={pressLogout}>
+
+          <span>Logged in as {props.user?props.user.username:""}</span>
+          <button type="submit" className="fauxlinkbutton">Logout</button>
+        </form>
+      </div>
+      <div style={{display:props.user?"none":"inline"}}>
+        <form onSubmit={pressLogin}>
+          <IconContext.Provider value={{ size: "1.25em", className: "loginIcon" }}>
+            <span><MdAccountCircle /><input placeholder="Username" onChange={handleLoginFormUserChange} /></span>
+            <span><MdVpnKey /><input placeholder="Password" type="password" onChange={handleLoginFormPassChange}/></span>
+            <span style={{display:props.showReg?"inline":"none"}}><MdVpnKey /><input placeholder="Confirm Password"type="password" onChange={handleRegPassConfirmChange}/></span>
+            <button type="submit" className="fauxlinkbutton">{props.showReg?"Register":"Login/ Register"}</button>
+          </IconContext.Provider>
+        </form>   
+      </div>
+    </>
   )
 }
 

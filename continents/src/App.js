@@ -26,13 +26,28 @@ const App = () => {
   const [password, setPassword] = useState('')
   const [showReg, setShowReg] = useState(false)
   const [regPassConfirm, setRegPassConfirm] = useState('')
+  const [user, setUser]=useState(null)
+
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedContinentsUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+    }
+  }, [])
 
   const login = () => {
     const loginObject = {"username":username,"password":password}
     console.log("loginObject", loginObject)
     const url = `api/login`
     axios.post(url,loginObject,{baseURL: `${window.location.protocol}//${window.location.hostname}:${apiPort}`}).then(response => {
-      console.log(`login response: ${response.data} `)
+      console.log(`login response: ${response.data} TOKEN=${response.data.token}`)
+      const user = {token:response.data.token,username:username}
+      window.localStorage.setItem(
+        'loggedContinentsUser', JSON.stringify(user)
+      ) 
+      //for setting token to bloc?
+      //setToken(response.data.token)
       setNotifMessage(response.data)
       setTimeout(() => {
         setNotifMessage(null)
@@ -48,28 +63,33 @@ const App = () => {
     })
   }
 
+  const logout = () => {
+    window.localStorage.removeItem('loggedContinentsUser')
+    setUser(null)
+  }
+
   const register = () => {
     if(regPassConfirm === password){
       console.log("lets register ",username)
       const regObject= {"username":username,"password":password}
       const registerUrl = `api/register`
 
-    axios.post(registerUrl,regObject,{baseURL: `${window.location.protocol}//${window.location.hostname}:${apiPort}`}).then(response => {
-      console.log(`login response: ${response.data} `)
-      setShowReg(false)
-      setNotifMessage(response.data)
-      setTimeout(() => {
-        setNotifMessage(null)
-      }, 5000)
-    }).catch(error => {
-      //todo: show all errors
-      let changeMe = Array.isArray(error.response.data)?error.response.data[0]:error.response.data
-      console.log(`register error: ${error}, response: ${changeMe.error}`)
-      setNotifMessage(changeMe)
-      setTimeout(() => {
-        setNotifMessage(null)
-      }, 5000)
-    })
+      axios.post(registerUrl,regObject,{baseURL: `${window.location.protocol}//${window.location.hostname}:${apiPort}`}).then(response => {
+        console.log(`login response: ${response.data} `)
+        setShowReg(false)
+        setNotifMessage(response.data)
+        setTimeout(() => {
+          setNotifMessage(null)
+        }, 5000)
+      }).catch(error => {
+        //todo: show all errors
+        let changeMe = Array.isArray(error.response.data)?error.response.data[0]:error.response.data
+        console.log(`register error: ${error}, response: ${changeMe.error}`)
+        setNotifMessage(changeMe)
+        setTimeout(() => {
+          setNotifMessage(null)
+        }, 5000)
+      })
     }else{
       setNotifMessage({error:"The passwords did not match"})
     }
@@ -80,10 +100,10 @@ const App = () => {
       <Notification resObj={notifMessage} />
       <div class="container" style={p}>
 
-        <LoginForm setLoginUser={setUsername} setLoginPass={setPassword} login={login} showReg={showReg} setShowReg={setShowReg} setRegPassConfirm={setRegPassConfirm} register={register}/>
-      
+        <LoginForm setLoginUser={setUsername} setLoginPass={setPassword} login={login} showReg={showReg} setShowReg={setShowReg} setRegPassConfirm={setRegPassConfirm} register={register} user={user} logout={logout}/>
+
         <Dropdown />
-        
+
       </div><div class="container" style={p}><Footer /></div>
     </>
   )
