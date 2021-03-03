@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect} from 'react'
 import { MdAccountCircle, MdVpnKey } from 'react-icons/md'
 import { IconContext } from 'react-icons'
 import '../styles/login.css'
@@ -36,16 +36,18 @@ const LoginForm = (props) => {
     props.setRegPassConfirm(event.target.value)
   }
 
+  const hideWhenLoggedOut = {display:props.user?"inline":"none"}
+  const hideWhenLoggedIn = {display:props.user?"none":"inline"}
+
   return (
     <>
-      <div style={{display:props.user?"inline":"none"}}>
+      <div style={hideWhenLoggedOut}>
         <form onSubmit={pressLogout}>
-
           <span>Logged in as {props.user?props.user.username:""}</span>
           <button type="submit" className="fauxlinkbutton">Logout</button>
         </form>
       </div>
-      <div style={{display:props.user?"none":"inline"}}>
+      <div style={hideWhenLoggedIn}>
         <form onSubmit={pressLogin}>
           <IconContext.Provider value={{ size: "1.25em", className: "loginIcon" }}>
             <span><MdAccountCircle /><input placeholder="Username" onChange={handleLoginFormUserChange} /></span>
