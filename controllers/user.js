@@ -1,6 +1,7 @@
 const Router = require('express-promise-router')
 const logger = require('../utils/logger')
 const db = require('../db/db')
+const jwt = require('jsonwebtoken')
 const argon2 = require('argon2')
 const router = new Router()
 const passwordChecker = require('../PasswordRequirements')
@@ -56,14 +57,22 @@ router.post('/api/login/', async (req,res) => {
   if(failqueueCheck(fingerprint,ip)){
     res.status(403).send({error:`You're doing that too much. Please wait a moment before trying again.`})
   } else {
-    const { rows } = await db.query('SELECT passwordhash FROM users WHERE username = $1',[username])
+    const { rows } = await db.query('SELECT id,passwordhash FROM users WHERE username = $1',[username])
     if(rows.length>0){
       const hashfromdb = rows[0].passwordhash
       const verifyok = await argon2.verify(hashfromdb, password)
       logger.info(`${username} logged in ${verifyok?'successfully':'unsucessfully'}`)
       if(verifyok){
         //do login stuff
-        res.send({info:'Logged in successfully! Welcome!'})
+
+        const userForToken = {
+          username:username,
+          id:rows[0].id
+        }
+
+        const token = jwt.sign(userForToken, process.env.SECRET)
+
+        res.send({token, info:'Logged in successfully! Welcome!'})
       } else {
         failqueueInsert(fingerprint,ip)
         res.status(403).send({error:'Wrong username or password provided',canReg:false})
@@ -75,6 +84,27 @@ router.post('/api/login/', async (req,res) => {
       res.status(403).send({error:'Wrong username or password provided',canReg:true})
     }
   }
+})
+
+const getTokenFrom = request => {
+  const authorization = request.get('authorization')
+  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+    return authorization.substring(7)
+  }
+  return null
+}
+
+//get user info, todo: get user's saved blocs here also
+router.get('/api/user/', async (req,res) => { 
+const token = getTokenFrom(req)
+  const decodedToken = jwt.verify(token, process.env.SECRET)
+  if (!token || !decodedToken.id) {
+    return res.status(401).json({ error: 'token missing or invalid' })
+  }
+    const { rows } = await db.query('SELECT username FROM users WHERE id = $1',[decodedToken.id])
+    if(rows.length>0){
+      return res.send({username:rows[0].username})
+    }
 })
 
 module.exports = router
