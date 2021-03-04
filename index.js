@@ -14,6 +14,8 @@ const fingerprint = require('express-fingerprint')
 const users = require('./controllers/user')
 
 app.use(fingerprint())
+
+app.use(middleware.requestLogger)
 app.use(users)
 
 app.get('/', (request, response) => {
@@ -23,7 +25,6 @@ const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddres
   logger.info("ip: ",ip)
 })
 
-app.use(middleware.requestLogger)
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 
