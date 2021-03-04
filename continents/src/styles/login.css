@@ -2,3 +2,13 @@
   margin-left: 0.25em;
   margin-right: 0.25em;
 }
+
+.fauxlinkbutton {
+  margin-left: 0.5em;
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  color: #069;
+  text-decoration: underline;
+  cursor: pointer;
+}
