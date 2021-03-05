@@ -2,8 +2,11 @@ const Router = require('express-promise-router')
 const logger = require('../utils/logger')
 const db = require('../db/db')
 const jwt = require('jsonwebtoken')
+const containsOnlyAlphaCodes = require('../alphacode.js')
 
 const router = new Router()
+
+const maxBlocNameLength = 70
 
 const getUserIdFromToken = req => {
   const auth = req.get('authorization')
@@ -26,9 +29,10 @@ router.post('/api/blocs', async (req, res) => {
     res.status(401).send({error:`Bad or missing login token`})
   } else if(!body.name){
     res.status(401).send({error:`Blocs require a name`})
-  } else if(!Array.isArray(body.countries)){
+  } else if(body.name.length>maxBlocNameLength){
+    res.status(401).send({error:`Bloc name too long. Maximum allowed length is ${maxBlocNameLength}`})
+  } else if(!containsOnlyAlphaCodes(body.countries)){
     res.status(401).send({error:`There was a syntax error with the bloc you are trying to save`})
-    //todo: validate that country array contains only alpha codes
   } else {
     await db.query('INSERT INTO blocs (created_by,data) VALUES ($1,$2)',[userId,body])
     logger.info('Saved bloc:',body)
