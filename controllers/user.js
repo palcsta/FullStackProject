@@ -94,7 +94,7 @@ const getTokenFrom = request => {
   return null
 }
 
-//get user info, todo: get user's saved blocs here also
+//get user info
 router.get('/api/user/', async (req,res) => { 
 const token = getTokenFrom(req)
   const decodedToken = jwt.verify(token, process.env.SECRET)
