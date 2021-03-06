@@ -1,29 +1,93 @@
-import React, { useState } from 'react';
+
 import Country from './Country';
 import Button from 'react-bootstrap/Button'
+
+
+import React, { useState, useEffect } from 'react';
+import DropdownButton from 'react-bootstrap/DropdownButton'
+import Dropdown from 'react-bootstrap/Dropdown'
+
+
+import Filter from './Filter'
+import axios from 'axios'
 import Map from './map.js'
 
-const style = {
-    display: 'inline',
-    border: '3px solid black',
-    borderradius: '20px',
-    'font-size': '29px',
 
-};
+
+
+
+
+
+
+
+
+
 const Countries = ({ countries }) => {
     const [index, setIndex] = useState(10);
     const [shown, setShown] = useState("")
+    const [fetched, setFetched] = useState([])
+    const color ="black"
+    const style  = {
+        display: 'inline',
+        border: '4px solid '+color,
+        borderradius: '20px',
+        'font-size': '29px',
 
+    };
+    const showed = countries.map(x => x.id.toUpperCase())
+    console.log("countries in countreis, ", countries)
+    console.log("fetched in countreis, ", fetched)
+    console.log("showed in countreis, ", showed)
+    console.log("MANIPULATIONS, ", fetched.filter(x => showed.includes(x.alpha2Code)).map(x => x.name))
 
+    const hook = () => {
+        // console.log('effect countries')
+        axios
+            .get('https://restcountries.eu/rest/v2/all')
+            .then(response => {
+                setFetched(response.data)
+                // console.log(countries)
 
-    const show = (i) => {
-        if (shown == "") { setShown(<Country country={countries[i]} />) }
-        else if (index == i) { setShown("") }
-        else setShown(<Country country={countries[i]} />)
-        setIndex(i)
+            })
     }
 
+    useEffect(hook, [])
 
+    const show = (i) => {
+        if (shown == "") { setShown(<Country country={i} />) }
+        else if (shown !== "") { setShown("") }
+        else setShown(<Country country={i} />)
+        //setIndex(i)
+    }
+    return (<>{/*<Map showing={countries} />*/}
+        {/*title()*/}
+        {fetched.filter(x => showed.includes(x.alpha2Code)).map((x, i) =>
+            <p style={{
+                display: 'inline',
+                border: '4px solid '+countries.filter(z => z.id.toUpperCase()==x.alpha2Code).map(y => y.color),
+                borderradius: '20px',
+                'font-size': '29px',
+        
+            }} ><a key={x.name} onClick={() => show(x)}>
+                {x.name}<img style={style} src={x.flag} alt={x.name}
+                    width="35" height="24">
+                </img>
+            </a></p>)}{shown}
+
+
+        {/*fetched !== []
+            ? fetched.map(x => showed.includes(x.alpha2Code)).map(x => <p>{x.name}</p>)
+        : ""*/}
+
+
+    </>
+    );
+}
+
+
+export default Countries
+
+/*
     const unique = (value, index, self) => {
         return self.indexOf(value) === index
     }
@@ -72,40 +136,28 @@ const Countries = ({ countries }) => {
         }
 
     }
+*/
 
 
 
-
-    const title = () => {
-        if (countries.length == 1) {
-            return (<p><Button onClick={() => paint()}>repaint: {countries[0].name} </Button></p>)
-        }
-        //console.log("countries.map(x => x.subregion).filter(unique) ",countries.map(x => x.subregion).filter(unique))
-        if (countries.length > 1 && countries.map(x => x.subregion).filter(unique).length == 1) {
-            return (<p><Button onClick={() => paint()}>repaint:{countries.map(x => x.subregion).filter(unique)[0]} </Button></p>)
-        }
-        if (countries.length > 1 && countries.map(x => x.subregion).filter(unique).length !== 1) {
-            return (<p><Button onClick={() => paint()}>repaint:{countries.map(x => x.region).filter(unique)[0]} </Button></p>)
-        } else {
-            return (<></>)
-        }
-
-
-
-
-
+/*const title = () => {
+    if (countries.length == 1) {
+        return (<p><Button onClick={() => paint()}>repaint: {countries[0].name} </Button></p>)
+    }
+    //console.log("countries.map(x => x.subregion).filter(unique) ",countries.map(x => x.subregion).filter(unique))
+    if (countries.length > 1 && countries.map(x => x.subregion).filter(unique).length == 1) {
+        return (<p><Button onClick={() => paint()}>repaint:{countries.map(x => x.subregion).filter(unique)[0]} </Button></p>)
+    }
+    if (countries.length > 1 && countries.map(x => x.subregion).filter(unique).length !== 1) {
+        return (<p><Button onClick={() => paint()}>repaint:{countries.map(x => x.region).filter(unique)[0]} </Button></p>)
+    } else {
+        return (<></>)
     }
 
-    return (<><Map showing={countries} />
-        {title()}
-        {countries.map((x, i) =>
-            <p style={style}><a key={x.name} onClick={() => show(i)}>
-                {x.name}<img style={style} src={x.flag} alt={x.name}
-                    width="35" height="24">
-                </img>
-            </a></p>)}{shown}</>
-    );
-}
 
 
-export default Countries
+
+
+}*/
+
+

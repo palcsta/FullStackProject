@@ -3,7 +3,7 @@ import axios from 'axios'
 import Country from './Country'
 import hoverer from '../styles/hoverer.css';
 import Button from 'react-bootstrap/Button'
-
+import Countries from './Countries'
 
 
 const Map = ({ showing }) => {
@@ -13,6 +13,7 @@ const Map = ({ showing }) => {
 
     const [already, setAlready] = useState()
     const [colo, setColo] = useState("black")
+    
 
 
     function getColor() {
@@ -63,13 +64,53 @@ const Map = ({ showing }) => {
         console.log("these are the painted countries", painted)
     }
 
+    const listSelected = () => {
+        let painted = []
+        var i;
+        let small = []    
+        if (document.querySelector('g') !== null) {
+
+            for (i = 0; i < document.querySelector('g').children.length; i++) {
+                if (document.querySelector('g').children[i].style.fill !== ""
+                    && document.querySelector('g').children[i].style.fill !== "black") {
+                    painted.push(
+                        {
+                            id: document.querySelector('g').children[i].id,
+                            color: document.querySelector('g').children[i].style.fill
+                        }
+                    )
+                }
+            }
+
+            if (chosen !== undefined) {
+                if (!painted.map(x => x.id.toUpperCase()).includes(chosen[0].alpha2Code)) {
+                    painted.push(
+                        {
+                            id: chosen[0].alpha2Code,
+                            color: "black"
+                        }
+
+                    )
+                }
+            }
+
+        }
+        return (<>Selected: ({painted.length})
+            unseen: {small.length}<p></p>
+            {painted.map(x => <>{x.id + "_" + x.color + "|"}</>)}
+            <Countries countries={painted}/>
+        </>)
+    }
+
+
+
     const listenToClicks = () => {
         if (showing[0] !== undefined) {
             console.log("showing.length == 1 ", showing.length == 1
                 , " already!==showing[0] ", already !== showing[0]
                 , " showing[0].alpha2Code!==already", showing[0].alpha2Code !== already)
         }
-        
+
         if (showing.length == 1 && already !== showing[0] && showing[0].alpha2Code !== already) {
             // console.log(already)
             setAlready(showing[0].alpha2Code)
@@ -83,7 +124,7 @@ const Map = ({ showing }) => {
 
                 document.querySelector('g').addEventListener('click', (event) => {
                     let color = getColor()
-                   // setColo(color)
+                    // setColo(color)
 
                     if (event.target.parentNode.id !== "") {
 
@@ -127,6 +168,7 @@ const Map = ({ showing }) => {
     }
     //if (showing.length == 1 && chosen.alpha2Code!==showing[0].alpha2Code) click(showing[0].alpha2Code)
     listenToClicks()
+    //listSelected()
 
     return (<>
         {chosen !== undefined
@@ -791,6 +833,8 @@ const Map = ({ showing }) => {
 
         </svg><Button onClick={() => clear()} secondary>Clear map</Button>
         <Button onClick={() => printSelected()} secondary>print selected(for later block implementation)</Button><p></p>
+
+        {listSelected()}
     </>
     )
 }
