@@ -34,11 +34,46 @@ router.post('/api/blocs', async (req, res) => {
   } else if(!containsOnlyAlphaCodes(body.countries)){
     res.status(401).send({error:`There was a syntax error with the bloc you are trying to save`})
   } else {
-    await db.query('INSERT INTO blocs (created_by,data) VALUES ($1,$2)',[userId,body])
-    logger.info('Saved bloc:',body)
-    res.status(200).send({info:'Bloc saved'})
+    const { rows } = await db.query(`SELECT id FROM blocs WHERE created_by = $1 AND data ->> 'name' = $2`,[userId,body.name])
+    if(rows.length>0){
+      logger.info(`found ${rows.length} rows matching created_by = ${userId} AND data ->> 'name' = ${body.name}`)
+      res.status(303).send({error:`A bloc with that name already exists`})
+    } else {
+      const blocToSave =(({ name, countries }) => ({ name, countries }))(body)
+      await db.query('INSERT INTO blocs (created_by,data) VALUES ($1,$2)',[userId,blocToSave])
+      logger.info('Saved bloc:',body)
+      res.status(200).send({info:'Bloc saved'})
+    }
   }
 })
+
+//update existing bloc
+router.put('/api/blocs/:id', async (req, res) => {
+  const body = req.body
+  const userId = getUserIdFromToken(req)
+  const blocId = req.params.id
+  if(!userId){
+    res.status(401).send({error:`Bad or missing login token`})
+  } else if(!body.name){
+    res.status(401).send({error:`Blocs require a name`})
+  } else if(body.name.length>maxBlocNameLength){
+    res.status(401).send({error:`Bloc name too long. Maximum allowed length is ${maxBlocNameLength}`})
+  } else if(!containsOnlyAlphaCodes(body.countries)){
+    res.status(401).send({error:`There was a syntax error with the bloc you are trying to save`})
+  } else {
+    const { rows } = await db.query(`SELECT id,data FROM blocs WHERE created_by = $1 AND id = $2`,[userId,blocId])
+    if(rows.length>0){
+      //bloc exists, lets update
+      logger.info(`updating bloc with ID ${blocId} created_by = ${userId}`)
+      const blocToSave =(({ name, countries }) => ({ name, countries }))(body)
+      await db.query(`UPDATE blocs SET data = $1 WHERE id = $2`,[blocToSave,blocId])
+      res.status(200).send({info:'Updated bloc'})
+    } else {
+      res.status(401).send({error:'No such bloc to update'})
+    }
+  }
+})
+
 
 router.get('/api/blocs/', async (req,res) => { 
   const userId = getUserIdFromToken(req)
