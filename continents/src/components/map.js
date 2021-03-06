@@ -3,7 +3,7 @@ import axios from 'axios'
 import Country from './Country'
 import hoverer from '../styles/hoverer.css';
 import Button from 'react-bootstrap/Button'
-
+import Countries from './Countries'
 
 
 const Map = ({ showing }) => {
@@ -13,6 +13,7 @@ const Map = ({ showing }) => {
 
     const [already, setAlready] = useState()
     const [colo, setColo] = useState("black")
+    
 
 
     function getColor() {
@@ -66,17 +67,38 @@ const Map = ({ showing }) => {
     const listSelected = () => {
         let painted = []
         var i;
+        let small = []    
         if (document.querySelector('g') !== null) {
+
             for (i = 0; i < document.querySelector('g').children.length; i++) {
                 if (document.querySelector('g').children[i].style.fill !== ""
                     && document.querySelector('g').children[i].style.fill !== "black") {
-                    painted.push(document.querySelector('g').children[i].id)
+                    painted.push(
+                        {
+                            id: document.querySelector('g').children[i].id,
+                            color: document.querySelector('g').children[i].style.fill
+                        }
+                    )
                 }
             }
+
+            if (chosen !== undefined) {
+                if (!painted.map(x => x.id.toUpperCase()).includes(chosen[0].alpha2Code)) {
+                    painted.push(
+                        {
+                            id: chosen[0].alpha2Code,
+                            color: "black"
+                        }
+
+                    )
+                }
+            }
+
         }
-        return (<>Selected countries: ({painted.length})
-                
-        
+        return (<>Selected: ({painted.length})
+            unseen: {small.length}<p></p>
+            {painted.map(x => <>{x.id + "_" + x.color + "|"}</>)}
+            <Countries countries={painted}/>
         </>)
     }
 
@@ -811,7 +833,7 @@ const Map = ({ showing }) => {
 
         </svg><Button onClick={() => clear()} secondary>Clear map</Button>
         <Button onClick={() => printSelected()} secondary>print selected(for later block implementation)</Button><p></p>
-    
+
         {listSelected()}
     </>
     )
