@@ -23,7 +23,7 @@ const Countries = ({ countries }) => {
         setIndex(i)
     }
 
-
+/*
     const unique = (value, index, self) => {
         return self.indexOf(value) === index
     }
@@ -72,11 +72,11 @@ const Countries = ({ countries }) => {
         }
 
     }
+*/
 
 
 
-
-    const title = () => {
+    /*const title = () => {
         if (countries.length == 1) {
             return (<p><Button onClick={() => paint()}>repaint: {countries[0].name} </Button></p>)
         }
@@ -94,16 +94,16 @@ const Countries = ({ countries }) => {
 
 
 
-    }
+    }*/
 
-    return (<><Map showing={countries} />
-        {title()}
-        {countries.map((x, i) =>
+    return (<>{/*<Map showing={countries} />*/}
+        {/*title()*/}
+        {/*countries.map((x, i) =>
             <p style={style}><a key={x.name} onClick={() => show(i)}>
                 {x.name}<img style={style} src={x.flag} alt={x.name}
                     width="35" height="24">
                 </img>
-            </a></p>)}{shown}</>
+        </a></p>)*/}{shown}</>
     );
 }
 

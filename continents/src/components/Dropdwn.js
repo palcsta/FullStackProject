@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button'
 import Countries from './Countries'
 import Filter from './Filter'
 import axios from 'axios'
-
+import Map from './map.js'
 
 const unique = (value, index, self) => {
     return self.indexOf(value) === index
@@ -155,8 +155,8 @@ const hook = () => {
 
 
             {paint()}
-            <Countries countries={filtered}               
-            />
+            {/*<Countries countries={filtered}/>*/}
+            {<Map showing={filtered}/>}
 
 
 
