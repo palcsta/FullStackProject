@@ -4,7 +4,6 @@ import { IconContext } from 'react-icons'
 import '../styles/login.css'
 import axios from 'axios'
 
-
 const LoginForm = (props) => {
 
   const [username, setUsername] = useState('')
@@ -12,10 +11,6 @@ const LoginForm = (props) => {
   const [showReg, setShowReg] = useState(false)
   const [regPassConfirm, setRegPassConfirm] = useState('')
   const [user, setUser]=useState(null)
-  const p = {
-    "border": "1px solid black",
-    "border-radius": "3px"
-  }
 
   useEffect(() => {
     const userJSON = window.localStorage.getItem('loggedContinentsUser')
@@ -30,7 +25,6 @@ const LoginForm = (props) => {
     const url = `api/login`
     axios.post(url,loginObject,{baseURL: `${window.location.protocol}//${window.location.hostname}:${props.apiPort}`}).then(response => {
       if(response.data.token){
-        console.log("GOT TOKEN=",response.data.token)
         let user = {token:response.data.token,username:username}
         window.localStorage.setItem(
           'loggedContinentsUser', JSON.stringify(user)

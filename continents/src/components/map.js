@@ -3,6 +3,7 @@ import axios from 'axios'
 import Country from './Country'
 import hoverer from '../styles/hoverer.css';
 import Button from 'react-bootstrap/Button'
+import SaveBlocForm from './SaveBloc'
 
 
 
@@ -13,6 +14,10 @@ const Map = ({ showing }) => {
 
     const [already, setAlready] = useState()
     const [colo, setColo] = useState("black")
+
+
+    const [showSaveBlocForm, setShowSaveBlocForm] = useState(false)
+    const [countriesToSave, setCountriesToSave] = useState([])
 
 
     function getColor() {
@@ -61,6 +66,8 @@ const Map = ({ showing }) => {
             }
         }
         console.log("these are the painted countries", painted)
+        setCountriesToSave(painted)
+        setShowSaveBlocForm(true)
     }
 
     const listenToClicks = () => {
@@ -790,7 +797,10 @@ const Map = ({ showing }) => {
             </g>
 
         </svg><Button onClick={() => clear()} secondary>Clear map</Button>
-        <Button onClick={() => printSelected()} secondary>print selected(for later block implementation)</Button><p></p>
+        <Button onClick={() => {printSelected()}} secondary>New Bloc</Button><p></p>
+        <div style={{display:showSaveBlocForm?"inline":"none"}}>
+        <SaveBlocForm setShowSaveBlocForm={setShowSaveBlocForm} countriesToSave={countriesToSave}/>
+                </div>
     </>
     )
 }
