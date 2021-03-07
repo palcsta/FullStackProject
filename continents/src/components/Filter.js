@@ -74,7 +74,7 @@ const Filter = ({ countries, country, paint }) => {
   return (
     <>{country !== undefined  //&& searched==""
       ?  (searched==""?<Country country={countries.filter(x => x.alpha2Code == country)[0]} paint={paint} />: selected)
-      : selected}
+      : (searched!=="" ? selected : "")}
 
       <div style={{ "text-align": "center" }}>
         <input placeholder="Search for the country" value={searched}

@@ -19,28 +19,18 @@ const Map = ({ showing, countries }) => {
         return `#${R}${G}${B}`
     }
     const click = (props) => {
-
         //console.log("is countries not empty in click?!?!?", countries )
         console.log("props in click ", props)
-
         setChosen(props.toUpperCase())
-
-
-
-
 
     }
 
     const clear = () => {
         var i;
-
-
         for (i = 0; i < document.querySelector('g').children.length; i++) {
             document.querySelector('g').children[i].style.fill = "black"
         }
-
         setChosen(undefined)
-
     }
 
 
@@ -84,6 +74,8 @@ const Map = ({ showing, countries }) => {
         </>)
     }
 
+
+    
 
 
     const listenToClicks = () => {
@@ -815,7 +807,7 @@ const Map = ({ showing, countries }) => {
                     d="M468.52,578.226l7.755,8.757l5.946,1.513l3.984-6.248l-0.312-8.281l-6.465-3.337l-2.431,1.098l-3.62,5.524l-5.014-0.053L468.52,578.226L468.52,578.226z" />
             </g>
 
-        </svg><Button onClick={() => clear()} secondary>Clear map</Button><Button onClick={() => click("_")} secondary>update</Button>
+        </svg><Button onClick={() => clear()} secondary>Clear map</Button><Button onClick={() => click("")} secondary>update</Button>
         <Button hidden onClick={() => printSelected()} secondary>print selected(for later block implementation)</Button><p></p>
 
         {listSelected()}
