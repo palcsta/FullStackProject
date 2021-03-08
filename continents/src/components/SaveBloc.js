@@ -1,5 +1,9 @@
 import React, { useState } from 'react'
+import Button from 'react-bootstrap/Button'
+import { MdSave } from 'react-icons/md'
+import { IconContext } from 'react-icons'
 import axios from 'axios'
+import '../styles/SaveBloc.css'
 
 const SaveBlocForm = (props) => {
 
@@ -42,10 +46,13 @@ const SaveBlocForm = (props) => {
         <>
             <form onSubmit={pressSave}>
                 <div>
-                    <label for="bloc-name">Bloc Name</label>
+                    <label for="bloc-name">Name</label>
                     <input type="text" id="bloc-name" placeholder="Enter bloc name" onChange={handleBlocNameChange} />
                 </div>
-                <button type="submit">Save</button>
+
+                <IconContext.Provider value={{ size: "1.25em", className: "saveButtonIcon" }}>
+                    <Button variant="primary" type="submit"><MdSave/> Save</Button>
+                </IconContext.Provider>
             </form>
         </>
     )
