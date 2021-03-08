@@ -18,6 +18,9 @@ app.use(fingerprint())
 app.use(middleware.requestLogger)
 app.use(users)
 
+const blocs = require('./controllers/bloc')
+app.use(blocs)
+
 app.get('/', (request, response) => {
   response.json({ info: 'Auth' })
   logger.info('fingerprint :',request.fingerprint.hash)
