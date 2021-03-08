@@ -4,16 +4,12 @@ import Country from './Country'
 import hoverer from '../styles/hoverer.css';
 import Button from 'react-bootstrap/Button'
 import Countries from './Countries'
+import Filter from './Filter'
 
-
-const Map = ({ showing }) => {
-
-
+const Map = ({ showing, countries }) => {
     const [chosen, setChosen] = useState(undefined)
-
     const [already, setAlready] = useState()
     const [colo, setColo] = useState("black")
-    
 
 
     function getColor() {
@@ -23,31 +19,18 @@ const Map = ({ showing }) => {
         return `#${R}${G}${B}`
     }
     const click = (props) => {
-
-
-        axios
-            .get('https://restcountries.eu/rest/v2/all')
-            .then(response => {
-                setChosen(response.data.filter(
-                    x =>
-                        x.alpha2Code.toUpperCase().includes(
-                            props.toUpperCase())))
-
-            })
-
+        //console.log("is countries not empty in click?!?!?", countries )
+        console.log("props in click ", props)
+        setChosen(props.toUpperCase())
 
     }
 
     const clear = () => {
         var i;
-
-
         for (i = 0; i < document.querySelector('g').children.length; i++) {
             document.querySelector('g').children[i].style.fill = "black"
         }
-
         setChosen(undefined)
-
     }
 
 
@@ -67,7 +50,7 @@ const Map = ({ showing }) => {
     const listSelected = () => {
         let painted = []
         var i;
-        let small = []    
+        let small = []
         if (document.querySelector('g') !== null) {
 
             for (i = 0; i < document.querySelector('g').children.length; i++) {
@@ -82,26 +65,17 @@ const Map = ({ showing }) => {
                 }
             }
 
-            if (chosen !== undefined) {
-                if (!painted.map(x => x.id.toUpperCase()).includes(chosen[0].alpha2Code)) {
-                    painted.push(
-                        {
-                            id: chosen[0].alpha2Code,
-                            color: "black"
-                        }
-
-                    )
-                }
-            }
 
         }
         return (<>Selected: ({painted.length})
             unseen: {small.length}<p></p>
-            {painted.map(x => <>{x.id + "_" + x.color + "|"}</>)}
-            <Countries countries={painted}/>
+            {/*painted.map(x => <>{x.id + "_" + x.color + "|"}</>)*/}
+            <Countries countries={painted} />
         </>)
     }
 
+
+    
 
 
     const listenToClicks = () => {
@@ -170,16 +144,18 @@ const Map = ({ showing }) => {
     listenToClicks()
     //listSelected()
 
-    return (<>
-        {chosen !== undefined
+    return (<>{countries !== []
+        ? <>{console.log("countries next to filter ", countries)}
+            {<Filter countries={countries} country={chosen} paint={colo} />}</>
+        : "couldnt fetch countries for search"
+    }
+        {/*chosen !== undefined
             ? <Country country={chosen[0]} paint={colo} />
-            : ""}
+        : ""*/}
 
 
 
         <svg style={hoverer} viewBox="30.767 241.591 784.077 458.627" xmlns="http://www.w3.org/2000/svg">
-
-
 
             <g >
 
@@ -831,8 +807,8 @@ const Map = ({ showing }) => {
                     d="M468.52,578.226l7.755,8.757l5.946,1.513l3.984-6.248l-0.312-8.281l-6.465-3.337l-2.431,1.098l-3.62,5.524l-5.014-0.053L468.52,578.226L468.52,578.226z" />
             </g>
 
-        </svg><Button onClick={() => clear()} secondary>Clear map</Button>
-        <Button onClick={() => printSelected()} secondary>print selected(for later block implementation)</Button><p></p>
+        </svg><Button onClick={() => clear()} secondary>Clear map</Button><Button onClick={() => click("")} secondary>update</Button>
+        <Button hidden onClick={() => printSelected()} secondary>print selected(for later block implementation)</Button><p></p>
 
         {listSelected()}
     </>
