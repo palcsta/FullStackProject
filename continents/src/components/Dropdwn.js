@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button'
 import Countries from './Countries'
 import Filter from './Filter'
 import axios from 'axios'
-
+import Map from './map.js'
 
 const unique = (value, index, self) => {
     return self.indexOf(value) === index
@@ -80,7 +80,7 @@ const hook = () => {
      
       })
   }
-
+  //hook()
   useEffect(hook, [])
 
     const continents = countries.filter(x => x.region !== "Polar").map(x => x.region).filter(unique)
@@ -92,7 +92,7 @@ const hook = () => {
     //console.log('sub-continents in dropdown: ', polar)
     //console.log("data in dropdown: ", noContinent)
     return (<>
-    <Filter countries={countries}/>
+    {/*<Filter countries={countries}/>*/}
         <div align="center" class="panel-footer " split>
             <DropdownButton id="dropdown-basic-button" title="Browse" split>
                 {continents.filter(x => x !== "").map(x => <>
@@ -155,8 +155,9 @@ const hook = () => {
 
 
             {paint()}
-            <Countries countries={filtered}               
-            />
+            {/*<Countries countries={filtered}/>*/}
+            {/*<Filter countries={countries} filter={filtered}/>*/}
+            {<Map showing={filtered} countries={countries}/>}
 
 
 

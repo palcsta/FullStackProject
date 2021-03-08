@@ -40,12 +40,12 @@ const l = {
 
 const Country = ({ country, paint }) => {
   let color = "red"
-  if(typeof paint === 'string'){
-    color=paint
-  }else{
-     color = "red"
+  if (typeof paint === 'string') {
+    color = paint
+  } else {
+    color = "red"
   }
-  
+
 
   const style = {
     display: 'flex',
@@ -60,7 +60,7 @@ const Country = ({ country, paint }) => {
     width: "175",
     height: "120"
   };
-  
+
 
 
   //paint!== undefined ? color="cyan" : color = "green"
@@ -68,7 +68,7 @@ const Country = ({ country, paint }) => {
   const [showing, setShowing] = useState(country !== undefined)
   const [religion, setReligion] = useState(" no religion data...")
   const [currency, setCurrency] = useState(" no currency data...")
-  if (country === null || country === undefined) {
+  if (country === null || country === undefined || country === [] || country.timezones === undefined) {
     return (<></>)
   }
 

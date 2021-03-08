@@ -24,6 +24,9 @@
 |1.2|1| fixed the conflict when selected country details from chart freezez
 |2.3|1| added coloring to map selection, so ull remember which map you selected and where it is on map
 |2.3|1| implemented button of selected country/region/subregion which repaints selected from the list, also improved it visually
+|6.3|2| reimplemented Countries.js and started implementation of listSelected() function
+|6.3|3| now listing paints the border of the selected country and only lists the selected country
+|7.3|5| fixed bugs with painting
 # työaikakirjanpito(Emil)
 
 | päivä | aika | mitä tein  |

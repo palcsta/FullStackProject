@@ -4,14 +4,11 @@ import Country from './Country'
 import hoverer from '../styles/hoverer.css';
 import Button from 'react-bootstrap/Button'
 import SaveBlocForm from './SaveBloc'
+import Countries from './Countries'
+import Filter from './Filter'
 
-
-
-const Map = ({ showing }) => {
-
-
+const Map = ({ showing, countries }) => {
     const [chosen, setChosen] = useState(undefined)
-
     const [already, setAlready] = useState()
     const [colo, setColo] = useState("black")
 
@@ -27,31 +24,18 @@ const Map = ({ showing }) => {
         return `#${R}${G}${B}`
     }
     const click = (props) => {
-
-
-        axios
-            .get('https://restcountries.eu/rest/v2/all')
-            .then(response => {
-                setChosen(response.data.filter(
-                    x =>
-                        x.alpha2Code.toUpperCase().includes(
-                            props.toUpperCase())))
-
-            })
-
+        //console.log("is countries not empty in click?!?!?", countries )
+        console.log("props in click ", props)
+        setChosen(props.toUpperCase())
 
     }
 
     const clear = () => {
         var i;
-
-
         for (i = 0; i < document.querySelector('g').children.length; i++) {
             document.querySelector('g').children[i].style.fill = "black"
         }
-
         setChosen(undefined)
-
     }
 
 
@@ -70,13 +54,44 @@ const Map = ({ showing }) => {
         setShowSaveBlocForm(true)
     }
 
+    const listSelected = () => {
+        let painted = []
+        var i;
+        let small = []
+        if (document.querySelector('g') !== null) {
+
+            for (i = 0; i < document.querySelector('g').children.length; i++) {
+                if (document.querySelector('g').children[i].style.fill !== ""
+                    && document.querySelector('g').children[i].style.fill !== "black") {
+                    painted.push(
+                        {
+                            id: document.querySelector('g').children[i].id,
+                            color: document.querySelector('g').children[i].style.fill
+                        }
+                    )
+                }
+            }
+
+
+        }
+        return (<>Selected: ({painted.length})
+            unseen: {small.length}<p></p>
+            {/*painted.map(x => <>{x.id + "_" + x.color + "|"}</>)*/}
+            <Countries countries={painted} />
+        </>)
+    }
+
+
+    
+
+
     const listenToClicks = () => {
         if (showing[0] !== undefined) {
             console.log("showing.length == 1 ", showing.length == 1
                 , " already!==showing[0] ", already !== showing[0]
                 , " showing[0].alpha2Code!==already", showing[0].alpha2Code !== already)
         }
-        
+
         if (showing.length == 1 && already !== showing[0] && showing[0].alpha2Code !== already) {
             // console.log(already)
             setAlready(showing[0].alpha2Code)
@@ -90,7 +105,7 @@ const Map = ({ showing }) => {
 
                 document.querySelector('g').addEventListener('click', (event) => {
                     let color = getColor()
-                   // setColo(color)
+                    // setColo(color)
 
                     if (event.target.parentNode.id !== "") {
 
@@ -134,17 +149,20 @@ const Map = ({ showing }) => {
     }
     //if (showing.length == 1 && chosen.alpha2Code!==showing[0].alpha2Code) click(showing[0].alpha2Code)
     listenToClicks()
+    //listSelected()
 
-    return (<>
-        {chosen !== undefined
+    return (<>{countries !== []
+        ? <>{console.log("countries next to filter ", countries)}
+            {<Filter countries={countries} country={chosen} paint={colo} />}</>
+        : "couldnt fetch countries for search"
+    }
+        {/*chosen !== undefined
             ? <Country country={chosen[0]} paint={colo} />
-            : ""}
+        : ""*/}
 
 
 
         <svg style={hoverer} viewBox="30.767 241.591 784.077 458.627" xmlns="http://www.w3.org/2000/svg">
-
-
 
             <g >
 
@@ -796,11 +814,14 @@ const Map = ({ showing }) => {
                     d="M468.52,578.226l7.755,8.757l5.946,1.513l3.984-6.248l-0.312-8.281l-6.465-3.337l-2.431,1.098l-3.62,5.524l-5.014-0.053L468.52,578.226L468.52,578.226z" />
             </g>
 
-        </svg><Button onClick={() => clear()} secondary>Clear map</Button>
+        </svg>
         <Button onClick={() => {printSelected()}} secondary>New Bloc</Button><p></p>
         <div style={{display:showSaveBlocForm?"inline":"none"}}>
-        <SaveBlocForm setShowSaveBlocForm={setShowSaveBlocForm} countriesToSave={countriesToSave}/>
-                </div>
+                <SaveBlocForm setShowSaveBlocForm={setShowSaveBlocForm} countriesToSave={countriesToSave}/>
+        </div>
+        <Button onClick={() => clear()} secondary>Clear map</Button><Button onClick={() => click("")} secondary>update</Button>
+
+        {listSelected()}
     </>
     )
 }
