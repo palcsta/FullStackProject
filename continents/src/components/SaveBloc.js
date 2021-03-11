@@ -2,48 +2,40 @@ import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import { MdSave } from 'react-icons/md'
 import { IconContext } from 'react-icons'
-import axios from 'axios'
 import '../styles/SaveBloc.css'
+import { saveBlocService } from '../services/blocService'
 
 const SaveBlocForm = (props) => {
 
-    //props: apiPort, props.setNotifMessage, showSaveBlocForm
-
-    const apiPort = props.apiPort?props.apiPort:"3003"
-
     const [blocName, setBlocName] = useState('')
+    const [showSaveBlocForm, setShowSaveBlocForm] = useState(false)
 
     const handleBlocNameChange = (event) => {
+        event.preventDefault()
         setBlocName(event.target.value)
     }
 
     const pressSave = (event) => {
         event.preventDefault()
-        console.log("countries to save in bloc:", props.countriesToSave)
-        const blocObject = {name:blocName,countries:props.countriesToSave}
-        const token = "bearer "+JSON.parse(window.localStorage.getItem('loggedContinentsUser')).token
-        const url = "api/blocs"
-        axios.post(url,blocObject,{ headers: { Authorization: token }, baseURL: `${window.location.protocol}//${window.location.hostname}:${apiPort}`}).then(response => {
-            console.log(response.data)
-            //setTimeout(() => {
-            // props.setNotifMessage(null)
-            // }, 5000)
+        const blocObject = {name:blocName,countries:props.selected}
+        const token = `bearer ${props.user.token}`
+            saveBlocService(blocObject,token).then(response => {
+            console.log(response)
         }).catch(error => {
-            console.log(error.response.data)
-            //setTimeout(() => {
-            //props.setNotifMessage(null)
-            //}, 5000)
+            console.log(error.response)
         })
     }
 
-    const pressCancel = (event) => {
-        event.preventDefault()
-        props.setShowSaveBlocForm(false)
+    const pressCancel = () => {
+        console.log("pressed cancel, showSaveBlocForm was ",showSaveBlocForm)
+        setShowSaveBlocForm(false)
+        console.log("pressed cancel, showSaveBlocForm is now ",showSaveBlocForm)
         setBlocName('')
     }
 
     return (
         <>
+            {!showSaveBlocForm||!props.user?<Button disabled={!props.user} onClick={()=>setShowSaveBlocForm(true)}>New Bloc</Button>: 
             <form onSubmit={pressSave}>
                 <div>
                     <label for="bloc-name">Name</label>
@@ -52,8 +44,10 @@ const SaveBlocForm = (props) => {
 
                 <IconContext.Provider value={{ size: "1.25em", className: "saveButtonIcon" }}>
                     <Button variant="primary" type="submit"><MdSave/> Save</Button>
+                    <Button variant="secondary" onClick={()=>pressCancel()}>Cancel</Button>
                 </IconContext.Provider>
             </form>
+                }
         </>
     )
 
