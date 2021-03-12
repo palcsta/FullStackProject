@@ -19,6 +19,21 @@ const LoginForm = (props) => {
   const [showReg, setShowReg] = useState(false)
   const [regPassConfirm, setRegPassConfirm] = useState('')
 
+  useEffect(() => {
+    const userJSON = window.localStorage.getItem('loggedContinentsUser')
+    if (userJSON) {
+      const loggedInUser = JSON.parse(userJSON)
+      props.setUser(loggedInUser)
+      const fetchBlocs = async () => {
+        await getBlocsService(`bearer ${loggedInUser.token}`).then(res => {
+          console.log("got blocs: ",res)
+          props.setBlocs(res)
+        })
+      }
+      fetchBlocs()
+    }
+  }, [])
+
   /* there's no clientside verification
   const handleSubmit = (event) => {
     const form = event.currentTarget;
