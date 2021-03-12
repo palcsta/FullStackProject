@@ -1,56 +1,21 @@
 import React, { useEffect, useRef } from "react";
 import '../styles/hoverer.css'
 
-const getNewColor = () => {
-    const R = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
-    const G = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
-    const B = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
-    return `#${R}${G}${B}`
-}
 
 const Map3 = (props) => {
   let svgRef = useRef(null);
 
-  const handleCountryClick = (clickedId) => {
-      //console.log("clicked ",clickedId)
-        if(!props.selected.includes(clickedId)){
-            props.setSelected([...props.selected,clickedId])
-            props.setMapColor([...props.mapColor,{id:clickedId,color:getNewColor()}])
-            props.setShowDetail(clickedId)
-        }else{
-            props.setSelected(props.selected.filter(s => s!==clickedId))
-            props.setMapColor(props.mapColor.filter(e => e.id!==clickedId))
-            props.setShowDetail(null)
-        }
-    }
-
 useEffect(() => {
-      const newMapColorsToSave = []
        Array.from(svgRef.current.firstChild.children).forEach(c => {
-         c.onclick = (event) =>  {handleCountryClick(event.target.id?event.target.id:event.target.parentNode.id)}
-         if(props.selected.includes(c.id)){
-            let myColorObj = props.mapColor.find(e => e.id===c.id) 
-            let mc2 = newMapColorsToSave.find(e => e.id===c.id)
-           if(myColorObj||mc2){
-              //console.log(`found previously colored ${c.id} with color ${myColorObj.color}`)
+         c.onclick = (event) => {props.clickOne(c.id)}
+          let myColorObj = props.mapColor.find(e => e.id===c.id) 
+           if(myColorObj){
               c.style.fill=myColorObj.color
-            } else if(newMapColorsToSave.length){
-              //console.log("coloring multiple")
-              let myNewColor=newMapColorsToSave[0].color
-              c.style.fill=myNewColor
-              newMapColorsToSave.push({id:c.id,color:myNewColor})
-            }else {
-              //console.log(`selection came from elsewhere, let's give ${c.id} a new color`)
-              let myNewColor=getNewColor()
-              c.style.fill=myNewColor
-              newMapColorsToSave.push({id:c.id,color:myNewColor})
-            }
          }else{
             c.style.fill = "black"
          }
         })
-        props.setMapColor([...props.mapColor,...newMapColorsToSave])
-    }, [props.selected])
+    }, [props.mapColor])
 
 
   return (

@@ -29,12 +29,12 @@ const CountriesDropdown = (props) => {
               <Dropdown >
                 <Button onClick={() => {
                   let matchingRegion = props.countries.filter(r => r.region === x)
-                  console.log("selecting ",matchingRegion)
+                  //console.log("selecting ",matchingRegion)
                   let selection = []
                   matchingRegion.forEach(match => selection.push(getA2(match)))
-                  console.log("selecting alphacodes ",selection)
-                  props.setSelected([...props.selected,...selection]
-                  )}} variant="info">{x}</Button>
+                  //console.log("selecting alphacodes ",selection)
+                  props.selectMany(selection)
+                  }} variant="info">{x}</Button>
                 <Dropdown.Toggle split="true" variant="success" id="dropdown-custom-2" />
                 <Dropdown.Menu className="super-colors">
 
@@ -44,11 +44,11 @@ const CountriesDropdown = (props) => {
                           <Dropdown key={z}>
                             <Button onClick={() => {
                               let matchingSubregion = props.countries.filter(g => g.subregion === z)
-                              console.log("selecting ", matchingSubregion)
+                              //console.log("selecting ", matchingSubregion)
                               let selection = []
                               matchingSubregion.forEach(match => selection.push(getA2(match)))
-                              console.log("selecting alphacodes ",selection)
-                              props.setSelected([...props.selected,...selection])}} variant="info">{"   " + z}
+                              //console.log("selecting alphacodes ",selection)
+                              props.selectMany(selection)}} variant="info">{"   " + z}
                             </Button>
                             <Dropdown.Toggle split="true" variant="success" id="dropdown-custom-2" />
                             <Dropdown.Menu className="super-colors">
@@ -57,14 +57,11 @@ const CountriesDropdown = (props) => {
                                 <Dropdown.Item 
                                   key={b.name}
                                   onClick={() => {
-                                    let matchingCountry = props.countries.filter(q => q.name === b.name)
-                                    console.log("selecting one country?",matchingCountry)
-                                    let selection = []
-                                      matchingCountry.forEach(match => selection.push(getA2(match)))
-                                    console.log("selecting alphacodes ",selection)
-                                    props.setSelected([...props.selected,...selection])
-                                    console.log("dropdown setting showDetail to ",selection[0])
-                                    props.setShowDetail(selection[0])
+                                    let matchingCountry = props.countries.find(q => q.name === b.name)
+                                    //console.log("selecting one country?",matchingCountry)
+                                     let  selection = getA2(matchingCountry)
+                                    //console.log("selecting alphacode ",selection)
+                                    props.selectOne(selection)
                                     }
                                   }>
                                   {b.name}
@@ -84,27 +81,27 @@ const CountriesDropdown = (props) => {
           <DropdownButton variant="info" id="dropdown-basic-button" title="Other">
             {other.map(x => <><Dropdown.Item key={x} onClick={() => {
               let matchingOther = props.countries.filter(q => q.name === x)
-              console.log("selecting ",matchingOther)
-              let selection = []
-              matchingOther.forEach(match => selection.push(getA2(match)))
-              props.setShowDetail(selection[0])
-              props.setSelected([...props.selected,...selection])
+              //console.log("selecting one from other ",matchingOther)
+              let selection = getA2(matchingOther[0])
+              props.selectOne(selection)
             }}>{x}</Dropdown.Item></>)}
             {polar.map(x => <><Dropdown.Item key={x} onClick={() => {
-              let matchingPolar = props.countries.filter(q => q.name === x)
-              console.log("selecting one?",matchingPolar)
-              let selection = []
-              matchingPolar.forEach(match => selection.push(getA2(match)))
-              props.setShowDetail(selection[0])
-              props.setSelected([...props.selected,...selection])
+              let matchingOther = props.countries.filter(q => q.name === x)
+              //console.log("selecting one from polar ",matchingOther)
+              let selection = getA2(matchingOther[0])
+              props.selectOne(selection)
             }}>{x + "(Polar)"}</Dropdown.Item></>)}
           </DropdownButton>
             <Dropdown.Divider />
           <DropdownButton variant="info" id="dropdown-basic-button" title="User's blocs">
             {props.blocs.map(x => <><Dropdown.Item key={x.id} onClick={() => {
               let matchingBloc = x.data.countries
-              console.log("selecting ",matchingBloc)
-              props.setSelected([...props.selected,...matchingBloc])
+              //console.log("selecting ",matchingBloc)
+              if(matchingBloc.length>1){
+                props.selectMany(matchingBloc)
+              } else {
+                props.selectOne(matchingBloc[0])
+              }
             }}>{x.data.name}</Dropdown.Item></>)}
           </DropdownButton>
         </DropdownButton>

@@ -11,6 +11,14 @@ import SelectedFlags from './components/SelectedFlags'
 import SaveBloc from './components/SaveBloc'
 import Footer from './components/Footer'
 
+
+const getNewColor = () => {
+  const R = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
+  const G = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
+  const B = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
+  return `#${R}${G}${B}`
+}
+
 function App() {
 
   const [selected,setSelected] = useState([])
@@ -29,18 +37,74 @@ function App() {
     fetchCountries()
   }, [])
 
+  const selectOne = (id) => {
+    //console.log("selectOne called for ",id)
+    if(selected.includes(id)){
+      //give it a new color
+      setMapColor([...mapColor.filter(c=>c.id!==id),{id:id,color:getNewColor()}]) 
+    } else {
+      setSelected([...selected,id])
+      setMapColor([...mapColor,{id:id,color:getNewColor()}])
+    }
+    setShowDetail(id)
+  }
+
+  const deselectOne = (id) => {
+    if(showDetail===id){
+      setShowDetail(null)
+    }
+    setSelected(selected.filter(c=>c!==id))
+    setMapColor(mapColor.filter(c=>c.id!==id)) 
+  }
+
+  const deselectKeepDetails = (id) => {
+    setSelected(selected.filter(c=>c!==id))
+    setMapColor(mapColor.filter(c=>c.id!==id)) 
+  }
+
+  const selectMany = (ids) => {
+    let ourColor = getNewColor()
+    let newColors = []
+    let newSelections = []
+    ids.forEach(country=>{
+      if(!selected.includes(country)){
+        newSelections.push(country)
+        newColors.push({id:country,color:ourColor})
+      }
+    })
+    setSelected([...selected,...newSelections])
+    setMapColor([...mapColor,...newColors])
+  }
+
+  const clickOne = (clickedId) => {
+    if(selected.includes(clickedId)){
+      if(showDetail===clickedId){
+        setShowDetail(null)
+        console.log("showDetail:", showDetail)
+      }
+      setSelected(selected.filter(c=>c!==clickedId))
+      setMapColor(mapColor.filter(c=>c.id!==clickedId)) 
+
+    } else {
+      setSelected([...selected,clickedId])
+      setMapColor([...mapColor,{id:clickedId,color:getNewColor()}])
+      console.log("showing detail for ",clickedId)
+      setShowDetail(clickedId)
+    }
+  }
+
   return (
     <div className="container" style={{border:"2px solid cyan",borderRadius:"5px"}}>
       <LoginForm user={user} setUser={setUser} setBlocs={setBlocs}/>
-      <Filter countries={countries} showDetail={showDetail} setShowDetail={setShowDetail} selected={selected} setSelected={setSelected} />
-      <CountryDetails countries={countries} showDetail={showDetail} setShowDetail={setShowDetail} mapColor={mapColor} selected={selected} setSelected={setSelected}/>
-      <CountriesDropdown countries={countries} selected={selected} setSelected={setSelected} setShowDetail={setShowDetail} blocs={blocs} />
-      <Map3 selected={selected} setSelected={setSelected} mapColor={mapColor} setMapColor={setMapColor} setShowDetail={setShowDetail} />
+      <Filter countries={countries} showDetail={showDetail} setShowDetail={setShowDetail} selected={selected} setSelected={setSelected} dkd={deselectKeepDetails}/>
+      <CountryDetails countries={countries} showDetail={showDetail} mapColor={mapColor} selected={selected} selectOne={selectOne} dkd={deselectKeepDetails}/>
+      <CountriesDropdown countries={countries} setShowDetail={setShowDetail} blocs={blocs} selectOne={selectOne} selectMany={selectMany}/>
+      <Map3 mapColor={mapColor} clickOne={clickOne} />
       <div>
-        <Button variant="warning" onClick={()=>{setSelected([]);setMapColor([])}}>Clear map</Button>
+        <Button variant="warning" onClick={()=>{setShowDetail(null);setSelected([]);setMapColor([])}}>Clear map</Button>
         <SaveBloc selected={selected} user={user}/>
       </div>
-      <SelectedFlags countries={countries} selected={selected} setSelected={setSelected} mapColor={mapColor} setShowDetail={setShowDetail} />
+      <SelectedFlags countries={countries} selected={selected} mapColor={mapColor} setShowDetail={setShowDetail} />
       <Footer />
     </div>
   )

@@ -24,7 +24,7 @@ const l = {
 
 const CountryDetails = (props) => {
 
-  let color = "red"
+  let color = "black"
   if (props.showDetail) {
     let foundColorObj = props.mapColor.find(e => e.id === props.showDetail)
     if(foundColorObj){
@@ -54,15 +54,15 @@ const CountryDetails = (props) => {
   let isSelected = props.selected.includes(props.showDetail)
 
   const deselectMe = () => {
-    props.setSelected(props.selected.filter(s=>s!==props.showDetail))
+    props.dkd(country.alpha2Code.toLowerCase())
   }
 
   const selectMe = () => {
-    props.setSelected([...props.selected,props.showDetail])
+    props.selectOne(country.alpha2Code.toLowerCase())
   }
 
   const content = () => {
-    if(props.showDetail){
+    if(props.showDetail&&country){
       return (
         <>
           <div style={style}> <div><h2><a target="_blank" rel="noopener noreferrer"
@@ -97,7 +97,7 @@ const CountryDetails = (props) => {
 
             </div>
 
-            <Button variant={isSelected?"outline-warning":"outline-primary"} style={{"float": "right","height":"2em","marginLeft":"50%","transform":"translateY(100%)"}} onClick={()=>{isSelected?deselectMe():selectMe()}}>{isSelected?"Deselect ":"Select "}</Button> 
+            <Button variant={isSelected?"outline-warning":"outline-primary"} style={{"float": "right","height":"2em","marginLeft":"30%","transform":"translateY(100%)"}} onClick={()=>{isSelected?deselectMe():selectMe()}}>{isSelected?"Deselect ":"Select "}</Button> 
           </div>
         </>
       )
