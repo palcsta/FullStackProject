@@ -21,7 +21,7 @@ router.post('/api/register', async (req, res) => {
   if(existinguserres.rows[0]) {
     const existinguser = existinguserres.rows[0].username
     logger.info(`Did not register ${req.body.username} because there was already a user named ${existinguser}`)
-    res.status(403).send({error:`User already exists: ${existinguser}`})
+    res.status(403).send([{error:`User already exists: ${existinguser}`,conserning:"username"}])
   } else if(checkerRes.ok) {
     //check if username obeys min,max, whitespace,special char requirements
     usernameCheck = usernameChecker(req.body.username)
@@ -38,24 +38,32 @@ router.post('/api/register', async (req, res) => {
       res.send({info:'Registered successfully! Welcome!'})
     } else {
       logger.error(`Did not register the username ${req.body.username} because ${usernameCheck.problems}`)
-      const errors = usernameCheck.problems.map(p => { return { error:p } })
-      res.status(403).send(errors.length>1?errors:errors[0])
+      const errors = usernameCheck.problems.map(p => { return { error:p,conserning:"username" } })
+      res.status(403).send(errors)
     }
   } else {
     const errors = checkerRes.problems.map(p => { return { error:p } })
     logger.info(`Did not register ${req.body.username} because of a password problem: ${checkerRes.problems}`)
-    res.status(403).send(errors.length>1?errors:errors[0])
+    res.status(403).send(errors)
   }
 })
 
 router.post('/api/login/', async (req,res) => { 
   const username = req.body.username
   const password = req.body.password
+  const noUsername = (typeof username!=="string"||!username.length) 
+  const noPassword = (typeof password!=="string"||!password.length)
+  if(noUsername||noPassword){
+    const missingFieldErrors = []
+    noUsername && missingFieldErrors.push({error:`Please enter a username.`,conserning:"username",canReg:false})
+    noPassword && missingFieldErrors.push({error:`Please enter a password.`,conserning:"password",canReg:false})
+    return res.status(403).send(missingFieldErrors)
+  }
   const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
   const fingerprint = req.fingerprint.hash
   //logger.info('Trying to login as user:',username)
   if(failqueueCheck(fingerprint,ip)){
-    res.status(403).send({error:`You're doing that too much. Please wait a moment before trying again.`})
+    res.status(403).send([{error:`You're doing that too much. Please wait a moment before trying again.`,conserning:"login"}])
   } else {
     const { rows } = await db.query('SELECT id,passwordhash FROM users WHERE username = $1',[username])
     if(rows.length>0){
@@ -75,13 +83,13 @@ router.post('/api/login/', async (req,res) => {
         res.send({token, info:'Logged in successfully! Welcome!'})
       } else {
         failqueueInsert(fingerprint,ip)
-        res.status(403).send({error:'Wrong username or password provided',canReg:false})
+        res.status(403).send([{error:'Wrong username or password provided',canReg:false,conserning:"login"}])
       }
     } else {
       //username doesn't exist
       failqueueInsert(fingerprint,ip)
       logger.info(`${username} tried to login, but user does not exist`)
-      res.status(403).send({error:'Wrong username or password provided',canReg:true})
+      res.status(403).send([{error:'Wrong username or password provided',canReg:username.length?true:false}])
     }
   }
 })

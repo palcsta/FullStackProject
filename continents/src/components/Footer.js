@@ -2,7 +2,7 @@
 const Footer = () => {
     const creators = <>by <a herf=""></a> and <a herf=""></a></>
     const center = {
-      "text-align": "center"
+      "textAlign": "center"
     }
 
     return (
