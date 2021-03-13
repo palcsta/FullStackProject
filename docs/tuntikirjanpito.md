@@ -27,6 +27,7 @@
 |6.3|2| reimplemented Countries.js and started implementation of listSelected() function
 |6.3|3| now listing paints the border of the selected country and only lists the selected country
 |7.3|5| fixed bugs with painting
+|13.3|2| code reviewing, some cosmetic refactoring
 # työaikakirjanpito(Emil)
 
 | päivä | aika | mitä tein  |
