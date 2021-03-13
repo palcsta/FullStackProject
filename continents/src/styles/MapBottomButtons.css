@@ -1,0 +1,8 @@
+.mapButtonGroup {
+    display: flex;
+    justify-content: center;
+}
+
+.mapButtonGroup > * {
+    margin:0.2em;
+}

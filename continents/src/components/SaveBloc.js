@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button'
-import { MdSave } from 'react-icons/md'
+import { MdSave, MdLibraryAdd  } from 'react-icons/md'
 import { IconContext } from 'react-icons'
 import '../styles/SaveBloc.css'
 import { saveBlocService } from '../services/blocService'
@@ -50,7 +50,10 @@ const SaveBlocForm = (props) => {
     return (
         <>
             {
-                !showSaveBlocForm||!props.user?<><Button disabled={!props.user} onClick={()=>firstPress()}>New Bloc</Button> 
+                !showSaveBlocForm||!props.user?<>
+                    <IconContext.Provider value={{ size: "1.25em", className: "saveButtonIcon" }}>
+                        <Button disabled={!props.user} onClick={()=>firstPress()}><MdLibraryAdd/>New Bloc</Button> 
+                    </IconContext.Provider>
                     <p style={{color:"blue",display:blocSaved?"inline":"none"}}>Bloc Saved</p></>: 
                     <form onSubmit={pressSave}>
                         <div>

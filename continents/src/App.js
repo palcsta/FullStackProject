@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Button from 'react-bootstrap/Button'
+import { MdLayersClear } from 'react-icons/md'
+import { IconContext } from 'react-icons'
 
 import Map3 from './components/Map3'
 import CountriesDropdown from './components/Dropdown'
@@ -12,6 +14,9 @@ import LoginForm from './components/LoginForm'
 import SelectedFlags from './components/SelectedFlags'
 import SaveBloc from './components/SaveBloc'
 import Footer from './components/Footer'
+
+import './styles/MapBottomButtons.css'
+import './styles/SaveBloc.css'
 
 
 const getNewColor = () => {
@@ -31,7 +36,6 @@ function App() {
   const [blocs, setBlocs] = useState([])
   const [religions, setReligions] = useState([])
   const [currencies, setCurrencies] = useState([])
-
 
 
   useEffect(() => {
@@ -63,8 +67,6 @@ function App() {
     }
     fetchCurrency()
   }, [])
-
-
 
 
   const selectOne = (id) => {
@@ -135,9 +137,11 @@ function App() {
       <CountryDetails countries={countries} religions={religions} currencies={currencies} showDetail={showDetail} mapColor={mapColor} selected={selected} selectOne={selectOne} dkd={deselectKeepDetails} />
       <CountriesDropdown countries={countries} setShowDetail={setShowDetail} blocs={blocs} selectOne={selectOne} selectMany={selectMany} />
       <Map3 mapColor={mapColor} clickOne={clickOne} />
-      <div>
-        <Button variant="warning" onClick={() => { setShowDetail(null); setSelected([]); setMapColor([]) }}>Clear map</Button>
-        <SaveBloc selected={selected} user={user} />
+      <div className="mapButtonGroup">
+        <IconContext.Provider value={{ size: "1.25em", className: "saveButtonIcon" }}>
+          <Button variant="warning" onClick={() => { setShowDetail(null); setSelected([]); setMapColor([]) }}><MdLayersClear/>Clear map</Button>
+          <SaveBloc selected={selected} user={user} />
+        </IconContext.Provider>
       </div>
       <SelectedFlags countries={countries} selected={selected} mapColor={mapColor} setShowDetail={setShowDetail} />
       <Footer />
