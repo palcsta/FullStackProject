@@ -27,10 +27,10 @@ const CountryDetails = (props) => {
   let color = "black"
   if (props.showDetail) {
     let foundColorObj = props.mapColor.find(e => e.id === props.showDetail)
-    if(foundColorObj){
-      color=foundColorObj.color
+    if (foundColorObj) {
+      color = foundColorObj.color
     }
-  } 
+  }
 
   const style = {
     display: 'flex',
@@ -45,14 +45,17 @@ const CountryDetails = (props) => {
     width: "175",
     height: "120"
   }
+  //const relUrl = "https://raw.githubusercontent.com/samayo/country-json/master/src/country-by-religion.json"
 
-  const [religion, setReligion] = useState(" no religion data...")
-  const [currency, setCurrency] = useState(" no currency data...")
+
 
 
   let country = props.countries.find(c => c.alpha2Code.toLowerCase() === props.showDetail)
   let isSelected = props.selected.includes(props.showDetail)
+  let rel = country ? props.religions.filter(x => x.country==country.name) :  "no religion data"
 
+  //const [religion, setReligion] = useState(country ? props.religions.filter(x => x.country==country.name): "no religion data")
+  const [currency, setCurrency] = useState(" no currency data...")
   const deselectMe = () => {
     props.dkd(country.alpha2Code.toLowerCase())
   }
@@ -62,7 +65,9 @@ const CountryDetails = (props) => {
   }
 
   const content = () => {
-    if(props.showDetail&&country){
+    if (props.showDetail && country && rel) {
+      console.log("REL is    ",rel)
+     // setReligion(props.religions.filter(x => x.country==country.name))
       return (
         <>
           <div style={style}> <div><h2><a target="_blank" rel="noopener noreferrer"
@@ -89,7 +94,7 @@ const CountryDetails = (props) => {
               {country.languages.map(x => <>|
                 <a href={"https://wikipedia.org/wiki/" + x.name + "_language"} key={x.name}>{x.name}</a>| </>)}
               <div>
-                <n><b><span style={l}>Religion:</span></b>{religion}</n>
+                <n><b><span style={l}>Religion:</span></b>{rel[0]!==undefined?rel[0].religion:"no data for religion"}</n>
                 <br></br>
                 <n><b><span style={l}>Currency:</span></b>{currency}</n>
                 <button hidden onClick={() => props.setShowDetail(null)}>hide</button>
@@ -97,7 +102,7 @@ const CountryDetails = (props) => {
 
             </div>
 
-            <Button variant={isSelected?"outline-warning":"outline-primary"} style={{"float": "right","height":"2em","marginLeft":"30%","transform":"translateY(100%)"}} onClick={()=>{isSelected?deselectMe():selectMe()}}>{isSelected?"Deselect ":"Select "}</Button> 
+            <Button variant={isSelected ? "outline-warning" : "outline-primary"} style={{ "float": "right", "height": "2em", "marginLeft": "30%", "transform": "translateY(100%)" }} onClick={() => { isSelected ? deselectMe() : selectMe() }}>{isSelected ? "Deselect " : "Select "}</Button>
           </div>
         </>
       )

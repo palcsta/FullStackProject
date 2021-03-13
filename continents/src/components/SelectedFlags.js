@@ -10,16 +10,13 @@ const SelectedFlags = (props) => {
     let myColorObj = props.mapColor.find(z => z.id.toUpperCase() === a2)
     return myColorObj ? myColorObj.color : "red"
   }
-  const hyphens = {
-    
-     "hyphens" : "manual"
-  }
-
+  
+  
 
 
   return (
 
-    <><div style={hyphens}  >
+    <>
       {countriesToShowFlagsFor.map((x, i) =>
         <p key={x.name} style={{
           display: 'inline',
@@ -27,20 +24,19 @@ const SelectedFlags = (props) => {
           borderradius: '20px',
           'fontSize': '29px',          
           display: "inline-block"
-          //'whiteSpace': 'nowrap'
+          
         }} ><a onClick={() => props.setShowDetail(x.alpha2Code.toLowerCase())}>
             {x.name}<img style={{
               display: 'inline',
-              borderradius: '20px',
-              'fontSize': '29px',
+             borderradius: '20px',
+             'fontSize': '29px',
               
-             // display: "inline-block"
             }} src={x.flag} alt={x.name}
               width="35" height="24">
             </img>
           </a></p>
       )}
-    </div></>
+    </>
 
   )
 

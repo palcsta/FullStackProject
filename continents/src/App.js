@@ -6,6 +6,7 @@ import CountriesDropdown from './components/Dropdown'
 import CountryDetails from './components/CountryDetails'
 import Filter from './components/Filter'
 import { countriesService } from './services/countriesService'
+import { relService } from './services/relService'
 import LoginForm from './components/LoginForm'
 import SelectedFlags from './components/SelectedFlags'
 import SaveBloc from './components/SaveBloc'
@@ -27,15 +28,31 @@ function App() {
   const [showDetail, setShowDetail] = useState(null)
   const [user, setUser] = useState(null)
   const [blocs, setBlocs] = useState([])
+  const [religions, setReligions] = useState([])
+
+
 
   useEffect(() => {
     const fetchCountries = async () => {
       await countriesService().then(res => {
         setCountries(res)
+        //console.log("countries in fetching app",countries)
       })
     }
     fetchCountries()
   }, [])
+
+  useEffect(() => {
+    const fetchReligions = async () => {
+      await relService().then(res => {
+        setReligions(res)
+       // console.log("REL IN FETCH ",religions)
+      })
+    }
+     fetchReligions() 
+  }, [])
+
+
 
   const selectOne = (id) => {
     //console.log("selectOne called for ",id)
@@ -102,7 +119,7 @@ function App() {
     <div className="container" style={{border:"2px solid cyan",borderRadius:"5px"}}>
       <LoginForm user={user} setUser={setUser} setBlocs={setBlocs}/>
       <Filter countries={countries} showDetail={showDetail} setShowDetail={setShowDetail} selected={selected} setSelected={setSelected} dkd={deselectKeepDetails}/>
-      <CountryDetails countries={countries} showDetail={showDetail} mapColor={mapColor} selected={selected} selectOne={selectOne} dkd={deselectKeepDetails}/>
+      <CountryDetails countries={countries} religions={religions} showDetail={showDetail} mapColor={mapColor} selected={selected} selectOne={selectOne} dkd={deselectKeepDetails}/>
       <CountriesDropdown countries={countries} setShowDetail={setShowDetail} blocs={blocs} selectOne={selectOne} selectMany={selectMany}/>
       <Map3 mapColor={mapColor} clickOne={clickOne} />
       <div>
