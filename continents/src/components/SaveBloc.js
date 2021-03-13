@@ -22,7 +22,7 @@ const SaveBlocForm = (props) => {
         const blocObject = {name:blocName,countries:props.selected}
         const token = `bearer ${props.user.token}`
         saveBlocService(blocObject,token).then(response => {
-            console.log(response)
+            //console.log(response)
             let blocSavingProblem = "error" in response
             if(blocSavingProblem){
                 setBlocSaveProblem(response.error)
@@ -33,7 +33,7 @@ const SaveBlocForm = (props) => {
                 setShowSaveBlocForm(false)
             }
         }).catch(error => {
-            console.log(error.response)
+            //console.log(error.response)
         })
     }
 
@@ -54,7 +54,7 @@ const SaveBlocForm = (props) => {
                     <p style={{color:"blue",display:blocSaved?"inline":"none"}}>Bloc Saved</p></>: 
                     <form onSubmit={pressSave}>
                         <div>
-                            <label for="bloc-name">Name</label>
+                            <label>Name: </label>
                             <input type="text" id="bloc-name" placeholder="Enter bloc name" onChange={handleBlocNameChange} />
                             <p style={{color:"red",display:blocSaveProblem.length?"inline":"none"}}>{blocSaveProblem}</p>
                         </div>
