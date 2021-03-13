@@ -33,10 +33,10 @@
 
 | päivä | aika | mitä tein  |
 | :----:|:-----| :-----|
-| 19.12. | 1    | palautusrepo/dokumentaatio/projektin skeleton |
-| 19.1. | 3    | projektin skeleton täydentäminen fullstack materiaalin esimerkkien mukaan|
-| 20.1. | 5    | postgres integraatio |
-| 21.1. | 10    | kirjautuminen ja registering |
+| 19.12.| 1  | palautusrepo/dokumentaatio/projektin skeleton |
+| 19.1. | 3  | projektin skeleton täydentäminen fullstack materiaalin esimerkkien mukaan|
+| 20.1. | 5  | postgres integraatio |
+| 21.1. | 10 | kirjautuminen ja registering |
 | 22.1. | 8   | kirjautuminen ja registering viilaaminen |
 | 24.1. | 5   | kirjautuminen ja registering dataan validointia eli käyttäjänimi/ salasana vaatimukset|
 | 26.1. | 2   | lisää alustavaa backend-työtä tulevaa kirjautumislomaketta varten|
@@ -45,4 +45,18 @@
 | 9.2. | 6   | alustava kirjautumislomake,kirjautumis-backendin vastaukset näkyviin fronttiin|
 | 11.2. | 6   | alustava valmistautuminen rekiströinnin lisäämiseen fronttiin|
 | 18.2. | 5   | rekiströinnin lisäämiseen fronttiin, hieman käyttöliittymän viilausta|
+| 22.2. | 0   | pull requestin hoitaminen|
+| 1.3. | 2   | pull requestin merge & token-pohjainen kirjautumisen aloittaminen|
+| 2.3. | 1   | pull requestin merge & token-pohjainen kirjautuminen|
+| 3.3. | 3   | token-pohjainen kirjautuminen, kirjautumisen frontendin viilausta|
+| 4.3. | 2   | pull requestin merge & token-pohjainen kirjautuminen|
+| 5.3. | 3   | käyttäjän määrittelemien maalistojen (bloc) tallentaminen tietokantaan, backend|
+| 6.3. | 1   | bloc backend ja frontend|
+| 7.3. | 1   | bloc frontend|
+| 8.3. | 4   | bloc frontend, tajuan että tarvitaan refactor|
+| 9.3. | 4   | koko codebasen refactor|
+| 10.3. | 11  | koko codebasen refactor|
+| 11.3. | 12  | koko codebasen refactor|
+| 12.3. | 9  | refactoristä aiheutuneiden bugien korjaus, kirjautumiseen bootstrap form, deployaaminen (nginx conffaus)|
+| 13.3. | 10  | virheilmoitukset (takaisin) frontendiin, kartan värjäyslogiikan muutos, https ja sovellus nettiin (omaan VPS:ään) |
 

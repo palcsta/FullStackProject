@@ -1,4 +1,5 @@
 import React from 'react'
+import '../styles/SelectedFlags.css'
 
 const SelectedFlags = (props) => {
 
@@ -16,27 +17,16 @@ const SelectedFlags = (props) => {
 
   return (
 
-    <>
+    <div>
       {countriesToShowFlagsFor.map((x, i) =>
-        <p key={x.name} style={{
-          display: 'inline',
-          border: `4px solid ${getColor(x.alpha2Code)}`,
-          borderradius: '20px',
-          'fontSize': '29px',          
-          display: "inline-block"
-          
-        }} ><a onClick={() => props.setShowDetail(x.alpha2Code.toLowerCase())}>
-            {x.name}<img style={{
-              display: 'inline',
-             borderradius: '20px',
-             'fontSize': '29px',
-              
-            }} src={x.flag} alt={x.name}
-              width="35" height="24">
-            </img>
-          </a></p>
+        <div key={x.name} className="selectedBox" style={{
+          borderColor: getColor(x.alpha2Code)
+        }} ><p onClick={() => props.setShowDetail(x.alpha2Code.toLowerCase())}>
+            {x.name}<img className="selectedFlag" src={x.flag} alt={x.name}></img>
+          </p>
+        </div>
       )}
-    </>
+    </div>
 
   )
 
