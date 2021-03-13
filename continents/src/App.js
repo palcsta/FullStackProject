@@ -80,7 +80,7 @@ function App() {
     if(selected.includes(clickedId)){
       if(showDetail===clickedId){
         setShowDetail(null)
-        console.log("showDetail:", showDetail)
+        //console.log("showDetail:", showDetail)
       }
       setSelected(selected.filter(c=>c!==clickedId))
       setMapColor(mapColor.filter(c=>c.id!==clickedId)) 
@@ -88,7 +88,7 @@ function App() {
     } else {
       setSelected([...selected,clickedId])
       setMapColor([...mapColor,{id:clickedId,color:getNewColor()}])
-      console.log("showing detail for ",clickedId)
+      //console.log("showing detail for ",clickedId)
       setShowDetail(clickedId)
     }
   }

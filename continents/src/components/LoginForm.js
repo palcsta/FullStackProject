@@ -79,7 +79,7 @@ const LoginForm = (props) => {
       } else {
         const usernameProblems = dataResponse.filter(o=>o.concerning==="username")
         const passwordProblems = dataResponse.filter(o=>o.concerning==="password")
-        console.log(`reg had ${usernameProblems.length} problems with username and ${passwordProblems.length} with password`)
+        //console.log(`reg had ${usernameProblems.length} problems with username and ${passwordProblems.length} with password`)
         setPasswordErrors(passwordProblems)
         setUsernameErrors(usernameProblems)
       }
