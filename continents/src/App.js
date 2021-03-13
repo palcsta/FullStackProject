@@ -63,7 +63,11 @@ function App() {
   }
 
   const selectMany = (ids) => {
-    let ourColor = getNewColor()
+    let ourColor = getNewColor() 
+    let newColors = ids.map(c=>{return {id:c,color:ourColor}})
+    setSelected([...selected.filter(s=>!ids.includes(s)),...ids])
+    setMapColor([...mapColor.filter(c=>!ids.includes(c.id)),...newColors])
+    /* old implementation that preserves existing colors
     let newColors = []
     let newSelections = []
     ids.forEach(country=>{
@@ -71,9 +75,10 @@ function App() {
         newSelections.push(country)
         newColors.push({id:country,color:ourColor})
       }
-    })
+    }) 
     setSelected([...selected,...newSelections])
-    setMapColor([...mapColor,...newColors])
+    set MapColor([...mapColor,...newColors])
+    */
   }
 
   const clickOne = (clickedId) => {

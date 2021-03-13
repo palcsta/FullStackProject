@@ -24,16 +24,31 @@ app.use(blocs)
 app.get('/', (request, response) => {
   response.json({ info: 'Auth' })
   logger.info('fingerprint :',request.fingerprint.hash)
-const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress
+  const ip = request.headers['x-forwarded-for'] || request.connection.remoteAddress
   logger.info("ip: ",ip)
 })
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
 
+const myArgs = process.argv.slice(2)
 const port = 3003
 const postgresPort = config.port
-app.listen(port, () => {
-  logger.info(`Postgres on port ${postgresPort}.`)
-  logger.info(`App running on port ${port}.`)
-})
+
+logger.info(`Trying postgres on port ${postgresPort}.`)
+logger.info(`Continents backend will be run on port ${port}.`)
+
+if(myArgs[0]==="https"){
+  const fs = require('fs')
+  const https= require("https")
+  logger.info(`Trying to use https, make sure KEYFILEPATH and CERTFILEPATH are correct in .env`)
+  const options = {
+    key: fs.readFileSync(config.keyFilePath),
+    cert: fs.readFileSync(config.certFilePath)
+  }
+  https.createServer(options, app).listen(port)  
+} else {
+  logger.info(`Connections to backend will be insecure unless the argument "https" is given.`)
+  app.listen(port)
+}
+
