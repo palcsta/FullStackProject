@@ -33,6 +33,7 @@ const SaveBlocForm = (props) => {
                 setBlocSaveProblem("")
                 setBlocSaved(true)
                 setShowSaveBlocForm(false)
+                props.updateBlocList()
             }
         }).catch(error => {
             //console.log(error.response)

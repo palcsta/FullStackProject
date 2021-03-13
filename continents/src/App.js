@@ -10,6 +10,7 @@ import Filter from './components/Filter'
 import { countriesService } from './services/countriesService'
 import { relService } from './services/relService'
 import { currencyService } from './services/currencyService'
+import { getBlocsService } from './services/blocService'
 import LoginForm from './components/LoginForm'
 import SelectedFlags from './components/SelectedFlags'
 import SaveBloc from './components/SaveBloc'
@@ -68,6 +69,17 @@ function App() {
     fetchCurrency()
   }, [])
 
+  const updateBlocList = () => {
+    if(user){
+      const fetchBlocs = async () => {
+        await getBlocsService(`bearer ${user.token}`).then(res => {
+          //console.log("got blocs: ",res)
+          setBlocs(res)
+        })
+      }
+      fetchBlocs()
+    }
+  }
 
   const selectOne = (id) => {
     //console.log("selectOne called for ",id)
@@ -140,7 +152,7 @@ function App() {
       <div className="mapButtonGroup">
         <IconContext.Provider value={{ size: "1.25em", className: "saveButtonIcon" }}>
           <Button variant="warning" onClick={() => { setShowDetail(null); setSelected([]); setMapColor([]) }}><MdLayersClear/>Clear map</Button>
-          <SaveBloc selected={selected} user={user} />
+          <SaveBloc selected={selected} user={user} updateBlocList={updateBlocList} />
         </IconContext.Provider>
       </div>
       <SelectedFlags countries={countries} selected={selected} mapColor={mapColor} setShowDetail={setShowDetail} />
