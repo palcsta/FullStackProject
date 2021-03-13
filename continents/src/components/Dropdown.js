@@ -78,6 +78,9 @@ const CountriesDropdown = (props) => {
             <Dropdown.Divider />
           </>
           )}
+
+<div align="center" className="panel-footer " split="true">
+
           <DropdownButton variant="info" id="dropdown-basic-button" title="Other">
             {other.map(x => <><Dropdown.Item key={x} onClick={() => {
               let matchingOther = props.countries.filter(q => q.name === x)
@@ -104,7 +107,11 @@ const CountriesDropdown = (props) => {
               }
             }}>{x.data.name}</Dropdown.Item></>)}
           </DropdownButton>
+
+</div>
         </DropdownButton>
-      </div></>
+      </div>
+    
+      </>
   )}
 export default CountriesDropdown
