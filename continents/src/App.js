@@ -147,7 +147,7 @@ function App() {
       <LoginForm user={user} setUser={setUser} setBlocs={setBlocs} />
       <Filter countries={countries} showDetail={showDetail} setShowDetail={setShowDetail} selected={selected} setSelected={setSelected} dkd={deselectKeepDetails} />
       <CountryDetails countries={countries} religions={religions} currencies={currencies} showDetail={showDetail} mapColor={mapColor} selected={selected} selectOne={selectOne} dkd={deselectKeepDetails} />
-      <CountriesDropdown countries={countries} setShowDetail={setShowDetail} blocs={blocs} selectOne={selectOne} selectMany={selectMany} />
+      <CountriesDropdown countries={countries} setShowDetail={setShowDetail} blocs={blocs} selectOne={selectOne} selectMany={selectMany} user={user}/>
       <Map3 mapColor={mapColor} clickOne={clickOne} />
       <div className="mapButtonGroup">
         <IconContext.Provider value={{ size: "1.25em", className: "saveButtonIcon" }}>

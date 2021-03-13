@@ -3,6 +3,8 @@ import React from 'react';
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Dropdown from 'react-bootstrap/Dropdown'
 import Button from 'react-bootstrap/Button'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Tooltip from 'react-bootstrap/Tooltip'
 
 const unique = (value, index, self) => {
   return self.indexOf(value) === index
@@ -96,7 +98,10 @@ const CountriesDropdown = (props) => {
             }}>{x + "(Polar)"}</Dropdown.Item></>)}
           </DropdownButton>
             <Dropdown.Divider />
-          <DropdownButton variant="info" id="dropdown-basic-button" title="User's blocs">
+
+  <OverlayTrigger overlay={<Tooltip id="tooltip-disabled" style={{display:(props.user && props.blocs.length)?"none":"inline"}}>{props.user?"You haven't saved any blocs yet.":"You must be logged in to do this."}</Tooltip>} placement="bottom">
+                          <span>
+          <DropdownButton disabled={!props.user||!props.blocs.length} style={{ pointerEvents: !props.user||!props.blocs.length?'none':'auto' }} variant="info" id="dropdown-basic-button" title="User's blocs">
             {props.blocs.map(x => <><Dropdown.Item key={x.id} onClick={() => {
               let matchingBloc = x.data.countries
               //console.log("selecting ",matchingBloc)
@@ -107,6 +112,8 @@ const CountriesDropdown = (props) => {
               }
             }}>{x.data.name}</Dropdown.Item></>)}
           </DropdownButton>
+                          </span>
+                            </OverlayTrigger>
 
 </div>
         </DropdownButton>
