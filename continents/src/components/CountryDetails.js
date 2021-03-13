@@ -52,10 +52,11 @@ const CountryDetails = (props) => {
 
   let country = props.countries.find(c => c.alpha2Code.toLowerCase() === props.showDetail)
   let isSelected = props.selected.includes(props.showDetail)
-  let rel = country ? props.religions.filter(x => x.country==country.name) :  "no religion data"
+  let rel = (country && props.religions) ? props.religions.filter(x => x.country == country.name) : "no religion data"
+  let currency = (country && props.currencies) ? props.currencies.filter(x => country.name.includes(x.country)) : "no currency data"
 
   //const [religion, setReligion] = useState(country ? props.religions.filter(x => x.country==country.name): "no religion data")
-  const [currency, setCurrency] = useState(" no currency data...")
+  //const [currency, setCurrency] = useState(" no currency data...")
   const deselectMe = () => {
     props.dkd(country.alpha2Code.toLowerCase())
   }
@@ -66,8 +67,8 @@ const CountryDetails = (props) => {
 
   const content = () => {
     if (props.showDetail && country && rel) {
-      console.log("REL is    ",rel)
-     // setReligion(props.religions.filter(x => x.country==country.name))
+      console.log("REL is    ", rel)
+      // setReligion(props.religions.filter(x => x.country==country.name))
       return (
         <>
           <div style={style}> <div><h2><a target="_blank" rel="noopener noreferrer"
@@ -86,23 +87,28 @@ const CountryDetails = (props) => {
               <br></br>
               <b>region:</b> {country.subregion}
               <br></br>
-              <b>time:</b>{country.timezones[0]}
+              <b>time:</b>{country.timezones[0]+"|||||"+new Date().toLocaleString(              )}
             </div>
 
             <div>
-              <b><i> <span style={l}>language(s):</span></i></b>
-              {country.languages.map(x => <>|
-                <a href={"https://wikipedia.org/wiki/" + x.name + "_language"} key={x.name}>{x.name}</a>| </>)}
-              <div>
-                <n><b><span style={l}>Religion:</span></b>{rel[0]!==undefined?rel[0].religion:"no data for religion"}</n>
+              <div><b><i> <span style={l}>language(s):</span></i></b>
+                {country.languages.map(x => <>|
+                <a target="_blank" href={"https://wikipedia.org/wiki/" + x.name + "_language"} key={x.name}>{x.name}</a>| </>)}
+              </div><div>
+                <n><b><span style={l}>Religion:</span></b>{rel[0] !== undefined ? rel[0].religion : " no data "}</n>
                 <br></br>
-                <n><b><span style={l}>Currency:</span></b>{currency}</n>
-                <button hidden onClick={() => props.setShowDetail(null)}>hide</button>
+                <n><b><span style={l}>Currency:</span></b>{currency[0] !== undefined ? currency[0].currency_code : "no data for currency"}</n>
+                <br></br>
+                <><button hidden onClick={() => props.setShowDetail(null)}>hide</button></>
               </div>
 
             </div>
+            <Button style={{margin:"2%"}} target="_blank" href={"https://youtube."+"com"+"/feed/trending?gl=" +country.alpha2Code} variant={"danger"}>YouTube<br></br>trending<br></br></Button>
+            <Button style={{margin:"2%"}} target="_blank" href={"https://www.google.com/maps/place/"+country.name} variant={"success"}>find in <br></br>Google Maps</Button>
+            <Button style={{margin:"2%"}} variant={isSelected ? "outline-warning" : "outline-primary"}
+              onClick={() => { isSelected ? deselectMe() : selectMe() }}>{isSelected ? <>Deselect<br></br>on the<br></br>chart</> : <>Select<br></br>on the<br></br>chart</>}</Button>
+              
 
-            <Button variant={isSelected ? "outline-warning" : "outline-primary"} style={{ "float": "right", "height": "2em", "marginLeft": "30%", "transform": "translateY(100%)" }} onClick={() => { isSelected ? deselectMe() : selectMe() }}>{isSelected ? "Deselect " : "Select "}</Button>
           </div>
         </>
       )

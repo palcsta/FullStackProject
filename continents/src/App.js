@@ -7,6 +7,7 @@ import CountryDetails from './components/CountryDetails'
 import Filter from './components/Filter'
 import { countriesService } from './services/countriesService'
 import { relService } from './services/relService'
+import { currencyService } from './services/currencyService'
 import LoginForm from './components/LoginForm'
 import SelectedFlags from './components/SelectedFlags'
 import SaveBloc from './components/SaveBloc'
@@ -22,13 +23,14 @@ const getNewColor = () => {
 
 function App() {
 
-  const [selected,setSelected] = useState([])
-  const [mapColor,setMapColor] = useState([])
-  const [countries,setCountries] = useState([]) 
+  const [selected, setSelected] = useState([])
+  const [mapColor, setMapColor] = useState([])
+  const [countries, setCountries] = useState([])
   const [showDetail, setShowDetail] = useState(null)
   const [user, setUser] = useState(null)
   const [blocs, setBlocs] = useState([])
   const [religions, setReligions] = useState([])
+  const [currencies, setCurrencies] = useState([])
 
 
 
@@ -46,44 +48,55 @@ function App() {
     const fetchReligions = async () => {
       await relService().then(res => {
         setReligions(res)
-       // console.log("REL IN FETCH ",religions)
+        // console.log("REL IN FETCH ",religions)
       })
     }
-     fetchReligions() 
+    fetchReligions()
   }, [])
+
+  useEffect(() => {
+    const fetchCurrency = async () => {
+      await currencyService().then(res => {
+        setCurrencies(res)
+        // console.log("REL IN FETCH ",religions)
+      })
+    }
+    fetchCurrency()
+  }, [])
+
 
 
 
   const selectOne = (id) => {
     //console.log("selectOne called for ",id)
-    if(selected.includes(id)){
+    if (selected.includes(id)) {
       //give it a new color
-      setMapColor([...mapColor.filter(c=>c.id!==id),{id:id,color:getNewColor()}]) 
+      setMapColor([...mapColor.filter(c => c.id !== id), { id: id, color: getNewColor() }])
     } else {
-      setSelected([...selected,id])
-      setMapColor([...mapColor,{id:id,color:getNewColor()}])
+      setSelected([...selected, id])
+      setMapColor([...mapColor, { id: id, color: getNewColor() }])
     }
     setShowDetail(id)
   }
 
   const deselectOne = (id) => {
-    if(showDetail===id){
+    if (showDetail === id) {
       setShowDetail(null)
     }
-    setSelected(selected.filter(c=>c!==id))
-    setMapColor(mapColor.filter(c=>c.id!==id)) 
+    setSelected(selected.filter(c => c !== id))
+    setMapColor(mapColor.filter(c => c.id !== id))
   }
 
   const deselectKeepDetails = (id) => {
-    setSelected(selected.filter(c=>c!==id))
-    setMapColor(mapColor.filter(c=>c.id!==id)) 
+    setSelected(selected.filter(c => c !== id))
+    setMapColor(mapColor.filter(c => c.id !== id))
   }
 
   const selectMany = (ids) => {
-    let ourColor = getNewColor() 
-    let newColors = ids.map(c=>{return {id:c,color:ourColor}})
-    setSelected([...selected.filter(s=>!ids.includes(s)),...ids])
-    setMapColor([...mapColor.filter(c=>!ids.includes(c.id)),...newColors])
+    let ourColor = getNewColor()
+    let newColors = ids.map(c => { return { id: c, color: ourColor } })
+    setSelected([...selected.filter(s => !ids.includes(s)), ...ids])
+    setMapColor([...mapColor.filter(c => !ids.includes(c.id)), ...newColors])
     /* old implementation that preserves existing colors
     let newColors = []
     let newSelections = []
@@ -99,32 +112,32 @@ function App() {
   }
 
   const clickOne = (clickedId) => {
-    if(selected.includes(clickedId)){
-      if(showDetail===clickedId){
+    if (selected.includes(clickedId)) {
+      if (showDetail === clickedId) {
         setShowDetail(null)
         //console.log("showDetail:", showDetail)
       }
-      setSelected(selected.filter(c=>c!==clickedId))
-      setMapColor(mapColor.filter(c=>c.id!==clickedId)) 
+      setSelected(selected.filter(c => c !== clickedId))
+      setMapColor(mapColor.filter(c => c.id !== clickedId))
 
     } else {
-      setSelected([...selected,clickedId])
-      setMapColor([...mapColor,{id:clickedId,color:getNewColor()}])
+      setSelected([...selected, clickedId])
+      setMapColor([...mapColor, { id: clickedId, color: getNewColor() }])
       //console.log("showing detail for ",clickedId)
       setShowDetail(clickedId)
     }
   }
 
   return (
-    <div className="container" style={{border:"2px solid cyan",borderRadius:"5px"}}>
-      <LoginForm user={user} setUser={setUser} setBlocs={setBlocs}/>
-      <Filter countries={countries} showDetail={showDetail} setShowDetail={setShowDetail} selected={selected} setSelected={setSelected} dkd={deselectKeepDetails}/>
-      <CountryDetails countries={countries} religions={religions} showDetail={showDetail} mapColor={mapColor} selected={selected} selectOne={selectOne} dkd={deselectKeepDetails}/>
-      <CountriesDropdown countries={countries} setShowDetail={setShowDetail} blocs={blocs} selectOne={selectOne} selectMany={selectMany}/>
+    <div className="container" style={{ border: "2px solid cyan", borderRadius: "5px" }}>
+      <LoginForm user={user} setUser={setUser} setBlocs={setBlocs} />
+      <Filter countries={countries} showDetail={showDetail} setShowDetail={setShowDetail} selected={selected} setSelected={setSelected} dkd={deselectKeepDetails} />
+      <CountryDetails countries={countries} religions={religions} currencies={currencies} showDetail={showDetail} mapColor={mapColor} selected={selected} selectOne={selectOne} dkd={deselectKeepDetails} />
+      <CountriesDropdown countries={countries} setShowDetail={setShowDetail} blocs={blocs} selectOne={selectOne} selectMany={selectMany} />
       <Map3 mapColor={mapColor} clickOne={clickOne} />
       <div>
-        <Button variant="warning" onClick={()=>{setShowDetail(null);setSelected([]);setMapColor([])}}>Clear map</Button>
-        <SaveBloc selected={selected} user={user}/>
+        <Button variant="warning" onClick={() => { setShowDetail(null); setSelected([]); setMapColor([]) }}>Clear map</Button>
+        <SaveBloc selected={selected} user={user} />
       </div>
       <SelectedFlags countries={countries} selected={selected} mapColor={mapColor} setShowDetail={setShowDetail} />
       <Footer />
