@@ -101,7 +101,7 @@ const CountryDetails = (props) => {
       return (
         <>
           <div style={style}> <div><h2><a target="_blank" rel="noopener noreferrer"
-            href={`https://en.wikipedia.org/wiki/${country.name}`}> {country.name}({country.alpha2Code})</a></h2>
+            href={`https://en.wikipedia.org/wiki/${country.name}`}> {country.name}</a>({country.alpha2Code}{country.nativeName==country.name?"":", "+country.nativeName})</h2>
             <b>capital:</b> {country.capital}</div>
           </div>
 
@@ -133,14 +133,17 @@ const CountryDetails = (props) => {
               </div><div>
                 <n><b><span style={l}>Religion:</span></b>{rel[0] !== undefined ? rel[0].religion : " no data "}</n>
                 <br></br>
-                <n><b><span style={l}>Currency:</span></b>{currency[0] !== undefined ? currency[0].currency_code : "no data"}</n>
+                <n><b><span style={l}>Currency:</span></b>{/*currency[0] !== undefined ? currency[0].currency_code : "no data"*/
+                country.currencies[0].code
+                
+                }{country.currencies[0].symbol==null?"":"("+country.currencies[0].symbol+")"}</n>
                 <br></br>
                 <><button hidden onClick={() => props.setShowDetail(null)}>hide</button></>
               </div>
 
             </div>
             <Button style={{margin:"2%"}} target="_blank" href={"https://youtube."+"com"+"/feed/trending?gl=" +country.alpha2Code} variant={"danger"}>YouTube<br></br>trending<br></br></Button>
-            <Button style={{margin:"2%"}} target="_blank" href={"https://www.google.com/maps/place/"+country.name} variant={"success"}>find in <br></br>Google Maps</Button>
+            <Button style={{margin:"2%"}} target="_blank" href={"https://www.google.com/maps/place/"+country.nativeName} variant={"success"}>find in <br></br>Google Maps</Button>
             <Button style={{margin:"2%"}} variant={isSelected ? "outline-warning" : "outline-primary"}
               onClick={() => { isSelected ? deselectMe() : selectMe() }}>{isSelected ? <>Deselect<br></br>on map</> : <>Select<br></br>on map</>}</Button>
               

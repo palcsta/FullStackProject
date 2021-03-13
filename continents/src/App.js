@@ -36,7 +36,7 @@ function App() {
   const [user, setUser] = useState(null)
   const [blocs, setBlocs] = useState([])
   const [religions, setReligions] = useState([])
-  const [currencies, setCurrencies] = useState([])
+ // const [currencies, setCurrencies] = useState([])
 
 
   useEffect(() => {
@@ -59,7 +59,7 @@ function App() {
     fetchReligions()
   }, [])
 
-  useEffect(() => {
+  /*useEffect(() => {
     const fetchCurrency = async () => {
       await currencyService().then(res => {
         setCurrencies(res)
@@ -68,7 +68,7 @@ function App() {
     }
     fetchCurrency()
   }, [])
-
+*/
   const updateBlocList = () => {
     if(user){
       const fetchBlocs = async () => {
@@ -146,7 +146,7 @@ function App() {
     <div className="container" style={{ border: "2px solid cyan", borderRadius: "5px" }}>
       <LoginForm user={user} setUser={setUser} setBlocs={setBlocs} />
       <Filter countries={countries} showDetail={showDetail} setShowDetail={setShowDetail} selected={selected} setSelected={setSelected} dkd={deselectKeepDetails} />
-      <CountryDetails countries={countries} religions={religions} currencies={currencies} showDetail={showDetail} mapColor={mapColor} selected={selected} selectOne={selectOne} dkd={deselectKeepDetails} />
+      <CountryDetails countries={countries} religions={religions} /*currencies={currencies}*/ showDetail={showDetail} mapColor={mapColor} selected={selected} selectOne={selectOne} dkd={deselectKeepDetails} />
       <CountriesDropdown countries={countries} setShowDetail={setShowDetail} blocs={blocs} selectOne={selectOne} selectMany={selectMany} />
       <Map3 mapColor={mapColor} clickOne={clickOne} />
       <div className="mapButtonGroup">

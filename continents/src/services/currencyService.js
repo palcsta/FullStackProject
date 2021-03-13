@@ -1,4 +1,4 @@
-import axios from 'axios'
+/*import axios from 'axios'
 
 const currencyUrl = 'https://raw.githubusercontent.com/samayo/country-json/master/src/country-by-currency-code.json' 
 
@@ -11,3 +11,4 @@ export const currencyService = async () => {
     console.log(`error fetching currency from ${currencyUrl} ; ${error} ${error.response && error.response.data}`)
   }
 }
+*/
