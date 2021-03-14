@@ -28,9 +28,11 @@ const SelectedFlags = (props) => {
 
 
 
-      { show !== undefined && countriesToShowFlagsFor.length !== 0 ? <div style={{ "textAlign": "center" }}>
+      { show !== undefined && countriesToShowFlagsFor.length !== 0 ? <div style={{ "textAlign": "right","margin":"0.2em" }}>
+        <p style={{"display":"inline","margin":"0.2em 0.5em 0.2em 0.2em"}}>
         Sort by:
-      <ButtonGroup aria-label="Basic example">
+        </p>
+      <ButtonGroup>
           <Button onClick={() => setShow(
             countriesToShowFlagsFor
               .sort((a, b) => parseFloat(b.population) - parseFloat(a.population)))}
@@ -45,7 +47,7 @@ const SelectedFlags = (props) => {
                 if (a.name > b.name) { return 1; }
                 return 0;
               })
-            )}>Alphabet</Button>
+            )}>Name</Button>
         </ButtonGroup>
       </div> : ""}
 
