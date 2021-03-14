@@ -13,12 +13,13 @@ or
 ```
 ./dbinstall.sh
 ```
-this will help you get the environment ready. In case you want to try backend and frontend simultaneously run them separately.
-After this run ```npm install ``` to setup your node environment
+this will help you get the environment ready. In case you want to try back-end and front-end simultaneously run them separately.
+After this run ```npm install``` to setup your node environment.
 
-## Backend
-in case you want to run backend 
-## Backend
+## Back-end
+in case you want to run back-end just run ```npm start``` in the project's root directory(FullStackProject/)
+## Front-end
+in case you want to run front-end just run ```npm start``` in the continents/ directory(FullStackProject/continents/)
 
 # Important quotes from the instruction 
 
