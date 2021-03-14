@@ -8,4 +8,5 @@ or you can use the <b>Browse</b> button to navigate to the country. Browse butto
 ![Image of search by filter](/docs/pics/browse.png "browse")
 Another way to select the country is by clicking on it on the map.
 ![Image of search by filter](/docs/pics/click.gif "click")
+
 The list of selected countries is shown underneath the map and can be sorted differently.
