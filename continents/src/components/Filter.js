@@ -1,4 +1,4 @@
-
+import '../styles/MapBottomButtons.css'
 import { render } from '@testing-library/react';
 import React, { useState } from 'react';
 
@@ -34,7 +34,7 @@ const Filter = (props) => {
 
   return (
     <>
-      <div style={{ "textAlign": "center" }}>
+      <div style={{ "textAlign": "center" }} className="mapTopButton">
         <input placeholder="Search for a country" value={searchBoxContent}
           onChange={handleNewSearchBoxContent} />
         {searchHints && <span>Did you mean: </span>}{searchHints}

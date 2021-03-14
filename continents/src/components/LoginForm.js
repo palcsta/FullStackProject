@@ -58,6 +58,8 @@ const LoginForm = (props) => {
       }
       let hasProblem = Array.isArray(res) && res.some(o => o.error)
       let weCanReg = res.find(o => "canReg" in o) && res.find(o => "canReg" in o).canReg
+      setUsernameErrors(res.filter(o=>o.concerning==="username").map(o=>o.error))
+      setPasswordErrors(res.filter(o=>o.concerning==="password").map(o=>o.error))
       setLoginProblems(res.filter(o=>o.concerning==="login"))
       setShowReg(weCanReg)
       setValidated(!weCanReg && !res.filter(o=>o.concerning==="login"))

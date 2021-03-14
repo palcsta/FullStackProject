@@ -55,6 +55,35 @@ const CountryDetails = (props) => {
   let rel = (country && props.religions) ? props.religions.filter(x => x.country == country.name) : "no religion data"
   let currency = (country && props.currencies) ? props.currencies.filter(x => country.name.includes(x.country)) : "no currency data"
 
+  function calcTime(/*city, */offset) {
+   // console.log("offset ",isNaN(offset))
+
+    // create Date object for current location
+    let d = new Date();
+   
+    // convert to msec
+    // add local time zone offset
+    // get UTC time in msec
+    let utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+   
+    // create new Date object for different city
+    // using supplied offset
+    let nd = new Date()
+    if(!isNaN(offset)){
+     nd = new Date(utc + (3600000*offset));
+    }else{
+      nd = new Date(utc);
+    }
+    
+   
+    // return time as a string
+    return nd.getHours()+":"+nd.getMinutes()//"time is " + nd.toString();
+
+}
+
+
+
+
   //const [religion, setReligion] = useState(country ? props.religions.filter(x => x.country==country.name): "no religion data")
   //const [currency, setCurrency] = useState(" no currency data...")
   const deselectMe = () => {
@@ -72,7 +101,7 @@ const CountryDetails = (props) => {
       return (
         <>
           <div style={style}> <div><h2><a target="_blank" rel="noopener noreferrer"
-            href={`https://en.wikipedia.org/wiki/${country.name}`}> {country.name}({country.alpha2Code})</a></h2>
+            href={`https://en.wikipedia.org/wiki/${country.name}`}> {country.name}</a>({country.alpha2Code}{country.nativeName==country.name?"":", "+country.nativeName})</h2>
             <b>capital:</b> {country.capital}</div>
           </div>
 
@@ -87,7 +116,14 @@ const CountryDetails = (props) => {
               <br></br>
               <b>region:</b> {country.subregion}
               <br></br>
-              <b>time:</b>{country.timezones[0]+"|||||"+new Date().toLocaleString(              )}
+              <b>time:</b>{/*""+new Date(
+                new Date().getMonth()+1+"/"+new Date().getDate()+"/"+new Date().getUTCFullYear()+
+                " "+new Date().getHours()+":"+new Date().getMinutes()+" "
+                +country.timezones[0])
+              */
+              calcTime(/*country.capital,*/country.timezones[0].substring(3,6)[0]+country.timezones[0].substring(3,6)[2])
+              +"("+country.timezones[0]+")"
+              }
             </div>
 
             <div>
@@ -97,16 +133,19 @@ const CountryDetails = (props) => {
               </div><div>
                 <n><b><span style={l}>Religion:</span></b>{rel[0] !== undefined ? rel[0].religion : " no data "}</n>
                 <br></br>
-                <n><b><span style={l}>Currency:</span></b>{currency[0] !== undefined ? currency[0].currency_code : "no data for currency"}</n>
+                <n><b><span style={l}>Currency:</span></b>{/*currency[0] !== undefined ? currency[0].currency_code : "no data"*/
+                country.currencies[0].code
+                
+                }{country.currencies[0].symbol==null?"":"("+country.currencies[0].symbol+")"}</n>
                 <br></br>
                 <><button hidden onClick={() => props.setShowDetail(null)}>hide</button></>
               </div>
 
             </div>
             <Button style={{margin:"2%"}} target="_blank" href={"https://youtube."+"com"+"/feed/trending?gl=" +country.alpha2Code} variant={"danger"}>YouTube<br></br>trending<br></br></Button>
-            <Button style={{margin:"2%"}} target="_blank" href={"https://www.google.com/maps/place/"+country.name} variant={"success"}>find in <br></br>Google Maps</Button>
+            <Button style={{margin:"2%"}} target="_blank" href={"https://www.google.com/maps/place/"+country.nativeName} variant={"success"}>find in <br></br>Google Maps</Button>
             <Button style={{margin:"2%"}} variant={isSelected ? "outline-warning" : "outline-primary"}
-              onClick={() => { isSelected ? deselectMe() : selectMe() }}>{isSelected ? <>Deselect<br></br>on the<br></br>chart</> : <>Select<br></br>on the<br></br>chart</>}</Button>
+              onClick={() => { isSelected ? deselectMe() : selectMe() }}>{isSelected ? <>Deselect<br></br>on map</> : <>Select<br></br>on map</>}</Button>
               
 
           </div>

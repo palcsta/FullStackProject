@@ -15,7 +15,7 @@ export const loginService = async loginObject => {
     const response = await axios.post(loginUrl,loginObject,{baseURL: `${window.location.protocol}//${window.location.hostname}:${port}`})
     return response.data
   } catch (error) {
-    console.log(`login error: ${error}, response: ${debugObjsToStr(error.response.data)} `)
+    //console.log(`login error: ${error}, response: ${debugObjsToStr(error.response.data)} `)
     return error.response.data
   }
 }
@@ -25,7 +25,7 @@ export const registerService = async registerObject => {
     const response = await axios.post(registerUrl,registerObject,{baseURL: `${window.location.protocol}//${window.location.hostname}:${port}`})
     return response.data
   } catch (error) {
-    console.log(`register error: ${error}, response: ${debugObjsToStr(error.response.data)}`)
+    //console.log(`register error: ${error}, response: ${debugObjsToStr(error.response.data)}`)
     return error.response.data
   }
 }

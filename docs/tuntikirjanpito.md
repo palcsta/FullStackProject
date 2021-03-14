@@ -30,6 +30,8 @@
 |13.3|2| code reviewing, some cosmetic refactoring
 |13.3|2| added service for religions fetch and implemented religion showing in country details
 |13.3|3| added youtube trends/currency fetching/google maps finding and some style for country details
+|13.3|2| implemented current time showing in readable format and refactored some country details
+|13.3|1| added some details on the country selection and rewrote currency fetching
 # työaikakirjanpito(Emil)
 
 | päivä | aika | mitä tein  |

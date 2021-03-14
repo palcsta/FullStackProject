@@ -6,6 +6,8 @@ import Button from 'react-bootstrap/Button'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
 
+import '../styles/MapBottomButtons.css'
+
 const unique = (value, index, self) => {
   return self.indexOf(value) === index
 }
@@ -23,7 +25,7 @@ const CountriesDropdown = (props) => {
 
   return (
     <>
-      <div align="center" className="panel-footer " split="true">
+      <div align="center" className="panel-footer " split="true" className="mapTopButton">
         <DropdownButton id="dropdown-basic-button" title="Browse" split="true">
           {continents.filter(x => x !== "").map(x => 
           <>
@@ -36,9 +38,9 @@ const CountriesDropdown = (props) => {
                   matchingRegion.forEach(match => selection.push(getA2(match)))
                   //console.log("selecting alphacodes ",selection)
                   props.selectMany(selection)
-                  }} variant="info">{x}</Button>
-                <Dropdown.Toggle split="true" variant="success" id="dropdown-custom-2" />
-                <Dropdown.Menu className="super-colors">
+                  }} variant="info" >{x}</Button>
+                <Dropdown.Toggle split="true" variant="success" id="dropdown-custom-2"/>
+                <Dropdown.Menu className="super-colors" >
 
                   {props.countries.filter(y => y.region.includes(x)).map(x => x.subregion)
                       .filter(unique).map(z =>

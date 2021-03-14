@@ -6,3 +6,7 @@
 .mapButtonGroup > * {
     margin:0.2em;
 }
+
+.mapTopButton {
+    margin-bottom:0.2em;
+}
