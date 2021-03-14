@@ -63,9 +63,11 @@ yhteensä 88 h = 5 op
 | 7.3. | 1   | bloc frontend|
 | 8.3. | 4   | bloc frontend, tajuan että tarvitaan refactor|
 | 9.3. | 4   | koko codebasen refactor|
-| 10.3. | 11  | koko codebasen refactor|
-| 11.3. | 12  | koko codebasen refactor|
+| 10.3. | 11  | (melkein) koko codebasen refactor|
+| 11.3. | 12  | (melkein) koko codebasen refactor|
 | 12.3. | 9  | refactoristä aiheutuneiden bugien korjaus, kirjautumiseen bootstrap form, deployaaminen (nginx conffaus)|
 | 13.3. | 10  | virheilmoitukset (takaisin) frontendiin, kartan värjäyslogiikan muutos, https ja sovellus nettiin (omaan VPS:ään) |
 | 14.3. | 6  | viimeistely |
+
+yhteensä 135 h = 7 op
 
