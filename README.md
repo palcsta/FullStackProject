@@ -2,6 +2,7 @@
 Course project for Fullstack open course
 
 [Timetable/recorded hours](docs/tuntikirjanpito.md)
+
 [Project URL](https://maailmam.me)
 # Instruction
 For running this project locally you need to access sudo and have postgresql installed. Project runs in your web browser. Before running the project run dbinstall.sh file
