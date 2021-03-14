@@ -10,3 +10,5 @@ Another way to select the country is by clicking on it on the map.
 ![Image of search by filter](/docs/pics/click.gif "click")
 
 The list of selected countries is shown underneath the map and can be sorted differently. Clicking on the country in the list will get you to country's details. Map can also be cleared.
+## Login
+The project has account system. You can register and save your own blocs(lists of particular countries) and name them. After you save the block you can list them from the "Browse"-dropdown button.
