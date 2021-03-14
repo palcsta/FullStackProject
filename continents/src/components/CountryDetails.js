@@ -96,7 +96,7 @@ const CountryDetails = (props) => {
 
   const content = () => {
     if (props.showDetail && country && rel) {
-      console.log("REL is    ", rel)
+     // console.log("REL is    ", rel)
       // setReligion(props.religions.filter(x => x.country==country.name))
       return (
         <>
@@ -109,8 +109,8 @@ const CountryDetails = (props) => {
             <img style={flag} src={country.flag} alt="" width="150" height="100" ></img>
 
 
-            <div>
-              <i><b>population</b></i>: {numberChanger(country.population)}
+            <div >
+              <i><b>pop.</b></i>: {numberChanger(country.population)}
               <br></br>
               <b>area:</b> {numberChanger(country.area)} km<sup>2</sup>
               <br></br>

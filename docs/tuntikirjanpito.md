@@ -32,6 +32,7 @@
 |13.3|3| added youtube trends/currency fetching/google maps finding and some style for country details
 |13.3|2| implemented current time showing in readable format and refactored some country details
 |13.3|1| added some details on the country selection and rewrote currency fetching
+|14.3|2| added sorting function; sorts by population, area and alphabet
 # työaikakirjanpito(Emil)
 
 | päivä | aika | mitä tein  |

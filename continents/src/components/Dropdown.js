@@ -51,6 +51,7 @@ const CountriesDropdown = (props) => {
                               //console.log("selecting ", matchingSubregion)
                               let selection = []
                               matchingSubregion.forEach(match => selection.push(getA2(match)))
+                              //console.log("WHAT GIVING SETMANY ",selection)
                               //console.log("selecting alphacodes ",selection)
                               props.selectMany(selection)}} variant="info">{"   " + z}
                             </Button>

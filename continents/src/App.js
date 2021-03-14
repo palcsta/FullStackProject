@@ -125,6 +125,13 @@ function App() {
     set MapColor([...mapColor,...newColors])
     */
   }
+  const selectSortedMany = (ids) => {
+    //let ourColor = getNewColor()
+    //let newColors = ids.map(c => { return { id: c, color: ourColor } })
+    setSelected(ids)
+    //setMapColor([...mapColor.filter(c => !ids.includes(c.id)), ...newColors])
+  
+  }
 
   const clickOne = (clickedId) => {
     if (selected.includes(clickedId)) {
@@ -156,7 +163,7 @@ function App() {
           <SaveBloc selected={selected} user={user} updateBlocList={updateBlocList} />
         </IconContext.Provider>
       </div>
-      <SelectedFlags countries={countries} selected={selected} mapColor={mapColor} setShowDetail={setShowDetail} />
+      <SelectedFlags  countries={countries} selected={selected} mapColor={mapColor} setShowDetail={setShowDetail} />
       <Footer />
     </div>
   )
