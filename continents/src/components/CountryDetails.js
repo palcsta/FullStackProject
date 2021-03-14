@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 
 const numberChanger = (number) => {
   if (number == null) return (<>-</>)
@@ -81,6 +84,8 @@ const CountryDetails = (props) => {
 
 }
 
+country && console.log(country.languages.map(x => {return <a target="_blank" href={"https://wikipedia.org/wiki/" + x.name + "_language"} key={x.name}><span>{x.name}</span></a>}))
+
 
 
 
@@ -94,71 +99,66 @@ const CountryDetails = (props) => {
     props.selectOne(country.alpha2Code.toLowerCase())
   }
 
-  const content = () => {
-    if (props.showDetail && country && rel) {
-     // console.log("REL is    ", rel)
-      // setReligion(props.religions.filter(x => x.country==country.name))
-      return (
-        <>
-          <div style={style}> <div><h2><a target="_blank" rel="noopener noreferrer"
-            href={`https://en.wikipedia.org/wiki/${country.name}`}> {country.name}</a>({country.alpha2Code}{country.nativeName==country.name?"":", "+country.nativeName})</h2>
-            <b>capital:</b> {country.capital}</div>
-          </div>
 
-          <div style={style}>
-            <img style={flag} src={country.flag} alt="" width="150" height="100" ></img>
+const quickstyle = {
+  "lineHeight":"1em"
+}
 
+  return (
+    <>
 
-            <div >
-              <i><b>pop.</b></i>: {numberChanger(country.population)}
+      {(props.showDetail && country && rel) &&
+<Container style={{ paddingLeft: 0, paddingRight: 0 }} >
+  <div style={style}>
+  <Row style={{ paddingLeft: 0, paddingRight: 0 }}>
+    <Col lg={true}>
+      <h2><a target="_blank" rel="noopener noreferrer"
+        href={`https://en.wikipedia.org/wiki/${country.name}`}> {country.name}</a>({country.alpha2Code}{country.nativeName==country.name?"":", "+country.nativeName})</h2>
+      <p style={quickstyle}> 
+       <b>capital:</b> {country.capital}
+      </p>
+
+    </Col>
+  </Row>
+  </div>
+  <div style={style}>
+  <Row>
+    <Col xs={5} md={2}>
+      <img style={{...flag,"margin":"0.5em"}}src={country.flag} alt="" width="150" height="100" ></img>
+
+    </Col>
+    <Col xs={5} md={3} style={{"marginLeft":"0.4em"}}>
+      <i><b>pop.</b></i>: {numberChanger(country.population)}
               <br></br>
               <b>area:</b> {numberChanger(country.area)} km<sup>2</sup>
               <br></br>
               <b>region:</b> {country.subregion}
               <br></br>
-              <b>time:</b>{/*""+new Date(
-                new Date().getMonth()+1+"/"+new Date().getDate()+"/"+new Date().getUTCFullYear()+
-                " "+new Date().getHours()+":"+new Date().getMinutes()+" "
-                +country.timezones[0])
-              */
-              calcTime(/*country.capital,*/country.timezones[0].substring(3,6)[0]+country.timezones[0].substring(3,6)[2])
+              <b>time: </b>{calcTime(/*country.capital,*/country.timezones[0].substring(3,6)[0]+country.timezones[0].substring(3,6)[2])
               +"("+country.timezones[0]+")"
               }
-            </div>
-
-            <div>
-              <div><b><i> <span style={l}>language(s):</span></i></b>
-                {country.languages.map(x => <>|
-                <a target="_blank" href={"https://wikipedia.org/wiki/" + x.name + "_language"} key={x.name}>{x.name}</a>| </>)}
-              </div><div>
-                <n><b><span style={l}>Religion:</span></b>{rel[0] !== undefined ? rel[0].religion : " no data "}</n>
-                <br></br>
-                <n><b><span style={l}>Currency:</span></b>{/*currency[0] !== undefined ? currency[0].currency_code : "no data"*/
+    </Col>
+    <Col xs={2} md={2} style={{"paddingTop":"0.2em"}}>
+      
+      <p style={quickstyle}><b><i>language(s): </i></b>
+                {country.languages.map(x => {return <a target="_blank" href={"https://wikipedia.org/wiki/" + x.name + "_language"} key={x.name}><span>{x.name}</span></a>}).reduce((prev, curr) => [prev, ', ', curr])}</p>
+      <p style={quickstyle}><b>Religion:</b>{rel[0] !== undefined ? rel[0].religion : " no data "}</p>
+      <p style={quickstyle}><b>Currency: </b>{
                 country.currencies[0].code
                 
-                }{country.currencies[0].symbol==null?"":"("+country.currencies[0].symbol+")"}</n>
-                <br></br>
-                <><button hidden onClick={() => props.setShowDetail(null)}>hide</button></>
-              </div>
+        }{country.currencies[0].symbol && `(${country.currencies[0].symbol})`}</p>
 
-            </div>
-            <Button style={{margin:"2%"}} target="_blank" href={"https://youtube."+"com"+"/feed/trending?gl=" +country.alpha2Code} variant={"danger"}>YouTube<br></br>trending<br></br></Button>
-            <Button style={{margin:"2%"}} target="_blank" href={"https://www.google.com/maps/place/"+country.nativeName} variant={"success"}>find in <br></br>Google Maps</Button>
-            <Button style={{margin:"2%"}} variant={isSelected ? "outline-warning" : "outline-primary"}
+    </Col>
+    <Col lg={true} style={{"textAlign":"center"}}>
+      <Button style={{margin:"0.3rem"}} target="_blank" href={"https://youtube."+"com"+"/feed/trending?gl=" +country.alpha2Code} variant={"danger"}>YouTube<br></br>trending<br></br></Button>
+            <Button style={{margin:"0.3rem"}} target="_blank" href={"https://www.google.com/maps/place/"+country.nativeName} variant={"success"}>find in <br></br>Google Maps</Button>
+            <Button style={{margin:"0.3rem"}} variant={isSelected ? "outline-warning" : "outline-primary"}
               onClick={() => { isSelected ? deselectMe() : selectMe() }}>{isSelected ? <>Deselect<br></br>on map</> : <>Select<br></br>on map</>}</Button>
-              
-
-          </div>
-        </>
-      )
-    } else {
-      return (<></>)
-    }
-  }
-
-  return (
-    <>
-      {content()}
+    </Col>
+  </Row>
+  </div> 
+</Container>
+      }
     </>
   )
 }
