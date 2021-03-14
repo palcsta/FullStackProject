@@ -2,7 +2,18 @@
 Course project for Fullstack open course
 
 [Timetable/recorded hours](docs/tuntikirjanpito.md)
-
+# Instruction
+For running this project locally you need to access sudo and have postgresql installed. Project runs in your web browser. Before running the project run dbinstall.sh file
+```
+sh dbinstall.sh
+```
+or
+```
+./dbinstall.sh
+```
+, which will help you get the environment ready. In case you want to try backend and frontend simultaneously run them separately.
+## Backend
+## Backend
 
 # Important quotes from the instruction 
 
