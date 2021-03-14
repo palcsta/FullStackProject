@@ -67,4 +67,5 @@ yhteensä 88 h = 5 op
 | 11.3. | 12  | koko codebasen refactor|
 | 12.3. | 9  | refactoristä aiheutuneiden bugien korjaus, kirjautumiseen bootstrap form, deployaaminen (nginx conffaus)|
 | 13.3. | 10  | virheilmoitukset (takaisin) frontendiin, kartan värjäyslogiikan muutos, https ja sovellus nettiin (omaan VPS:ään) |
+| 14.3. | 6  | viimeistely |
 
