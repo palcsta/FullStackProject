@@ -24,7 +24,7 @@ Backend runs in terminal
 ## Front-end
 in case you want to run front-end just run ```npm start``` in the continents/ directory(FullStackProject/continents/)
 
-# Important quotes from the instruction 
+# Important quotes from the project instruction 
 
 - yksi opintopiste vastaa 17.5 tuntia,10op: 10 * 17.5=175h, 5op: 17.5 * 5=87,5h
 - GitHub-repositoriosi README.md-tiedostossa tulee olla linkki osoitteeseen, missä sovellus on käynnissä. 
