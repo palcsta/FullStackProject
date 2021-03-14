@@ -1,5 +1,5 @@
 # [World continents / Subcontinents / Country details / Interactive world map](https://maailmam.me)
-## Description [setup instructions](../README.md)
+## Description([setup instructions])(../README.md)
 This geographical project aims to improve users political countries knowledge by showing the location of the country/subregions/continents as well as some of the interesting facts regarding each of the country.
 ### Usage
 The app is relatively simple to use. You can search for a country by using the search field
