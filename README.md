@@ -5,7 +5,7 @@ Course project for Fullstack open course
 
 [Project URL](https://maailmam.me)
 # Instruction
-For running this project locally you need to access sudo and have postgresql and npm installed. Project runs in your web browser. Before running the project run dbinstall.sh file
+For running this project locally you need to access sudo and have postgresql and npm installed. Project runs in web browser. Before running the project run dbinstall.sh file
 ```
 sh dbinstall.sh
 ```
@@ -13,11 +13,12 @@ or
 ```
 ./dbinstall.sh
 ```
-this will help you get the environment ready. In case you want to try back-end and front-end simultaneously run them separately.
+this will help you to get the environment ready. In case you want to try back-end and front-end simultaneously, run them separately.
 After this run ```npm install``` to setup your node environment.
 
 ## Back-end
 in case you want to run back-end just run ```npm start``` in the project's root directory(FullStackProject/)
+Backend runs in terminal
 ## Front-end
 in case you want to run front-end just run ```npm start``` in the continents/ directory(FullStackProject/continents/)
 
