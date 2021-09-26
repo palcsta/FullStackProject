@@ -27,14 +27,24 @@
 |6.3|2| reimplemented Countries.js and started implementation of listSelected() function
 |6.3|3| now listing paints the border of the selected country and only lists the selected country
 |7.3|5| fixed bugs with painting
+|13.3|2| code reviewing, some cosmetic refactoring
+|13.3|2| added service for religions fetch and implemented religion showing in country details
+|13.3|3| added youtube trends/currency fetching/google maps finding and some style for country details
+|13.3|2| implemented current time showing in readable format and refactored some country details
+|13.3|1| added some details on the country selection and rewrote currency fetching
+|14.3|2| added sorting function; sorts by population, area and alphabet
+|14.3|1| Demo/readme/documentation
+
+yhteensä 88 h = 5 op
+
 # työaikakirjanpito(Emil)
 
 | päivä | aika | mitä tein  |
 | :----:|:-----| :-----|
-| 19.12. | 1    | palautusrepo/dokumentaatio/projektin skeleton |
-| 19.1. | 3    | projektin skeleton täydentäminen fullstack materiaalin esimerkkien mukaan|
-| 20.1. | 5    | postgres integraatio |
-| 21.1. | 10    | kirjautuminen ja registering |
+| 19.12.| 1  | palautusrepo/dokumentaatio/projektin skeleton |
+| 19.1. | 3  | projektin skeleton täydentäminen fullstack materiaalin esimerkkien mukaan|
+| 20.1. | 5  | postgres integraatio |
+| 21.1. | 10 | kirjautuminen ja registering |
 | 22.1. | 8   | kirjautuminen ja registering viilaaminen |
 | 24.1. | 5   | kirjautuminen ja registering dataan validointia eli käyttäjänimi/ salasana vaatimukset|
 | 26.1. | 2   | lisää alustavaa backend-työtä tulevaa kirjautumislomaketta varten|
@@ -43,4 +53,21 @@
 | 9.2. | 6   | alustava kirjautumislomake,kirjautumis-backendin vastaukset näkyviin fronttiin|
 | 11.2. | 6   | alustava valmistautuminen rekiströinnin lisäämiseen fronttiin|
 | 18.2. | 5   | rekiströinnin lisäämiseen fronttiin, hieman käyttöliittymän viilausta|
+| 22.2. | 0   | pull requestin hoitaminen|
+| 1.3. | 2   | pull requestin merge & token-pohjainen kirjautumisen aloittaminen|
+| 2.3. | 1   | pull requestin merge & token-pohjainen kirjautuminen|
+| 3.3. | 3   | token-pohjainen kirjautuminen, kirjautumisen frontendin viilausta|
+| 4.3. | 2   | pull requestin merge & token-pohjainen kirjautuminen|
+| 5.3. | 3   | käyttäjän määrittelemien maalistojen (bloc) tallentaminen tietokantaan, backend|
+| 6.3. | 1   | bloc backend ja frontend|
+| 7.3. | 1   | bloc frontend|
+| 8.3. | 4   | bloc frontend, tajuan että tarvitaan refactor|
+| 9.3. | 4   | koko codebasen refactor|
+| 10.3. | 11  | (melkein) koko codebasen refactor|
+| 11.3. | 12  | (melkein) koko codebasen refactor|
+| 12.3. | 9  | refactoristä aiheutuneiden bugien korjaus, kirjautumiseen bootstrap form, deployaaminen (nginx conffaus)|
+| 13.3. | 10  | virheilmoitukset (takaisin) frontendiin, kartan värjäyslogiikan muutos, https ja sovellus nettiin (omaan VPS:ään) |
+| 14.3. | 6  | viimeistely |
+
+yhteensä 135 h = 7 op
 

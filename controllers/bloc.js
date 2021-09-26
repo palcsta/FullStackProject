@@ -24,15 +24,21 @@ const getUserIdFromToken = req => {
 
 router.post('/api/blocs', async (req, res) => {
   const body = req.body
+  if(typeof body.name!=="string"||!Array.isArray(body.countries)){
+    console.log("malformed bloc save request!")
+    return res.status(401).send({error:`There was a syntax error with the bloc you are trying to save`})
+  }
   const userId = getUserIdFromToken(req)
   if(!userId){
-    res.status(401).send({error:`Bad or missing login token`})
+    return res.status(401).send({error:`Bad or missing login token`})
   } else if(!body.name){
-    res.status(401).send({error:`Blocs require a name`})
+    return res.status(401).send({error:`Blocs require a name.`})
+  }else if(!body.countries.length){
+    return res.status(401).send({error:"Bloc cannot be empty."})
   } else if(body.name.length>maxBlocNameLength){
-    res.status(401).send({error:`Bloc name too long. Maximum allowed length is ${maxBlocNameLength}`})
+    return res.status(401).send({error:`Bloc name too long. Maximum allowed length is ${maxBlocNameLength}`})
   } else if(!containsOnlyAlphaCodes(body.countries)){
-    res.status(401).send({error:`There was a syntax error with the bloc you are trying to save`})
+    return res.status(401).send({error:`There was a syntax error with the bloc you are trying to save`})
   } else {
     const { rows } = await db.query(`SELECT id FROM blocs WHERE created_by = $1 AND data ->> 'name' = $2`,[userId,body.name])
     if(rows.length>0){

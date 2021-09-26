@@ -1,5 +1,8 @@
-path:hover {
-    fill: cyan;
-    stroke: blue;
+.mapHover path:hover {
+    stroke: cyan;
+}
 
+
+.mapHover g g:hover {
+    stroke: cyan;
 }

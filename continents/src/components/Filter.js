@@ -1,92 +1,45 @@
-
+import '../styles/MapBottomButtons.css'
 import { render } from '@testing-library/react';
-import React, { useState, useEffect } from 'react';
-import Country from './Country'
-import Countries from './Countries'
-function getColor() {
-  const R = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
-  const G = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
-  const B = Math.round(Math.random() * 255).toString(16).padStart(2, '0')
-  return `#${R}${G}${B}`
-}
+import React, { useState } from 'react';
 
+const Filter = (props) => {
 
-
-
-
-const Filter = ({ countries, country, paint }) => {
-
-  const [searched, setSearched] = useState("")
-  console.log("processing filter!!!!!")
-  console.log("countries in filter ", countries, " country in filter ", country, " paint in filter, ", paint,
-    "searched in filter ", searched)
-  const [color, setColor] = useState("")
-  const [selected, setSelected] = useState(country !== undefined ?
-    <Country country={countries.filter(x => x.alpha2Code == country)[0]} paint={paint} /> : "")
-  const [many, setMany] = useState([])
-
-  //searched!==filter ? ()=>setSearched(filter) : ""
-  //console.log("found == undefined", selected == undefined, "country == undefined ", country == undefined)
-  //searched=="" ? setSelected(<Country country={country[0]} paint={paint} />) : setSelected("")
-
-
-
-  const handleNewSearched = (event) => {
+  const [searchBoxContent, setSearchBoxContent] = useState("")
+  const [searchHints,setSearchHints] = useState("")
+ 
+  const handleNewSearchBoxContent = (event) => {
     // console.log("event ", event)
 
-    let filtered = countries.filter(
+    let filtered = props.countries.filter(
       x =>
         x.name.toUpperCase().includes(
           event.target.value.toUpperCase()))
     event.preventDefault()
-    setSearched(event.target.value)
-    console.log("FILTERED, ", filtered)
-    if (filtered !== undefined) {
+    setSearchBoxContent(event.target.value)
+    //console.log("FILTERED: ", filtered)
+    if (filtered) {
       //console.log("filtered", filtered.length)
-      if (filtered.length == 1) {
-        if (document.querySelector('g') !== null) {
-          if (document.getElementById(filtered[0].alpha2Code.toLowerCase()) !== null) {
-            let col = getColor()
-            document.getElementById(filtered[0].alpha2Code.toLowerCase()).style.fill = col
-            setColor(col)
-            setSelected(<Country country={filtered[0]} paint={col} />)
-            //setSearched("")
-          }
-        }
-
-        setMany("")
-
-        console.log("searched is now, ", searched)
+      if (filtered.length === 1) {
+        //console.log("searchbox wants to show details for ", filtered[0].alpha2Code.toLowerCase())
+        props.setShowDetail(filtered[0].alpha2Code.toLowerCase())
       }
       if (filtered.length < 21 && filtered.length !== 1) {
-        setMany(filtered.map(x => x.name + "|"))
-
-      }
-      if (event.target.value == "") {
-        setMany("")
-        if (country !== undefined) setSelected(<Country
-          country={countries.filter(x => x.alpha2Code == country)[0]} paint={paint} />)
+        setSearchHints(filtered.map(x => x.name).join(", "))
+      } else {
+        setSearchHints("")
       }
     }
-
+    !event.target.value && props.setShowDetail(null)
   }
 
   return (
-    <>{country !== undefined  //&& searched==""
-      ?  (searched==""?<Country country={countries.filter(x => x.alpha2Code == country)[0]} paint={paint} />: selected)
-      : (searched!=="" ? selected : "")}
-
-      <div style={{ "text-align": "center" }}>
-        <input placeholder="Search for the country" value={searched}
-          onChange={handleNewSearched} />
-        {many}
-        {/*selected*/}
-
-
-
+    <>
+      <div style={{ "textAlign": "center" }} className="mapTopButton">
+        <input placeholder="Search for a country" value={searchBoxContent}
+          onChange={handleNewSearchBoxContent} />
+        {searchHints && <span>Did you mean: </span>}{searchHints}
       </div>
-
-
-    </>)
+    </>
+  )
 }
 export default Filter
