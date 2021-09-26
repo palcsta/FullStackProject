@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "authentication",
   "main": "index.js",
+  "homepage": "https://palcsta.github.io/FullStackProject/",
   "directories": {
     "doc": "docs"
   },
