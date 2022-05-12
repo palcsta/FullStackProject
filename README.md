@@ -3,7 +3,7 @@ Course project for Fullstack open course
 
 [Timetable/recorded hours](docs/tuntikirjanpito.md)
 
-[Project URL](https://maailmam.me)
+[Project URL](https://maamme.herokuapp.com)
 =======
 # Instruction
 ## Backend
